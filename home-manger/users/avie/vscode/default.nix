@@ -31,7 +31,7 @@
         vscode-marketplace.ms-python.isort
         vscode-marketplace.ms-python.python
         vscode-marketplace.ms-python.vscode-pylance
-        vscode-marketplace.ms-toolsai.jupyter
+        vscode-extensions.ms-toolsai.jupyter
         vscode-marketplace.ms-toolsai.jupyter-keymap
         vscode-marketplace.ms-toolsai.jupyter-renderers
         vscode-marketplace.ms-toolsai.vscode-jupyter-cell-tags
