@@ -1,0 +1,1 @@
+mkfs.ext4 -L nixos /dev/nvme0n1p5
