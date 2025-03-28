@@ -70,11 +70,13 @@
 
   virtualisation.docker.enable = true;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.download-buffer-size = 524288000;
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    download-buffer-size = 524288000;
+  };
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
