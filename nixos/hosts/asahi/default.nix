@@ -41,7 +41,6 @@
 
   networking = {
     hostName = "avie-nixos";
-    networkmanager.enable = true;
   };
 
   console = {
