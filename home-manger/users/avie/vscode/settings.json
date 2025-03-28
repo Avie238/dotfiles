@@ -1,0 +1,214 @@
+{
+  "editor": {
+    "fontFamily": "Jetbrains Mono",
+    "fontLigatures": true,
+    "unicodeHighlight.invisibleCharacters": false,
+    "largeFileOptimizations": false,
+    "linkedEditing": true,
+    "defaultFormatter": "esbenp.prettier-vscode",
+    "tabSize": 2,
+    "formatOnSave": true
+  },
+  "code-runner": {
+    "executorMap": {
+      "c": "cd $dir && gcc -std=c++11 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+    },
+    "runInTerminal": true,
+    "executorMapByFileExtension": {
+      ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
+      ".vbs": "cscript //Nologo",
+      ".scala": "scala",
+      ".jl": "julia",
+      ".cr": "crystal",
+      ".ml": "ocaml",
+      ".zig": "zig run",
+      ".exs": "elixir",
+      ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+      ".rkt": "racket",
+      ".scm": "csi -script",
+      ".ahk": "autohotkey",
+      ".au3": "autoit3",
+      ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
+      ".kts": "kotlinc -script",
+      ".dart": "dart",
+      ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+      ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+      ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+      ".hs": "runhaskell",
+      ".nim": "nim compile --verbosity:0 --hints:off --run",
+      ".csproj": "dotnet run --project",
+      ".fsproj": "dotnet run --project",
+      ".lisp": "sbcl --script",
+      ".kit": "kitc --run",
+      ".v": "v run",
+      ".vsh": "v run",
+      ".sass": "sass --style expanded",
+      ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+      ".ring": "ring",
+      ".sml": "cd $dir && sml $fileName",
+      ".mojo": "mojo run"
+    }
+  },
+  "terminal": {
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "terminal.external.osxExec": "iTerm.app"
+  },
+  "git": {
+    "autofetch": true,
+    "suggestSmartCommit": true,
+    "confirmSync": false,
+    "openRepositoryInParentFolders": "never"
+  },
+  "explorer": {
+    "confirmDelete": false,
+    "confirmDragAndDrop": false,
+    "confirmPasteNative": false
+  },
+  "todohighlight.keywords": [
+    "DEBUG:",
+    "REVIEW:",
+    {
+      "text": "NOTE:",
+      "color": "#ff0000",
+      "backgroundColor": "yellow",
+      "overviewRulerColor": "grey"
+    },
+    {
+      "text": "BUG:",
+      "color": "#ffffff",
+      "backgroundColor": "#ac33ff",
+      "isWholeLine": false
+    },
+    {
+      "text": "ERROR MESSAGE:",
+      "color": "#ffffff",
+      "backgroundColor": "#5C2FB6",
+      "isWholeLine": false
+    },
+    {
+      "text": "UI:",
+      "color": "#ffffff",
+      "backgroundColor": "green",
+      "isWholeLine": false
+    },
+    {
+      "text": "FEATURES:",
+      "color": "#ffffff",
+      "backgroundColor": "#00CED1",
+      "isWholeLine": false
+    },
+    {
+      "text": "BACKEND:",
+      "color": "#ffffff",
+      "backgroundColor": "red",
+      "isWholeLine": false
+    },
+    {
+      "text": "MICS:",
+      "color": "#ffffff",
+      "backgroundColor": "#AA336A",
+      "isWholeLine": false
+    },
+    {
+      "text": "WARNING:",
+      "color": "red",
+      "border": "1px solid red",
+      "borderRadius": "2px",
+      "backgroundColor": "rgba(0,0,0,.2)"
+    }
+  ],
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Webapp in Chrome",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "name": "Webapp in Firefox",
+        "type": "firefox",
+        "request": "launch",
+        "reAttach": true,
+        "url": "http://localhost:5173",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "KeepspireChatLambda mock",
+        "program": "~/.nvm/versions/node/v20.12.2/bin/amplify",
+        "args": [
+          "mock",
+          "function",
+          "KeepspireChatLambda",
+          "--event",
+          "src/event.json",
+          "--timeout",
+          "300"
+        ],
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Python Debugger: Current File",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal"
+      }
+    ]
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "window.customTitleBarVisibility": "never",
+  "update.showReleaseNotes": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "debug.javascript.defaultRuntimeExecutable": {
+    "pwa-node": "node"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "githubPullRequests.createOnPublishBranch": "never",
+  "javascript": {
+    "updateImportsOnFileMove.enabled": "always",
+    "suggest.paths": false
+  },
+  "typescript": {
+    "updateImportsOnFileMove.enabled": "always",
+    "suggest.paths": false
+  },
+  "notebook.output.scrolling": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/.docx.json"
+      ],
+      "url": "https://raw.githubusercontent.com/Mehdi-Verfaillie/docx/main/src/config/.docx.schema.json"
+    }
+  ],
+  "diffEditor.ignoreTrimWhitespace": true
+}
