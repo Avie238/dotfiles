@@ -66,6 +66,7 @@
         vscode-marketplace.xabikos.javascriptsnippets
         vscode-marketplace.yclepticstudios.unity-snippets
         vscode-marketplace.zainchen.json
+        vscode-marketplace.jnoortheen.nix-ide
         vscode-extensions.eamodio.gitlens
         vscode-extensions.ms-dotnettools.csdevkit
         vscode-extensions.ms-dotnettools.csharp
