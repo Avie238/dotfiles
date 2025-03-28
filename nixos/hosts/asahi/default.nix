@@ -74,7 +74,7 @@
     "nix-command"
     "flakes"
   ];
-  nix.settings.download-buffer-size = 524288000
+  nix.settings.download-buffer-size = 524288000;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
