@@ -27,6 +27,8 @@
     efi.canTouchEfiVariables = false;
   };
 
+  boot.kernelParams = [ "apple_dcp.show_notch=1" ];
+
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.overlays = [
