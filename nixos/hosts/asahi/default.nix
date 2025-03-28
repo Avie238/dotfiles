@@ -27,7 +27,13 @@
     efi.canTouchEfiVariables = false;
   };
 
-  boot.kernelParams = [ "apple_dcp.show_notch=1" ];
+  boot.kernelParams = [
+    "apple_dcp.show_notch=1"
+    "zswap.enabled=1"
+    "zswap.compressor=zstd"
+    "zswap.zpool=zsmalloc"
+    "zswap.max_pool_percent=50"
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
