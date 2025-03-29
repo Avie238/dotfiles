@@ -25,6 +25,8 @@
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
+      export VISUAL="code --wait --js-flags=\" --nodecommit_pooled_pages \""
+      export EDITOR="$VISUAL"
     '';
 
     oh-my-zsh = {

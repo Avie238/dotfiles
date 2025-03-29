@@ -8,6 +8,6 @@
       "docker"
     ];
     createHome = true;
-    password = "ania123";
+    hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
   };
 }
