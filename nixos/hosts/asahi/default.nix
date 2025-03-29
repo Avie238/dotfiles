@@ -14,14 +14,9 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./graphics_asahi.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
-    ./localization.nix
-    ./network.nix
-    ./DE.nix
-    ./graphics.nix
-    ./users.nix
-    inputs.sops-nix.nixosModules.sops
-    ./sops.nix
+    ./../shared
   ];
 
   boot.loader = {
@@ -37,47 +32,8 @@
     "zswap.max_pool_percent=50"
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
-  nixpkgs.overlays = [
-    inputs.nix-vscode-extensions.overlays.default
-  ];
-
-  programs.zsh = {
-    enable = true;
-  };
-
-  users.defaultUserShell = pkgs.zsh;
-
   networking = {
     hostName = "avie-nixos";
-  };
-
-  console = {
-    font = "Lat2-Terminus16";
-    useXkbConfig = true;
-  };
-
-  security.sudo.wheelNeedsPassword = false;
-
-  environment.systemPackages = with pkgs; [
-    tree
-    firefox
-    git
-    nodejs
-    nixfmt-rfc-style
-    dotnet-sdk
-    gparted
-  ];
-
-  virtualisation.docker.enable = true;
-
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    download-buffer-size = 524288000;
   };
 
   # Enable CUPS to print documents.
