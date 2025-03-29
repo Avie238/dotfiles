@@ -15,6 +15,7 @@
     meslo-lgs-nf
     jetbrains-mono
     cloud-utils
+    sops
   ];
 
   home.file.".hushlogin" = {

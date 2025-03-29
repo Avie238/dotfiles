@@ -7,6 +7,7 @@
   pkgs,
   lib,
   inputs,
+  PROJECT_ROOT,
   ...
 }:
 
@@ -20,7 +21,18 @@
     ./DE.nix
     ./graphics.nix
     ./users.nix
+    inputs.sops-nix.nixosModules.sops
   ];
+
+  sops = {
+
+    defaultSopsFile = ../../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    age.keyFile = "/home/avie/.config/sops/age/keys.txt";
+
+    secrets.example-key = { };
+  };
 
   boot.loader = {
     systemd-boot.enable = true;

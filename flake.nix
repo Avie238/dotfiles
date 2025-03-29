@@ -15,6 +15,12 @@
     };
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -24,10 +30,12 @@
       home-manager,
       apple-silicon,
       nix-vscode-extensions,
+      ...
     }@inputs:
     let
       system = "aarch64-linux";
       lib = nixpkgs.lib;
+      PROJECT_ROOT = builtins.getEnv "PWD";
     in
     {
       nixosConfigurations = {
@@ -36,14 +44,23 @@
           modules = [
             ./nixos/hosts/asahi
             home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.avie = import ./home-manger/users/avie;
-            }
+            self.nixosModules.declarativeHome
+            self.nixosModules.users-avie
           ];
           specialArgs = { inherit inputs self; };
         };
+      };
+
+      nixosModules = {
+        declarativeHome = {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        };
+
+        users-avie = {
+          home-manager.users.avie = import ./home-manger/users/avie;
+        };
+
       };
 
     };

@@ -32,7 +32,7 @@
         };
         wifi = {
           mode = "infrastructure";
-          ssid = "65;110;105;97;226;128;153;115;32;105;80;104;111;110;101;";
+          ssid = "Ania’s iPhone";
         };
         wifi-security = {
           auth-alg = "open";
