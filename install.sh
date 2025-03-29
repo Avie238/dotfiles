@@ -1,1 +1,0 @@
-nixos-install --flake ./dotfiles#avie-nixos
