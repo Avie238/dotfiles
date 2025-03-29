@@ -35,7 +35,6 @@
     let
       system = "aarch64-linux";
       lib = nixpkgs.lib;
-      PROJECT_ROOT = builtins.getEnv "PWD";
     in
     {
       nixosConfigurations = {
@@ -43,6 +42,17 @@
           inherit system;
           modules = [
             ./nixos/hosts/asahi
+            home-manager.nixosModules.home-manager
+            self.nixosModules.declarativeHome
+            self.nixosModules.users-avie
+          ];
+          specialArgs = { inherit inputs self; };
+        };
+
+        msi-nixos = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./nixos/hosts/msi
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
             self.nixosModules.users-avie
@@ -58,7 +68,7 @@
         };
 
         users-avie = {
-          home-manager.users.avie = import ./home-manger/users/avie;
+          home-manager.users.avie = ./home-manger/users/avie;
         };
 
       };
