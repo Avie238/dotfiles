@@ -69,6 +69,33 @@
             method = "auto";
           };
         };
+        eduroam = {
+          connection = {
+            id = "eduroam";
+            permissions = "";
+            type = "wifi";
+            interface-name = "wlp1s0f0";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "eduroam";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-eap";
+          };
+          "802-1x" = {
+            eap = "peap";
+            identity = "$EDUORAM_USERNAME";
+            password = "$EDUORAM_PASSWORD";
+            phase2-auth = "mschapv2";
+          };
+          ipv4.method = "auto";
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+        };
       };
     };
   };
