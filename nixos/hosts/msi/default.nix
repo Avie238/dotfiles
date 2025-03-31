@@ -26,6 +26,8 @@
     hostName = "avie-nixos-msi";
   };
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 

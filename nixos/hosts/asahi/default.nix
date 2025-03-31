@@ -19,6 +19,8 @@
     ./../shared
   ];
 
+  boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = false;
@@ -35,6 +37,8 @@
   networking = {
     hostName = "avie-nixos";
   };
+
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;

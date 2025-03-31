@@ -33,13 +33,13 @@
       ...
     }@inputs:
     let
-      system = "aarch64-linux";
+      # system = "aarch64-linux";
       lib = nixpkgs.lib;
     in
     {
       nixosConfigurations = {
         avie-nixos = lib.nixosSystem {
-          inherit system;
+          # inherit system;
           modules = [
             ./nixos/hosts/asahi
             home-manager.nixosModules.home-manager
@@ -50,12 +50,23 @@
         };
 
         msi-nixos = lib.nixosSystem {
-          inherit system;
+          # inherit system;
           modules = [
             ./nixos/hosts/msi
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
             self.nixosModules.users-avie
+          ];
+          specialArgs = { inherit inputs self; };
+        };
+
+        x86-iso = lib.nixosSystem {
+          # inherit system;
+          modules = [
+            ./nixos/hosts/x86-iso
+            # home-manager.nixosModules.home-manager
+            # self.nixosModules.declarativeHome
+            # self.nixosModules.users-avie
           ];
           specialArgs = { inherit inputs self; };
         };
