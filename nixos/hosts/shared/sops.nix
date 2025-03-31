@@ -13,17 +13,10 @@
 {
 
   sops = {
-
     defaultSopsFile = ../../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
 
     age.keyFile = "/home/avie/.config/sops/age/keys.txt";
-
-    secrets."wifi.env" = {
-      owner = config.users.users.avie.name;
-    };
-
-    secrets."user_passwords/avie".neededForUsers = true;
   };
 
 }

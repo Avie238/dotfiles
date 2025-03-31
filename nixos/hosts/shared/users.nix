@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 {
+  sops.secrets."user_passwords/avie".neededForUsers = true;
   users.users.avie = {
     isNormalUser = true;
     extraGroups = [

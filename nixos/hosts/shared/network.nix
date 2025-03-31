@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+  sops.secrets."wifi.env" = {
+    owner = config.users.users.avie.name;
+  };
   networking.networkmanager = {
     enable = true;
 
