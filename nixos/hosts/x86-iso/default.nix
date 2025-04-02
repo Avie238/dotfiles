@@ -12,10 +12,7 @@
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-    ./../shared/sops.nix
-    ./../shared/network.nix
-    ./../shared/users.
-    ./../shared/localization.nix
+    ./../shared/minimal
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -25,29 +22,24 @@
   isoImage.contents = [
     {
       source = ../../../../../../home/avie/.config/sops/age;
-      target = "/ania";
+      target = "/age";
     }
   ];
 
   system.activationScripts.mybootstrap.text = ''
-    if [[ ! -e /ania ]]; then
-      cp -r ${../../../../../../home/avie/.config/sops/age} /ania
+    if [[ ! -e /home/avie/.config/sops/age/ ]]; then
+      sudo cp -r /iso/age /home/avie/.config/sops/age/
     fi
   '';
 
   isoImage.makeUsbBootable = true;
 
-  environment.systemPackages = with pkgs; [
-    tree
-    git
-  ];
+  sops.secrets."user_passwords/avie".neededForUsers = lib.mkForce false;
+  users.users.avie = {
 
-  # system.activationScripts.mybootstrap = {
-  #   text = ''
+    hashedPasswordFile = null;
+  };
 
-  #     cp /home/avie/.config/sops/age.keys.txt /age
-
-  #   '';
-  # };
+  sops.secrets."wifi.env" = null;
 
 }
