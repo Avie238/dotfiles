@@ -30,6 +30,7 @@
       home-manager,
       apple-silicon,
       nix-vscode-extensions,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -67,6 +68,7 @@
             # home-manager.nixosModules.home-manager
             # self.nixosModules.declarativeHome
             # self.nixosModules.users-avie
+            sops-nix.nixosModules.sops
           ];
           specialArgs = { inherit inputs self; };
         };

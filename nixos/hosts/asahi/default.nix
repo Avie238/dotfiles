@@ -16,7 +16,7 @@
     ./hardware-configuration.nix
     ./graphics_asahi.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
-    ./../shared
+    ./../shared/desktop
   ];
 
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];

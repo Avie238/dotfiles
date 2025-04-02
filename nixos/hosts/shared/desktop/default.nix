@@ -11,12 +11,17 @@
 }:
 
 {
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+    ./../minimal
+    ./DE.nix
+    ./graphics.nix
+  ];
 
-  sops = {
-    defaultSopsFile = ../../../secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
+  nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+  ];
 
-    age.keyFile = "/home/avie/.config/sops/age/keys.txt";
-  };
+  virtualisation.docker.enable = true;
 
 }

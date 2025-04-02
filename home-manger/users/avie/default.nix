@@ -8,6 +8,25 @@
     ./vscode
   ];
 
+  programs.firefox.enable = true;
+  xdg.autostart = {
+    enable = true;
+
+    # entries = [
+    #   "${pkgs.evolution}/share/applications/org.gnome.Evolution.desktop"
+    # ];
+
+  };
+
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        show-battery-percentage = true;
+      };
+    };
+  };
+
   home.username = "avie";
   home.homeDirectory = "/home/avie";
 

@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 {
+  security.sudo.wheelNeedsPassword = false;
   sops.secrets."user_passwords/avie".neededForUsers = true;
   users.users.avie = {
     isNormalUser = true;
