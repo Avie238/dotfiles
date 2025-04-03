@@ -36,7 +36,11 @@
   '';
 
   isoImage.makeUsbBootable = true;
-
+  sops_config.enable = false;
+  networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/run/secrets/wifi.env" ];
+  # services.getty.autologinUser = lib.mkForce "avie";
+  # users.users.avie.hashedPasswordFile = lib.mkForce null;
+  # users.users.avie.initialHashedPassword = "";
   # sops.secrets."user_passwords/avie".neededForUsers = lib.mkForce false;
   # users.users.avie = {
 

@@ -12,14 +12,30 @@
 
 {
 
-  sops = {
-    defaultSopsFile = ../../../../secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
+  options = {
+    sops_config.enable = lib.mkEnableOption "enables use of sops_nix";
+  };
 
-    age.keyFile = "/home/avie/.config/sops/age/keys.txt";
-    # gnupg.sshKeyPaths = [ ];
+  config = lib.mkIf config.sops_config.enable {
 
-    # age.keyFile = "/iso/age/keys.txt";
+    #General
+    sops = {
+      defaultSopsFile = ../../../../secrets/secrets.yaml;
+      defaultSopsFormat = "yaml";
+
+      age.keyFile = "/home/avie/.config/sops/age/keys.txt";
+    };
+
+    #Users
+    sops.secrets."user_passwords/avie".neededForUsers = true;
+    users.users.avie.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
+
+    #Network
+    sops.secrets."wifi.env" = {
+      owner = config.users.users.avie.name;
+    };
+    networking.networkmanager.ensureProfiles.environmentFiles = [ config.sops.secrets."wifi.env".path ];
+
   };
 
 }

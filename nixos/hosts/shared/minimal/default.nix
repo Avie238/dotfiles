@@ -20,6 +20,8 @@
     ./terminal.nix
   ];
 
+  sops_config.enable = lib.mkDefault true;
+
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [

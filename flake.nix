@@ -40,7 +40,6 @@
     {
       nixosConfigurations = {
         avie-nixos = lib.nixosSystem {
-          # inherit system;
           modules = [
             ./nixos/hosts/asahi
             home-manager.nixosModules.home-manager
@@ -51,7 +50,6 @@
         };
 
         msi-nixos = lib.nixosSystem {
-          # inherit system;
           modules = [
             ./nixos/hosts/msi
             home-manager.nixosModules.home-manager
