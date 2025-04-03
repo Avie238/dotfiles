@@ -32,21 +32,13 @@
 
   system.activationScripts.mybootstrap.text = ''
     cp -r /iso/secrets /run
-    touch /home/nixos/.zshrc
+    touch /home/avie/.zshrc
   '';
 
   isoImage.makeUsbBootable = true;
   sops_config.enable = false;
   networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/run/secrets/wifi.env" ];
-  # services.getty.autologinUser = lib.mkForce "avie";
-  # users.users.avie.hashedPasswordFile = lib.mkForce null;
-  # users.users.avie.initialHashedPassword = "";
-  # sops.secrets."user_passwords/avie".neededForUsers = lib.mkForce false;
-  # users.users.avie = {
-
-  #   hashedPasswordFile = lib.mkForce null;
-  # };
-
-  # sops.secrets."wifi.env" = lib.mkForce { };
+  services.getty.autologinUser = lib.mkForce "avie";
+  users.users.avie.initialHashedPassword = "";
 
 }

@@ -23,7 +23,7 @@
       defaultSopsFile = ../../../../secrets/secrets.yaml;
       defaultSopsFormat = "yaml";
 
-      age.keyFile = "/home/avie/.config/sops/age/keys.txt";
+      age.keyFile = (config.users.users.avie.home + "/.config/sops/age/keys.txt");
     };
 
     #Users

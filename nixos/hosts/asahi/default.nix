@@ -14,6 +14,7 @@
   imports = [
     ./hardware-configuration.nix
     ./graphics_asahi.nix
+    ./zswap.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
     ./../shared/desktop
   ];
@@ -27,10 +28,6 @@
 
   boot.kernelParams = [
     "apple_dcp.show_notch=1"
-    "zswap.enabled=1"
-    "zswap.compressor=zstd"
-    "zswap.zpool=zsmalloc"
-    "zswap.max_pool_percent=50"
   ];
 
   networking.hostName = "avie-nixos";
