@@ -21,25 +21,28 @@
 
   isoImage.contents = [
     {
+      source = ../../../../../../run/secrets/wifi.env;
+      target = "/secrets/wifi.env";
+    }
+    {
       source = ../../../../../../home/avie/.config/sops/age;
       target = "/age";
     }
   ];
 
   system.activationScripts.mybootstrap.text = ''
-    if [[ ! -e /home/avie/.config/sops/age/ ]]; then
-      sudo cp -r /iso/age /home/avie/.config/sops/age/
-    fi
+    cp -r /iso/secrets /run
+    touch /home/nixos/.zshrc
   '';
 
   isoImage.makeUsbBootable = true;
 
-  sops.secrets."user_passwords/avie".neededForUsers = lib.mkForce false;
-  users.users.avie = {
+  # sops.secrets."user_passwords/avie".neededForUsers = lib.mkForce false;
+  # users.users.avie = {
 
-    hashedPasswordFile = null;
-  };
+  #   hashedPasswordFile = lib.mkForce null;
+  # };
 
-  sops.secrets."wifi.env" = null;
+  # sops.secrets."wifi.env" = lib.mkForce { };
 
 }

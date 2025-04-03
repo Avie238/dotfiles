@@ -1,13 +1,14 @@
 { config, pkgs, ... }:
 {
-  sops.secrets."wifi.env" = {
-    owner = config.users.users.avie.name;
-  };
+  # sops.secrets."wifi.env" = {
+  #   owner = config.users.users.avie.name;
+  # };
   networking.networkmanager = {
     enable = true;
 
     ensureProfiles = {
-      environmentFiles = [ config.sops.secrets."wifi.env".path ];
+      # environmentFiles = [ config.sops.secrets."wifi.env".path ];
+      environmentFiles = [ "/run/secrets/wifi.env" ];
       profiles = {
         home = {
           connection = {

@@ -19,7 +19,7 @@
     age.keyFile = "/home/avie/.config/sops/age/keys.txt";
     # gnupg.sshKeyPaths = [ ];
 
-    # age.keyFile = "/ania/keys.txt";
+    # age.keyFile = "/iso/age/keys.txt";
   };
 
 }

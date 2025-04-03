@@ -15,7 +15,7 @@
     inputs.sops-nix.nixosModules.sops
     ./localization.nix
     ./network.nix
-    ./users.nix
+    # ./users.nix
     ./sops.nix
     ./terminal.nix
   ];

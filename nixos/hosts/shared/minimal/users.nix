@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   security.sudo.wheelNeedsPassword = false;
-  sops.secrets."user_passwords/avie".neededForUsers = true;
+  # sops.secrets."user_passwords/avie".neededForUsers = true;
   users.users.avie = {
     isNormalUser = true;
     extraGroups = [
@@ -10,6 +10,8 @@
       "docker"
     ];
     createHome = true;
-    hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
+    # hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
+    # hashedPasswordFile = "/run/secrets-for-users/user_passwords/avie";
+    password = "ania123";
   };
 }
