@@ -35,6 +35,15 @@
     touch /home/avie/.zshrc
   '';
 
+  environment.shellAliases = { 
+    custom-install = ''
+    git clone https://github.com/Avie238/dotfiles
+    cd dotfiles
+    sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/nixos/hosts/msi/disko.nix --arg device '"/dev/nvme0n1"'
+    nixos-install --flake ./#msi-nixos
+    ''
+  };
+
   sops_config.enable = false;
   nix.settings.trusted-users = lib.mkForce [ "avie" ];
   networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/run/secrets/wifi.env" ];
