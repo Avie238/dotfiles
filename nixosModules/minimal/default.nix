@@ -17,6 +17,7 @@
   ];
 
   sops_config.enable = lib.mkDefault true;
+  localization.enable = lib.mkDefault true;
 
   boot.loader = {
     systemd-boot.enable = true;

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 
@@ -15,6 +16,6 @@
 
   system.stateVersion = "25.05";
 
-  sops.age.keyFile = "/persist/system/var/lib/sops-nix/keys.txt"
+  sops.age.keyFile = lib.mkForce "/persist/system/var/lib/sops-nix/keys.txt"
 
 }

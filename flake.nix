@@ -48,7 +48,6 @@
     {
       nixosConfigurations = {
         avie-nixos = lib.nixosSystem {
-          system = "aarch64-linux";
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager

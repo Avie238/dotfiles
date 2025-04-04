@@ -1,17 +1,29 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  time.timeZone = "Europe/Amsterdam";
-
-  i18n = {
-    defaultLocale = "en_IE.UTF-8";
-    supportedLocales = [
-      "en_US.UTF-8/UTF-8"
-      "nl_NL.UTF-8/UTF-8"
-      "en_IE.UTF-8/UTF-8"
-      "pl_PL.UTF-8/UTF-8"
-    ];
+  options = {
+    localization.enable = lib.mkEnableOption "enables custom localization settings";
   };
 
-  services.xserver.xkb.layout = "pl";
+  config = lib.mkIf config.localization.enable {
+    time.timeZone = "Europe/Amsterdam";
+
+    i18n = {
+      defaultLocale = "en_IE.UTF-8";
+      supportedLocales = [
+        "en_US.UTF-8/UTF-8"
+        "nl_NL.UTF-8/UTF-8"
+        "en_IE.UTF-8/UTF-8"
+        "pl_PL.UTF-8/UTF-8"
+      ];
+    };
+
+    services.xserver.xkb.layout = "pl";
+  };
+
 }
