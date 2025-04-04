@@ -1,1 +1,1 @@
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/nixos/hosts/msi/disko.nix
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/nixos/hosts/msi/disko.nix --device /dev/nvme0n1
