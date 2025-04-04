@@ -1,1 +1,1 @@
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/nixos/hosts/msi/disko.nix --device /dev/nvme0n1
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko /home/avie/dotfiles/nixos/hosts/msi/disko.nix --arg device '"/dev/nvme0n1"'
