@@ -14,27 +14,10 @@
   imports = [
     ./hardware-configuration.nix
     ./../shared/desktop
+    (import ./disko.nix {device = "/dev/nvme0n1"})
   ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-  };
-
-  # boot.kernelParams = [
-  #   "apple_dcp.show_notch=1"
-  #   "zswap.enabled=1"
-  #   "zswap.compressor=zstd"
-  #   "zswap.zpool=zsmalloc"
-  #   "zswap.max_pool_percent=50"
-  # ];
-
   networking.hostName = "msi-nixos";
-
-  nixpkgs.hostPlatform = "x86_64-linux";
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
 
   system.stateVersion = "25.05";
 

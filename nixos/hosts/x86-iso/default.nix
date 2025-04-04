@@ -35,10 +35,13 @@
     touch /home/avie/.zshrc
   '';
 
-  isoImage.makeUsbBootable = true;
   sops_config.enable = false;
+  nix.settings.trusted-users = lib.mkForce [ "avie" ];
   networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/run/secrets/wifi.env" ];
   services.getty.autologinUser = lib.mkForce "avie";
   users.users.avie.initialHashedPassword = "";
+  services.getty.helpLine = lib.mkForce ''
+    Custom installer enviorment from Avie238
+  '';
 
 }

@@ -21,6 +21,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
+
   };
 
   outputs =
@@ -34,7 +43,6 @@
       ...
     }@inputs:
     let
-      # system = "aarch64-linux";
       lib = nixpkgs.lib;
     in
     {
@@ -55,18 +63,18 @@
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
             self.nixosModules.users-avie
+            inputs.disko.nixosModules.default
+            inputs.impermanence.nixosModules.impermanence
           ];
           specialArgs = { inherit inputs self; };
         };
 
         x86-iso = lib.nixosSystem {
-          # inherit system;
           modules = [
             ./nixos/hosts/x86-iso
             # home-manager.nixosModules.home-manager
             # self.nixosModules.declarativeHome
             # self.nixosModules.users-avie
-            sops-nix.nixosModules.sops
           ];
           specialArgs = { inherit inputs self; };
         };

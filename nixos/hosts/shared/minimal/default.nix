@@ -22,6 +22,11 @@
 
   sops_config.enable = lib.mkDefault true;
 
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = lib.mkDefault true;
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
