@@ -1,4 +1,5 @@
 { config, pkgs, ... }:
+
 {
   services.displayManager.autoLogin = {
     enable = true;
@@ -11,4 +12,7 @@
     displayManager.gdm.wayland = true;
     desktopManager.gnome.enable = true;
   };
+
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
 }

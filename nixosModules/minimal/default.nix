@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   pkgs,
@@ -29,14 +25,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    tree
-    git
-    nodejs
-    nixfmt-rfc-style
-    gparted
-  ];
-
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -44,5 +32,11 @@
     ];
     download-buffer-size = 524288000;
   };
+
+  environment.systemPackages = with pkgs; [
+    tree
+    git
+    nixfmt-rfc-style
+  ];
 
 }

@@ -1,17 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 
 {
-
   options = {
     sops_config.enable = lib.mkEnableOption "enables use of sops_nix";
   };
@@ -37,5 +31,4 @@
     networking.networkmanager.ensureProfiles.environmentFiles = [ config.sops.secrets."wifi.env".path ];
 
   };
-
 }

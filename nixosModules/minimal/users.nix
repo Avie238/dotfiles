@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, ... }:
+
 {
 
   security.sudo.wheelNeedsPassword = false;

@@ -48,6 +48,7 @@
     {
       nixosConfigurations = {
         avie-nixos = lib.nixosSystem {
+          system = "aarch64-linux";
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager
@@ -72,9 +73,6 @@
         x86-iso = lib.nixosSystem {
           modules = [
             ./hosts/x86-iso
-            # home-manager.nixosModules.home-manager
-            # self.nixosModules.declarativeHome
-            # self.nixosModules.users-avie
           ];
           specialArgs = { inherit inputs self; };
         };
@@ -88,6 +86,9 @@
 
         users-avie = {
           home-manager.users.avie = ./home-manger/users/avie;
+          nixpkgs.overlays = [
+            inputs.nix-vscode-extensions.overlays.default
+          ];
         };
 
       };

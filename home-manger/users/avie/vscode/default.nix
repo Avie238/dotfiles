@@ -1,5 +1,11 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+
   programs.vscode = {
     enable = true;
     profiles.default = {
