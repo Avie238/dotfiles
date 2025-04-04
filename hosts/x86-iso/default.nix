@@ -29,9 +29,10 @@
 
   environment.shellAliases = {
     custom-install = ''
+      sudo su
       git clone https://github.com/Avie238/dotfiles
       cd dotfiles
-      sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/nixos/hosts/msi/disko.nix --arg device '"/dev/nvme0n1"'
+      sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device '"/dev/nvme0n1"'
       nixos-install --flake ./#msi-nixos
     '';
   };
