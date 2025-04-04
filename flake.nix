@@ -49,7 +49,7 @@
       nixosConfigurations = {
         avie-nixos = lib.nixosSystem {
           modules = [
-            ./nixos/hosts/asahi
+            ./hosts/asahi
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
             self.nixosModules.users-avie
@@ -59,7 +59,7 @@
 
         msi-nixos = lib.nixosSystem {
           modules = [
-            ./nixos/hosts/msi
+            ./hosts/msi
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
             self.nixosModules.users-avie
@@ -71,7 +71,7 @@
 
         x86-iso = lib.nixosSystem {
           modules = [
-            ./nixos/hosts/x86-iso
+            ./hosts/x86-iso
             # home-manager.nixosModules.home-manager
             # self.nixosModules.declarativeHome
             # self.nixosModules.users-avie
