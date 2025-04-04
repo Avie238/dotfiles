@@ -21,11 +21,11 @@
 
   isoImage.contents = [
     {
-      source = ../../../../../../run/secrets/wifi.env;
+      source = ../../../../../run/secrets/wifi.env;
       target = "/secrets/wifi.env";
     }
     {
-      source = ../../../../../../home/avie/.config/sops/age;
+      source = ../../../../../home/avie/.config/sops/age;
       target = "/age";
     }
   ];
