@@ -8,7 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../shared/desktop
+    ./../../nixosModules/desktop
     (import ./disko.nix { device = "/dev/nvme0n1"; })
   ];
 
