@@ -12,7 +12,7 @@
     ./graphics_asahi.nix
     ./boot.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
-    ./../shared/desktop
+    ./../../nixosModules/desktop
   ];
 
   networking.hostName = "avie-nixos";
