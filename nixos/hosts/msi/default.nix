@@ -14,7 +14,7 @@
   imports = [
     ./hardware-configuration.nix
     ./../shared/desktop
-    (import ./disko.nix {device = "/dev/nvme0n1"})
+    (import ./disko.nix { device = "/dev/nvme0n1"; })
   ];
 
   networking.hostName = "msi-nixos";
