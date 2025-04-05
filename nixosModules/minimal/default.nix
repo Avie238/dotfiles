@@ -34,6 +34,8 @@
     download-buffer-size = 524288000;
   };
 
+  virtualisation.docker.enable = true;
+
   environment.systemPackages = with pkgs; [
     tree
     git

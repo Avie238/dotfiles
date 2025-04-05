@@ -12,6 +12,4 @@
     ./DE.nix
     ./graphics.nix
   ];
-
-  virtualisation.docker.enable = true;
 }

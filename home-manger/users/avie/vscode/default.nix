@@ -5,9 +5,13 @@
   ...
 }:
 {
+  nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+  ];
 
   programs.vscode = {
     enable = true;
+    package = pkgs.vscodium;
     profiles.default = {
       userSettings = builtins.fromJSON (builtins.readFile ./settings.json);
       keybindings = builtins.fromJSON (builtins.readFile ./keybindings.json);
@@ -39,7 +43,6 @@
           ms-python.isort
           ms-python.python
           ms-python.vscode-pylance
-          ms-toolsai.jupyter
           ms-toolsai.jupyter-keymap
           ms-toolsai.jupyter-renderers
           ms-toolsai.vscode-jupyter-cell-tags
@@ -78,6 +81,7 @@
 
         ])
         ++ (with pkgs.vscode-extensions; [
+          ms-toolsai.jupyter
           ms-python.black-formatter
           eamodio.gitlens
           ms-dotnettools.csdevkit

@@ -14,6 +14,7 @@
     ./../../nixosModules/desktop
   ];
 
+  boot.supportedFilesystems = [ "apfs" ];
   networking.hostName = "avie-nixos";
 
   system.stateVersion = "25.05";
