@@ -60,7 +60,7 @@
             ./hosts/asahi
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
-            self.nixosModules.users-avie
+            (self.nixosModules.users-avie { desktop = true; })
           ];
           specialArgs = { inherit inputs self; };
         };
@@ -70,7 +70,7 @@
             ./hosts/msi
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
-            self.nixosModules.users-avie
+            (self.nixosModules.users-avie { desktop = true; })
             inputs.disko.nixosModules.default
             inputs.impermanence.nixosModules.impermanence
           ];
@@ -82,7 +82,7 @@
             ./hosts/x86-iso
             home-manager.nixosModules.home-manager
             self.nixosModules.declarativeHome
-            self.nixosModules.users-avie
+            (self.nixosModules.users-avie { desktop = false; })
           ];
           specialArgs = { inherit inputs self; };
         };
@@ -94,13 +94,19 @@
           home-manager.useUserPackages = true;
         };
 
-        users-avie = {
-          home-manager.users.avie = {
-            imports = [ ./home-manger/users/avie/default.nix ];
+        users-avie =
+          {
+            desktop ? false,
+            ...
+          }:
+          {
+            home-manager.users.avie = {
+              imports =
+                if desktop then [ ./home-manger/users/avie/desktop.nix ] else [ ./home-manger/users/avie ];
+
+            };
 
           };
-
-        };
 
       };
 

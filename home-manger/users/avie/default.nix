@@ -10,12 +10,7 @@
     ./zsh
     ./fastfetch.nix
     ./git.nix
-    ./vscode
-    ./firefox.nix
-    ./gnome.nix
   ];
-
-  xdg.autostart.enable = true;
 
   home.username = "avie";
   home.homeDirectory = "/home/avie";
