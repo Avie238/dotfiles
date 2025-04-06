@@ -44,6 +44,7 @@
     }@inputs:
     let
       lib = nixpkgs.lib;
+
     in
     {
       nixosConfigurations = {
@@ -87,9 +88,15 @@
         };
 
         users-avie = {
-          home-manager.users.avie.imports = [
-            ./home-manger/users/avie
+          home-manager.users.avie = {
+            imports = [
+              ./home-manger/users/avie
+            ];
+          };
+          nixpkgs.overlays = [
+            inputs.nix-vscode-extensions.overlays.default
           ];
+
         };
 
       };

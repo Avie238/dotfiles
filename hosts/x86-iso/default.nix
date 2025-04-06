@@ -12,9 +12,11 @@
     (modulesPath + "/profiles/installation-device.nix")
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
     ./../../nixosModules/minimal
+    ./kmscon.nix
   ];
 
-  services.kmscon.enable = true;
+  sops_config.enable = false;
+  localization.enable = false;
 
   isoImage.contents = [
     {
@@ -27,9 +29,9 @@
     }
   ];
 
-  system.activationScripts.mybootstrap.text = ''
+  system.activationScripts.copySecrets.text = ''
     cp -r /iso/secrets /run
-    touch /home/avie/.zshrc
+    cp ${/run/secrets/wifi.env} /anka
   '';
 
   environment.shellAliases = {
@@ -58,26 +60,18 @@
     '';
   };
 
-  services.getty.helpLine = lib.mkForce ''
-    Custom installer enviorment from Avie238
-  '';
-
-  console.packages = [ pkgs.terminus_font ];
-
   # An installation media cannot tolerate a host config defined file
   # system layout on a fresh machine, before it has been formatted.
   swapDevices = lib.mkImageMediaOverride [ ];
   fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
 
-  #Turning stuff off
-  users.users.nixos.enable = false;
-  sops_config.enable = false;
-  localization.enable = false;
-  networking.wireless.enable = false;
-  nix.settings.trusted-users = lib.mkForce [ "avie" ];
-  networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/run/secrets/wifi.env" ];
-  services.getty.autologinUser = lib.mkForce "avie";
+  #Users
   users.users.avie.initialHashedPassword = "";
+  users.users.nixos.enable = false;
+
+  #Network
+  networking.wireless.enable = false;
+  networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/iso/secrets/wifi.env" ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "25.05";

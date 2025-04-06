@@ -5,10 +5,6 @@
   ...
 }:
 {
-  nixpkgs.overlays = [
-    inputs.nix-vscode-extensions.overlays.default
-  ];
-
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;

@@ -11,17 +11,11 @@
     ./fastfetch.nix
     ./git.nix
     ./vscode
+    ./firefox.nix
   ];
 
   programs.firefox.enable = true;
-  xdg.autostart = {
-    enable = true;
-
-    entries = [
-      "${pkgs.firefox}/share/applications/firefox.desktop"
-    ];
-
-  };
+  xdg.autostart.enable = true;
 
   dconf = {
     enable = true;
@@ -39,8 +33,8 @@
     meslo-lgs-nf
     jetbrains-mono
     sops
-    vscodium
     gnumake
+    anydesk
   ];
 
   home.file.".hushlogin" = {
