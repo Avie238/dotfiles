@@ -93,9 +93,6 @@
               ./home-manger/users/avie
             ];
           };
-          nixpkgs.overlays = [
-            inputs.nix-vscode-extensions.overlays.default
-          ];
 
         };
 

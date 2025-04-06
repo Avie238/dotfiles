@@ -10,8 +10,13 @@
 
   services.kmscon.enable = true;
   services.kmscon.autologinUser = "avie";
+  services.kmscon.fonts = [
+    {
+      name = "MesloLGS NF";
+      package = pkgs.meslo-lgs-nf;
+    }
+  ];
 
-  console.packages = [ pkgs.terminus_font ];
   nix.settings.trusted-users = lib.mkForce [ "avie" ];
 
 }

@@ -31,33 +31,14 @@
 
   system.activationScripts.copySecrets.text = ''
     cp -r /iso/secrets /run
-    cp ${/run/secrets/wifi.env} /anka
   '';
 
   environment.shellAliases = {
-
-    clone = ''
-      git clone https://github.com/Avie238/dotfiles
-      cd dotfiles
-    '';
-
-    partition = ''
-      sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device '"/dev/nvme0n1"' --yes-wipe-all-disks
-    '';
-    install = ''
-      nixos-install --flake ./#msi-nixos --no-root-passwd
-    '';
-    copy = ''
-      cp /iso/age/keys.txt /mnt/var/lib/sops-nix --mkdir
-    '';
-
-    custom-install = ''
-      sudo su
-      clone
-      partition
-      copy
-      install
-    '';
+    clone = "git clone https://github.com/Avie238/dotfiles && cd dotfiles";
+    partition = "sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device '" /dev/nvme0n1 "' --yes-wipe-all-disks";
+    copy = "cp /iso/age/keys.txt /mnt/var/lib/sops-nix --mkdir";
+    install = "nixos-install --flake ./#msi-nixos --no-root-passwd";
+    custom-install = "sudo su && clone && partition && copy && install";
   };
 
   # An installation media cannot tolerate a host config defined file
@@ -75,5 +56,9 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "25.05";
+
+  #Debug
+  isoImage.compressImage = false;
+  isoImage.squashfsCompression = null;
 
 }
