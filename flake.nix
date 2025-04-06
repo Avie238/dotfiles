@@ -48,7 +48,6 @@
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager
-            self.nixosModules.declarativeHome
             (self.nixosModules.users-avie { desktop = true; })
           ];
           specialArgs = { inherit inputs self; };
@@ -58,7 +57,6 @@
           modules = [
             ./hosts/msi
             home-manager.nixosModules.home-manager
-            self.nixosModules.declarativeHome
             (self.nixosModules.users-avie { desktop = true; })
             inputs.disko.nixosModules.default
             inputs.impermanence.nixosModules.impermanence
@@ -70,7 +68,6 @@
           modules = [
             ./hosts/x86-iso
             home-manager.nixosModules.home-manager
-            self.nixosModules.declarativeHome
             (self.nixosModules.users-avie { desktop = false; })
           ];
           specialArgs = { inherit inputs self; };
@@ -78,10 +75,6 @@
       };
 
       nixosModules = {
-        declarativeHome = {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        };
 
         users-avie =
           {
@@ -89,10 +82,14 @@
             ...
           }:
           {
-            home-manager.users.avie = {
-              imports =
-                if desktop then [ ./home-manger/users/avie/desktop.nix ] else [ ./home-manger/users/avie ];
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.avie = {
+                imports =
+                  if desktop then [ ./home-manger/users/avie/desktop.nix ] else [ ./home-manger/users/avie ];
 
+              };
             };
 
           };

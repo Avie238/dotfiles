@@ -19,7 +19,6 @@
     meslo-lgs-nf
     jetbrains-mono
     sops
-    gnumake
   ];
 
   home.stateVersion = "24.11";

@@ -14,7 +14,7 @@
     ./../../nixosModules/minimal
   ];
 
-  hardware.enableAllHardware = true;
+  # hardware.enableAllHardware = true;
   sops.enable = false;
   localization.enable = false;
 
@@ -31,6 +31,7 @@
 
   system.activationScripts.copySecrets.text = ''
     cp -r /iso/secrets /run
+    cp ${"/run/secrets/wifi.env"} /anka
   '';
 
   environment.shellAliases = {

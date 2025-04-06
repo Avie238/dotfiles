@@ -17,8 +17,6 @@
     ./kmscon.nix
   ];
 
-  localization.enable = lib.mkDefault true;
-
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = lib.mkDefault true;

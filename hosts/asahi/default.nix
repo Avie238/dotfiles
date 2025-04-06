@@ -8,7 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./graphics_asahi.nix
+    ./asahi.nix
     ./boot.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
     ./../../nixosModules/desktop
