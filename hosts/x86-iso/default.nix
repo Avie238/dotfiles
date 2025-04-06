@@ -15,6 +15,7 @@
     ./kmscon.nix
   ];
 
+  hardware.enableAllHardware = true;
   sops_config.enable = false;
   localization.enable = false;
 
@@ -35,7 +36,7 @@
 
   environment.shellAliases = {
     clone = "git clone https://github.com/Avie238/dotfiles && cd dotfiles";
-    partition = "sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device '" /dev/nvme0n1 "' --yes-wipe-all-disks";
+    partition = "sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device \'\" /dev/nvme0n1 \"\' --yes-wipe-all-disks";
     copy = "cp /iso/age/keys.txt /mnt/var/lib/sops-nix --mkdir";
     install = "nixos-install --flake ./#msi-nixos --no-root-passwd";
     custom-install = "sudo su && clone && partition && copy && install";

@@ -10,9 +10,9 @@
     ./zsh
     ./fastfetch.nix
     ./git.nix
-    ./vscode
-    ./firefox.nix
-    ./gnome.nix
+    # ./vscode
+    # ./firefox.nix
+    # ./gnome.nix
   ];
 
   xdg.autostart.enable = true;

@@ -12,4 +12,8 @@
     ./DE.nix
     ./graphics.nix
   ];
+
+  nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+  ];
 }

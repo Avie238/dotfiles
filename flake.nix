@@ -43,12 +43,19 @@
       ...
     }@inputs:
     let
-      lib = nixpkgs.lib;
+      # system = "aarch64-linux";
+      # pkgs = import nixpkgs {
+      #   inherit system;
+      #   overlays = [
+      #     inputs.nix-vscode-extensions.overlays.default
+      #   ];
+      # };
+      # lib = nixpkgs.lib;
 
     in
     {
       nixosConfigurations = {
-        avie-nixos = lib.nixosSystem {
+        avie-nixos = nixpkgs.lib.nixosSystem {
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager
@@ -58,7 +65,7 @@
           specialArgs = { inherit inputs self; };
         };
 
-        msi-nixos = lib.nixosSystem {
+        msi-nixos = nixpkgs.lib.nixosSystem {
           modules = [
             ./hosts/msi
             home-manager.nixosModules.home-manager
@@ -70,7 +77,7 @@
           specialArgs = { inherit inputs self; };
         };
 
-        x86-iso = lib.nixosSystem {
+        x86-iso = nixpkgs.lib.nixosSystem {
           modules = [
             ./hosts/x86-iso
             home-manager.nixosModules.home-manager
@@ -89,9 +96,8 @@
 
         users-avie = {
           home-manager.users.avie = {
-            imports = [
-              ./home-manger/users/avie
-            ];
+            imports = [ ./home-manger/users/avie/default.nix ];
+
           };
 
         };
