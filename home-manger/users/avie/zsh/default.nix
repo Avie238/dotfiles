@@ -43,4 +43,8 @@
     codium = "codium --js-flags=\"--nodecommit_pooled_pages\"";
   };
 
+  home.file.".hushlogin" = {
+    text = "";
+  };
+
 }

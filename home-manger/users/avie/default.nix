@@ -12,19 +12,10 @@
     ./git.nix
     ./vscode
     ./firefox.nix
+    ./gnome.nix
   ];
 
-  programs.firefox.enable = true;
   xdg.autostart.enable = true;
-
-  dconf = {
-    enable = true;
-    settings = {
-      "org/gnome/desktop/interface" = {
-        show-battery-percentage = true;
-      };
-    };
-  };
 
   home.username = "avie";
   home.homeDirectory = "/home/avie";
@@ -34,12 +25,7 @@
     jetbrains-mono
     sops
     gnumake
-    anydesk
   ];
-
-  home.file.".hushlogin" = {
-    text = "";
-  };
 
   home.stateVersion = "24.11";
 
