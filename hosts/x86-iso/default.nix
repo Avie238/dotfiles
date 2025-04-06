@@ -12,11 +12,10 @@
     (modulesPath + "/profiles/installation-device.nix")
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
     ./../../nixosModules/minimal
-    ./kmscon.nix
   ];
 
   hardware.enableAllHardware = true;
-  sops_config.enable = false;
+  sops.enable = false;
   localization.enable = false;
 
   isoImage.contents = [
@@ -50,6 +49,7 @@
   #Users
   users.users.avie.initialHashedPassword = "";
   users.users.nixos.enable = false;
+  nix.settings.trusted-users = lib.mkForce [ "avie" ];
 
   #Network
   networking.wireless.enable = false;

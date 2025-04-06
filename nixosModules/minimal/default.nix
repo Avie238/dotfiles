@@ -14,9 +14,9 @@
     ./users.nix
     ./sops.nix
     ./terminal.nix
+    ./kmscon.nix
   ];
 
-  sops_config.enable = lib.mkDefault true;
   localization.enable = lib.mkDefault true;
 
   boot.loader = {

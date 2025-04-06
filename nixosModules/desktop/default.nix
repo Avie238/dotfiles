@@ -6,6 +6,7 @@
 }:
 
 {
+
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./../minimal
@@ -16,4 +17,5 @@
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
   ];
+
 }

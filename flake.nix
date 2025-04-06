@@ -1,8 +1,8 @@
 {
-  description = "Asahi linux Nixos M2 air";
+  description = "Avie's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
 
     apple-silicon = {
       url = "github:Avie238/nixos-apple-silicon";
@@ -42,17 +42,6 @@
       sops-nix,
       ...
     }@inputs:
-    let
-      # system = "aarch64-linux";
-      # pkgs = import nixpkgs {
-      #   inherit system;
-      #   overlays = [
-      #     inputs.nix-vscode-extensions.overlays.default
-      #   ];
-      # };
-      # lib = nixpkgs.lib;
-
-    in
     {
       nixosConfigurations = {
         avie-nixos = nixpkgs.lib.nixosSystem {

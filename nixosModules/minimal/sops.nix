@@ -7,10 +7,13 @@
 
 {
   options = {
-    sops_config.enable = lib.mkEnableOption "enables use of sops_nix";
+    sops.enable = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+    };
   };
 
-  config = lib.mkIf config.sops_config.enable {
+  config = lib.mkIf config.sops.enable {
 
     #General
     sops = {
@@ -24,6 +27,7 @@
     sops.secrets."user_passwords/avie".neededForUsers = true;
     users.users.avie.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
     users.users.root.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
+
     #Network
     sops.secrets."wifi.env" = {
       owner = config.users.users.avie.name;

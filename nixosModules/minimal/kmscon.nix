@@ -17,6 +17,4 @@
     }
   ];
 
-  nix.settings.trusted-users = lib.mkForce [ "avie" ];
-
 }

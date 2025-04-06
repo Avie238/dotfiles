@@ -39,8 +39,6 @@
 
   home.shellAliases = {
     code = "codium";
-    #FIXME: Remove on vscode update
-    codium = "codium --js-flags=\"--nodecommit_pooled_pages\"";
   };
 
   home.file.".hushlogin" = {
