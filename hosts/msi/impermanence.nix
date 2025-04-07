@@ -36,13 +36,12 @@
   environment.persistence."/persist/system" = {
     hideMounts = true;
     directories = [
-      "/etc/nixos"
       "/var/log"
       "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
       "/var/lib/swapfile"
+      "/home/avie/Repos"
       {
         directory = "/var/lib/colord";
         user = "colord";
