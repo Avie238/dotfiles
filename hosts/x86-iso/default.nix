@@ -18,29 +18,16 @@
   sops.enable = false;
   localization.enable = false;
 
-  # isoImage.contents = [
-  #   {
-  #     source = /run/secrets/wifi.env;
-  #     target = "/secrets/wifi.env";
-  #   }
-  #   {
-  #     source = /home/avie/.config/sops/age;
-  #     target = "/age";
-  #   }
-  # ];
-
   system.activationScripts.copySecrets.text = ''
     cp -p ${/run/secrets/wifi.env} /wifi.env
     cp -p ${/home/avie/.config/sops/age/keys.txt} /keys.txt
   '';
 
-  # cp ${"/home/avie/.config/sops/age/keys.txt"} /home/avie/.config/sops/age/
-
   environment.shellAliases = {
     clone = "git clone https://github.com/Avie238/dotfiles && cd dotfiles";
     partition = "sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device \'\"/dev/nvme0n1\"\' --yes-wipe-all-disks";
-    copy = "mkdir -p /mnt/var/lib/sops-nix && cp /keys.txt /mnt/var/lib/sops-nix/keys.txt";
-    install = "nixos-install --flake ./#msi-nixos --no-root-passwd";
+    copy = "sudo mkdir -p /mnt/var/lib/sops-nix && sudo cp /keys.txt /mnt/var/lib/sops-nix/keys.txt";
+    install = "sudo nixos-install --flake ./#msi-nixos --no-root-passwd";
     custom-install = "clone; partition; copy; install";
   };
 

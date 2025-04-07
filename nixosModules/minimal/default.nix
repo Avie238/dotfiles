@@ -21,6 +21,7 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
+  boot.supportedFilesystems = [ "apfs" ];
 
   nixpkgs.config.allowUnfree = true;
 
