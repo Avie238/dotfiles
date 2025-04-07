@@ -13,9 +13,8 @@
     inputs.apple-silicon.nixosModules.apple-silicon-support
     ./../../nixosModules/desktop
   ];
-  config = {
-    boot.supportedFilesystems = [ "apfs" ];
-    networking.hostName = "avie-nixos";
-    system.stateVersion = "25.05";
-  };
+
+  networking.hostName = "avie-nixos";
+  system.stateVersion = "25.05";
+
 }

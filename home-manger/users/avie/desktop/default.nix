@@ -9,6 +9,7 @@
 
 {
   imports = [
+    ../minimal
     ./vscode
     ./firefox.nix
     ./gnome.nix

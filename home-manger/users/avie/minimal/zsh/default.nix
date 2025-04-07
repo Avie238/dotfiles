@@ -39,6 +39,12 @@
 
   home.shellAliases = {
     code = "codium";
+
+  };
+
+  home.sessionVariables = {
+    VISUAL = "code --wait";
+    EDITOR = "${config.home.sessionVariables.VISUAL}";
   };
 
   home.file.".hushlogin" = {

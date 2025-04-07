@@ -87,7 +87,7 @@
               useUserPackages = true;
               users.avie = {
                 imports =
-                  if desktop then [ ./home-manger/users/avie/desktop.nix ] else [ ./home-manger/users/avie ];
+                  if desktop then [ ./home-manger/users/avie/desktop ] else [ ./home-manger/users/avie/minimal ];
 
               };
             };

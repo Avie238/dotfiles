@@ -1,0 +1,1 @@
+mkdir -p /mnt/var/lib/sops-nix && cp /keys.txt /mnt/var/lib/sops-nix/keys.txt
