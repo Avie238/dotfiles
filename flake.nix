@@ -30,6 +30,13 @@
       url = "github:nix-community/impermanence";
     };
 
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      flake = false;
+    };
+
+    flake-compat.url = "github:nix-community/flake-compat";
+
   };
 
   outputs =
@@ -42,6 +49,26 @@
       sops-nix,
       ...
     }@inputs:
+    let
+      # build platforms supported for uboot in nixpkgs
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+
+      forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
+
+      pkgs = import nixpkgs {
+        system = "aarch64-linux";
+        config = {
+          allowUnfree = true;
+        };
+        overlays = [
+          inputs.apple-silicon.overlays.default
+          inputs.nix-vscode-extensions.overlays.default
+        ];
+      };
+    in
     {
       nixosConfigurations = {
         avie-nixos = nixpkgs.lib.nixosSystem {
@@ -50,7 +77,7 @@
             home-manager.nixosModules.home-manager
             (self.nixosModules.users-avie { desktop = true; })
           ];
-          specialArgs = { inherit inputs self; };
+          specialArgs = { inherit inputs self pkgs; };
         };
 
         msi-nixos = nixpkgs.lib.nixosSystem {
@@ -96,5 +123,62 @@
 
       };
 
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import inputs.nixpkgs {
+            crossSystem.system = "aarch64-linux";
+            localSystem.system = system;
+            overlays = [
+              (import inputs.rust-overlay)
+              inputs.apple-silicon.overlays.default
+            ];
+          };
+        in
+        {
+          inherit (pkgs)
+            m1n1
+            uboot-asahi
+            linux-asahi
+            asahi-fwextract
+            mesa-asahi-edge
+            ;
+          inherit (pkgs) asahi-audio;
+
+          installer-bootstrap =
+            let
+              installer-system = inputs.nixpkgs.lib.nixosSystem {
+                inherit system;
+
+                # make sure this matches the post-install
+                # `hardware.asahi.pkgsSystem`
+                pkgs = import inputs.nixpkgs {
+                  crossSystem.system = "aarch64-linux";
+                  localSystem.system = system;
+                  overlays = [ inputs.apple-silicon.overlays.default ];
+                };
+
+                specialArgs = {
+                  modulesPath = inputs.nixpkgs + "/nixos/modules";
+                  inputs = inputs;
+                };
+
+                modules = [
+                  ./hosts/arm-iso
+                  (inputs.apple-silicon + "/iso-configuration")
+                  { hardware.asahi.pkgsSystem = system; }
+                ];
+              };
+
+              config = installer-system.config;
+            in
+            (config.system.build.isoImage.overrideAttrs (old: {
+              # add ability to access the whole config from the command line
+              passthru = (old.passthru or { }) // {
+                inherit config;
+              };
+            }));
+        }
+      );
     };
 }
