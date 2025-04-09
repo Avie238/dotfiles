@@ -14,7 +14,6 @@
     ./users.nix
     ./sops.nix
     ./terminal.nix
-    ./kmscon.nix
   ];
 
   boot.loader = {

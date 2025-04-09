@@ -23,8 +23,6 @@
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
-      export VISUAL="codium --wait"
-      export EDITOR="$VISUAL"
     '';
 
     oh-my-zsh = {
@@ -39,7 +37,6 @@
 
   home.shellAliases = {
     code = "codium";
-
   };
 
   home.sessionVariables = {

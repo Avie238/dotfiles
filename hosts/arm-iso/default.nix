@@ -21,10 +21,12 @@
   '';
 
   environment.shellAliases = {
-    dotfiles-clone = "git clone https://github.com/Avie238/dotfiles";
+    dotfiles-clone = "git clone https://github.com/Avie238/dotfiles && cd dotfiles";
     format-nixos = "mkfs.ext4 -L nixos /dev/disk/by-label/nixos";
-    install = "nixos-install --flake ./dotfiles#avie-nixos";
     mount-filesystems = "mount /dev/disk/by-label/nixos /mnt && mkdir -p /mnt/boot && mount /dev/disk/by-label/EFI\\x20-\\x20NIXOS /mnt/boot";
+    copy = "sudo mkdir -p /mnt/var/lib/sops-nix && sudo cp /keys.txt /mnt/var/lib/sops-nix/keys.txt";
+    install = "nixos-install --flake ./dotfiles#avie-nixos --no-root-passwd";
+    custom-install = "clone; format-nixos; mount-filesystems; copy; install";
   };
 
   #Users

@@ -1,0 +1,1 @@
+sudo dd if=/home/avie/dotfiles/arm-installer/iso/nixos-25.05.20250408.8cc0451-aarch64-linux.iso of=/dev/sda status=progress

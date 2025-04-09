@@ -50,7 +50,6 @@
       ...
     }@inputs:
     let
-      # build platforms supported for uboot in nixpkgs
       systems = [
         "aarch64-linux"
         "x86_64-linux"
@@ -167,6 +166,8 @@
                   ./hosts/arm-iso
                   (inputs.apple-silicon + "/iso-configuration")
                   { hardware.asahi.pkgsSystem = system; }
+                  home-manager.nixosModules.home-manager
+                  (self.nixosModules.users-avie { desktop = false; })
                 ];
               };
 

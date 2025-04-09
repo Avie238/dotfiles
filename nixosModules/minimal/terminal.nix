@@ -7,8 +7,15 @@
 
   users.defaultUserShell = pkgs.zsh;
 
-  console = {
-    font = "Lat2-Terminus16";
-    useXkbConfig = true;
+  services.kmscon = {
+    enable = true;
+    autologinUser = "avie";
+    fonts = [
+      {
+        name = "MesloLGS NF";
+        package = pkgs.meslo-lgs-nf;
+      }
+    ];
   };
+
 }
