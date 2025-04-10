@@ -3,13 +3,18 @@
   modulesPath,
   lib,
   config,
+  inputs,
   ...
 }:
 
 {
   imports = [
 
-    ./../../nixosModules/minimal
+    (modulesPath + "/profiles/minimal.nix")
+    (modulesPath + "/profiles/installation-device.nix")
+    (modulesPath + "/installer/cd-dvd/iso-image.nix")
+    ./../../../nixosModules/minimal
+    inputs.apple-silicon.nixosModules.apple-silicon-support
   ];
 
   sops.enable = false;
@@ -34,7 +39,16 @@
   users.users.nixos.enable = false;
   nix.settings.trusted-users = lib.mkForce [ "avie" ];
 
+  swapDevices = lib.mkImageMediaOverride [ ];
+  fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
+
   #Network
   networking.wireless.enable = false;
   networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/wifi.env" ];
+
+  nixpkgs.hostPlatform = "aarch64-linux";
+  system.stateVersion = "25.05";
+
+  isoImage.compressImage = false;
+  isoImage.squashfsCompression = null;
 }

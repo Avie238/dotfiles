@@ -2,7 +2,7 @@
   description = "Avie's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     apple-silicon = {
       url = "github:Avie238/nixos-apple-silicon";
@@ -57,29 +57,34 @@
 
       forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
-      pkgs = import nixpkgs {
-        system = "aarch64-linux";
-        config = {
-          allowUnfree = true;
+      pkgsFor =
+        system:
+        import nixpkgs {
+          system = system;
+          config = {
+            allowUnfree = true;
+          };
+          overlays = [
+            inputs.apple-silicon.overlays.default
+            inputs.nix-vscode-extensions.overlays.default
+          ];
         };
-        overlays = [
-          inputs.apple-silicon.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
-        ];
-      };
+
     in
     {
       nixosConfigurations = {
         avie-nixos = nixpkgs.lib.nixosSystem {
+          pkgs = pkgsFor "aarch64-linux";
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager
             (self.nixosModules.users-avie { desktop = true; })
           ];
-          specialArgs = { inherit inputs self pkgs; };
+          specialArgs = { inherit inputs self; };
         };
 
         msi-nixos = nixpkgs.lib.nixosSystem {
+          pkgs = pkgsFor "x86_64-linux";
           modules = [
             ./hosts/msi
             home-manager.nixosModules.home-manager
@@ -90,14 +95,25 @@
           specialArgs = { inherit inputs self; };
         };
 
-        x86-iso = nixpkgs.lib.nixosSystem {
+        msi-iso = nixpkgs.lib.nixosSystem {
+          pkgs = pkgsFor "x86_64-linux";
           modules = [
-            ./hosts/x86-iso
+            ./hosts/msi/iso
             home-manager.nixosModules.home-manager
             (self.nixosModules.users-avie { desktop = false; })
           ];
           specialArgs = { inherit inputs self; };
         };
+        asahi-iso2 = nixpkgs.lib.nixosSystem {
+          pkgs = pkgsFor "aarch64-linux";
+          modules = [
+            ./hosts/asahi/iso
+            home-manager.nixosModules.home-manager
+            (self.nixosModules.users-avie { desktop = false; })
+          ];
+          specialArgs = { inherit inputs self; };
+        };
+
       };
 
       nixosModules = {
@@ -131,6 +147,7 @@
             overlays = [
               (import inputs.rust-overlay)
               inputs.apple-silicon.overlays.default
+              inputs.nix-vscode-extensions.overlays.default
             ];
           };
         in
@@ -149,12 +166,13 @@
               installer-system = inputs.nixpkgs.lib.nixosSystem {
                 inherit system;
 
-                # make sure this matches the post-install
-                # `hardware.asahi.pkgsSystem`
                 pkgs = import inputs.nixpkgs {
                   crossSystem.system = "aarch64-linux";
                   localSystem.system = system;
-                  overlays = [ inputs.apple-silicon.overlays.default ];
+                  overlays = [
+                    inputs.apple-silicon.overlays.default
+                    inputs.nix-vscode-extensions.overlays.default
+                  ];
                 };
 
                 specialArgs = {
@@ -163,7 +181,7 @@
                 };
 
                 modules = [
-                  ./hosts/arm-iso
+                  ./hosts/asahi/iso
                   (inputs.apple-silicon + "/iso-configuration")
                   { hardware.asahi.pkgsSystem = system; }
                   home-manager.nixosModules.home-manager

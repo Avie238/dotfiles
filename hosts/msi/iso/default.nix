@@ -11,10 +11,9 @@
     (modulesPath + "/profiles/minimal.nix")
     (modulesPath + "/profiles/installation-device.nix")
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
-    ./../../nixosModules/minimal
+    ./../../../nixosModules/minimal
   ];
 
-  # hardware.enableAllHardware = true;
   sops.enable = false;
   localization.enable = false;
 
