@@ -37,9 +37,8 @@
 
   home.shellAliases = {
     code = "codium";
-    arm = "nix build .#installer-bootstrap -o results/iso-asahi -j6 -L --impure";
-    x86 = "nix run nixpkgs\#nixos-generators --  --format iso --flake ./#msi-iso -o results/iso-msi --system x86_64-linux";
-    arm2 = "nix run nixpkgs\#nixos-generators --  --format iso --flake ./#asahi-iso2 -o results/iso-asahi2 --system aarch64-linux";
+    iso_arm = "nix build .#installer-bootstrap -o results/iso-asahi -j6 -L --impure";
+    iso_x86 = "nix run nixpkgs\#nixos-generators --  --format iso --flake ./#msi-iso -o results/iso-msi --system x86_64-linux";
   };
 
   home.sessionVariables = {

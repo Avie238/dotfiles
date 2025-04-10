@@ -1,1 +1,0 @@
-nix run nixpkgs\#nixos-generators --  --format iso --flake ./#x86-iso -o result --system x86_64-linux
