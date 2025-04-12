@@ -28,14 +28,12 @@
           wix.glean
           xabikos.javascriptsnippets
           #Python
-          donjayamanne.python-extension-pack
           kevinrose.vsc-python-indent
           ms-python.black-formatter
           ms-python.debugpy
           ms-python.isort
           ms-python.python
-          ms-python.vscode-pylance
-          ms-toolsai.jupyter
+          detachhead.basedpyright
           ms-toolsai.jupyter-keymap
           ms-toolsai.jupyter-renderers
           ms-toolsai.vscode-jupyter-cell-tags
@@ -57,17 +55,15 @@
           redhat.java
           #Nix
           jnoortheen.nix-ide
-          #Git
-          gitlab.gitlab-workflow
-          eamodio.gitlens
-          #Unity
+          #arrterian.nix-env-selector
+          # Unity
           tobiah.unity-tools
           yclepticstudios.unity-snippets
           kleber-swf.unity-code-snippets
-          #Sql
+          # Sql
           mtxr.sqltools
           mtxr.sqltools-driver-mysql
-          #General
+          # General
           esbenp.prettier-vscode
           formulahendry.code-runner
           graphql.vscode-graphql-syntax
@@ -91,11 +87,14 @@
           zainchen.json
         ])
         ++ (with pkgs.vscode-extensions; [
-          #C#
+          #C
           ms-dotnettools.csdevkit
           ms-dotnettools.csharp
           ms-dotnettools.vscode-dotnet-runtime
           ms-dotnettools.vscodeintellicode-csharp
+          #Git
+          gitlab.gitlab-workflow
+          eamodio.gitlens
         ]);
 
     };
