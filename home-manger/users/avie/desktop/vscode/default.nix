@@ -28,12 +28,12 @@
           wix.glean
           xabikos.javascriptsnippets
           #Python
-          kevinrose.vsc-python-indent
           ms-python.black-formatter
           ms-python.debugpy
           ms-python.isort
           ms-python.python
           detachhead.basedpyright
+          kevinrose.vsc-python-indent
           ms-toolsai.jupyter-keymap
           ms-toolsai.jupyter-renderers
           ms-toolsai.vscode-jupyter-cell-tags
@@ -47,15 +47,14 @@
           ms-vscode.cpptools-extension-pack
           ms-vscode.cpptools-themes
           #Java
+          redhat.java
           vscjava.vscode-gradle
           vscjava.vscode-java-debug
           vscjava.vscode-java-dependency
           vscjava.vscode-java-pack
           vscjava.vscode-java-test
-          redhat.java
           #Nix
           jnoortheen.nix-ide
-          #arrterian.nix-env-selector
           # Unity
           tobiah.unity-tools
           yclepticstudios.unity-snippets
