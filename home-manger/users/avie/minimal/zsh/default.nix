@@ -42,7 +42,7 @@
   };
 
   home.sessionVariables = {
-    VISUAL = "code --wait";
+    VISUAL = "codium --wait";
     EDITOR = "${config.home.sessionVariables.VISUAL}";
   };
 
