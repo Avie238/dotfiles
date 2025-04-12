@@ -14,4 +14,5 @@
     ./graphics.nix
   ];
 
+  services.flatpak.enable = true;
 }
