@@ -201,5 +201,7 @@
       "path": "zsh"
     }
   },
-  "terminal.integrated.defaultProfile.linux": "zsh"
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd"
 }

@@ -12,6 +12,7 @@
       "docker"
     ];
     createHome = true;
+    shell = pkgs.zsh;
   };
 
 }

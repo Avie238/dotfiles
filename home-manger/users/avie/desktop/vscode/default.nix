@@ -11,6 +11,7 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
+    mutableExtensionsDir = false;
     profiles.default = {
       userSettings = builtins.fromJSON (builtins.readFile ./settings.json);
       keybindings = builtins.fromJSON (builtins.readFile ./keybindings.json);
@@ -84,6 +85,7 @@
           visualstudioexptteam.vscodeintellicode
           wayou.vscode-todo-highlight
           zainchen.json
+          christian-kohler.path-intellisense
         ])
         ++ (with pkgs.vscode-extensions; [
           #C

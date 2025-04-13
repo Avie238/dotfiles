@@ -19,6 +19,7 @@
     meslo-lgs-nf
     jetbrains-mono
     sops
+    any-nix-shell
   ];
 
   home.stateVersion = "24.11";
