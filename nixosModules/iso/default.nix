@@ -1,10 +1,4 @@
-{
-  pkgs,
-  modulesPath,
-  lib,
-  config,
-  ...
-}:
+{ lib, ... }:
 
 {
   imports = [
@@ -26,8 +20,8 @@
 
   #Users
   users.users.avie.initialHashedPassword = "";
-  users.users.nixos.enable = false;
   nix.settings.trusted-users = lib.mkForce [ "avie" ];
+  users.users.nixos.enable = false;
 
   #Network
   networking.wireless.enable = false;

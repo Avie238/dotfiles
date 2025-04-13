@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 
 {
 
@@ -11,8 +6,12 @@
     inputs.sops-nix.nixosModules.sops
     ./../minimal
     ./DE.nix
-    ./graphics.nix
+    ./zswap.nix
   ];
 
   services.flatpak.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+  };
 }
