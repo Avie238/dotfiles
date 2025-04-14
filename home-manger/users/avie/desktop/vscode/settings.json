@@ -203,5 +203,8 @@
   },
   "terminal.integrated.defaultProfile.linux": "zsh",
   "nix.enableLanguageServer": true,
-  "nix.serverPath": "nixd"
+  "nix.serverPath": "nixd",
+  "files.associations": {
+    "*.h": "cpp"
+  }
 }
