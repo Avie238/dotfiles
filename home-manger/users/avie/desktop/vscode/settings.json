@@ -7,10 +7,10 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
+  "code-runner.runInTerminal": true,
   "code-runner.executorMap": {
     "c": "cd $dir && gcc -std=c++11 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
   },
-  "code-runner.runInTerminal": true,
   "code-runner.executorMapByFileExtension": {
     ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
     ".vbs": "cscript //Nologo",
@@ -45,13 +45,11 @@
     ".sml": "cd $dir && sml $fileName",
     ".mojo": "mojo run"
   },
-  "terminal.integrated.enableMultiLinePasteWarning": "never",
-  "terminal.integrated.fontFamily": "MesloLGS NF",
-  "terminal.external.osxExec": "iTerm.app",
   "git.autofetch": true,
   "git.suggestSmartCommit": true,
   "git.confirmSync": false,
   "git.openRepositoryInParentFolders": "never",
+  "diffEditor.ignoreTrimWhitespace": true,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmPasteNative": false,
@@ -119,30 +117,6 @@
         "webRoot": "${workspaceFolder}"
       },
       {
-        "name": "Webapp in Firefox",
-        "type": "firefox",
-        "request": "launch",
-        "reAttach": true,
-        "url": "http://localhost:5173",
-        "webRoot": "${workspaceFolder}"
-      },
-      {
-        "type": "node",
-        "request": "launch",
-        "name": "KeepspireChatLambda mock",
-        "program": "~/.nvm/versions/node/v20.12.2/bin/amplify",
-        "args": [
-          "mock",
-          "function",
-          "KeepspireChatLambda",
-          "--event",
-          "src/event.json",
-          "--timeout",
-          "300"
-        ],
-        "console": "integratedTerminal"
-      },
-      {
         "name": "Python Debugger: Current File",
         "type": "debugpy",
         "request": "launch",
@@ -195,7 +169,8 @@
       "url": "https://raw.githubusercontent.com/Mehdi-Verfaillie/docx/main/src/config/.docx.schema.json"
     }
   ],
-  "diffEditor.ignoreTrimWhitespace": true,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.fontFamily": "MesloLGS NF",
   "terminal.integrated.profiles.linux": {
     "zsh": {
       "path": "zsh"

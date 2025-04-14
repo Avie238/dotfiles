@@ -37,6 +37,11 @@
 
     flake-compat.url = "github:nix-community/flake-compat";
 
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -47,6 +52,7 @@
       apple-silicon,
       nix-vscode-extensions,
       sops-nix,
+      firefox-addons,
       ...
     }@inputs:
     let
@@ -67,6 +73,7 @@
           overlays = [
             inputs.apple-silicon.overlays.default
             inputs.nix-vscode-extensions.overlays.default
+            inputs.firefox-addons.overlays.default
           ];
         };
 
@@ -125,7 +132,7 @@
           }:
           {
             home-manager = {
-              backupFileExtension = "backup";
+              backupFileExtension = "backup2";
               useGlobalPkgs = true;
               useUserPackages = true;
               users.avie = {

@@ -6,6 +6,7 @@
     ./vscode
     ./firefox.nix
     ./gnome.nix
+    ./kitty.nix
   ];
 
   xdg.autostart.enable = true;

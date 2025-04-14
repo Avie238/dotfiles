@@ -15,4 +15,9 @@
 
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
 }
