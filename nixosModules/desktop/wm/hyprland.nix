@@ -13,6 +13,8 @@
       xwayland.enable = true;
     };
 
+    services.xserver.excludePackages = [ pkgs.xterm ];
+
     environment.systemPackages = with pkgs; [
       waybar
       rofi-wayland

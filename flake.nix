@@ -89,13 +89,11 @@
       #   gpuType = "amd"; # amd, intel or nvidia; only makes some slight mods for amd at the moment
       # };
 
-      userSettings = rec {
+      userSettings = {
         username = "avie"; # username
         name = "Avie"; # name/identifier
         dotfilesDir = "~/.dotfiles"; # absolute path of the local repo
         wm = "hyprland"; # Selected window manager or desktop environment; must select one in both ./user/wm/ and ./system/wm/
-        # window manager type (hyprland or x11) translator
-        wmType = if ((wm == "hyprland") || (wm == "plasma")) then "wayland" else "x11";
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
         editor = "vscode"; # Default editor;
@@ -109,7 +107,7 @@
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager
-            (self.nixosModules.users-avie { desktop = true; })
+            self.nixosModules.users-avie
           ];
           specialArgs = { inherit inputs userSettings self; };
         };
@@ -119,11 +117,11 @@
           modules = [
             ./hosts/msi
             home-manager.nixosModules.home-manager
-            (self.nixosModules.users-avie { desktop = true; })
+            self.nixosModules.users-avie
             inputs.disko.nixosModules.default
             inputs.impermanence.nixosModules.impermanence
           ];
-          specialArgs = { inherit inputs self; };
+          specialArgs = { inherit inputs userSettings self; };
         };
 
         msi-iso = nixpkgs.lib.nixosSystem {
@@ -151,7 +149,7 @@
 
         users-avie =
           {
-            desktop ? false,
+            userSettings,
             ...
           }:
           {
@@ -161,9 +159,13 @@
               useUserPackages = true;
               users.avie = {
                 imports =
-                  if desktop then [ ./home-manger/users/avie/desktop ] else [ ./home-manger/users/avie/minimal ];
+                  if userSettings.wm != "none" then
+                    [ ./home-manger/users/avie/desktop ]
+                  else
+                    [ ./home-manger/users/avie/minimal ];
 
               };
+              extraSpecialArgs = { inherit userSettings; };
             };
 
           };
