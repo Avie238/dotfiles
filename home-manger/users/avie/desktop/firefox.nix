@@ -14,11 +14,6 @@
         id = 0;
         name = "default";
         isDefault = true;
-        # settings = {
-        #   "browser.startup.homepage" = "https://searx.aicampground.com";
-        #   "browser.search.defaultenginename" = "Searx";
-        #   "browser.search.order.1" = "Searx";
-        # };
         search = {
           force = true;
           default = "google";
@@ -29,7 +24,7 @@
             "Nix Packages" = {
               urls = [
                 {
-                  template = "https://search.nixos.org/packages";
+                  template = "https://search.nixos.org/packages?channel=unstable";
                   params = [
                     {
                       name = "type";

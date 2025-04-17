@@ -5,7 +5,7 @@
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./../minimal
-    ./DE.nix
+    ./wm
     ./zswap.nix
   ];
 

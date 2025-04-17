@@ -46,6 +46,7 @@
   home.sessionVariables = {
     VISUAL = "codium --wait";
     EDITOR = "${config.home.sessionVariables.VISUAL}";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 
   home.file.".hushlogin" = {

@@ -15,5 +15,7 @@
     jetbrains.idea-ultimate
     qbittorrent
     nixd
+    nodejs_23
+    python310
   ];
 }
