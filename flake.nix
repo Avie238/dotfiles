@@ -49,10 +49,6 @@
       self,
       nixpkgs,
       home-manager,
-      apple-silicon,
-      nix-vscode-extensions,
-      sops-nix,
-      firefox-addons,
       ...
     }@inputs:
     let
@@ -77,23 +73,11 @@
           ];
         };
 
-      # systemSettings = {
-      #   system = "x86_64-linux"; # system arch
-      #   hostname = "snowfire"; # hostname
-      #   profile = "personal"; # select a profile defined from my profiles directory
-      #   timezone = "America/Chicago"; # select timezone
-      #   locale = "en_US.UTF-8"; # select locale
-      #   bootMode = "uefi"; # uefi or bios
-      #   bootMountPath = "/boot"; # mount path for efi boot partition; only used for uefi boot mode
-      #   grubDevice = ""; # device identifier for grub; only used for legacy (bios) boot mode
-      #   gpuType = "amd"; # amd, intel or nvidia; only makes some slight mods for amd at the moment
-      # };
-
       userSettings = {
-        username = "avie"; # username
-        name = "Avie"; # name/identifier
-        dotfilesDir = "~/.dotfiles"; # absolute path of the local repo
-        wm = "hyprland"; # Selected window manager or desktop environment; must select one in both ./user/wm/ and ./system/wm/
+        username = "avie";
+        name = "Avie";
+        dotfilesDir = "~/.dotfiles";
+        wm = "hyprland"; # hyprland / gnome / none
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
         editor = "vscode"; # Default editor;
@@ -107,62 +91,59 @@
           modules = [
             ./hosts/asahi
             home-manager.nixosModules.home-manager
-            self.nixosModules.users-avie
+            self.nixosModules.my-user
           ];
           specialArgs = { inherit inputs userSettings self; };
         };
 
-        msi-nixos = nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor "x86_64-linux";
-          modules = [
-            ./hosts/msi
-            home-manager.nixosModules.home-manager
-            self.nixosModules.users-avie
-            inputs.disko.nixosModules.default
-            inputs.impermanence.nixosModules.impermanence
-          ];
-          specialArgs = { inherit inputs userSettings self; };
-        };
+        # msi-nixos = nixpkgs.lib.nixosSystem {
+        #   pkgs = pkgsFor "x86_64-linux";
+        #   modules = [
+        #     ./hosts/msi
+        #     home-manager.nixosModules.home-manager
+        #     self.nixosModules.users-avie
+        #     inputs.disko.nixosModules.default
+        #     inputs.impermanence.nixosModules.impermanence
+        #   ];
+        #   specialArgs = { inherit inputs userSettings self; };
+        # };
 
-        msi-iso = nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor "x86_64-linux";
-          modules = [
-            ./hosts/msi/iso
-            home-manager.nixosModules.home-manager
-            (self.nixosModules.users-avie { desktop = false; })
-          ];
-          specialArgs = { inherit inputs self; };
-        };
-        asahi-iso2 = nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor "aarch64-linux";
-          modules = [
-            ./hosts/asahi/iso
-            home-manager.nixosModules.home-manager
-            (self.nixosModules.users-avie { desktop = false; })
-          ];
-          specialArgs = { inherit inputs self; };
-        };
+        # msi-iso = nixpkgs.lib.nixosSystem {
+        #   pkgs = pkgsFor "x86_64-linux";
+        #   modules = [
+        #     ./hosts/msi/iso
+        #     home-manager.nixosModules.home-manager
+        #     (self.nixosModules.users-avie { desktop = false; })
+        #   ];
+        #   specialArgs = { inherit inputs self; };
+        # };
+        # asahi-iso2 = nixpkgs.lib.nixosSystem {
+        #   pkgs = pkgsFor "aarch64-linux";
+        #   modules = [
+        #     ./hosts/asahi/iso
+        #     home-manager.nixosModules.home-manager
+        #     (self.nixosModules.users-avie { desktop = false; })
+        #   ];
+        #   specialArgs = { inherit inputs self; };
+        # };
 
       };
 
       nixosModules = {
 
-        users-avie =
+        my-user =
           {
             userSettings,
             ...
           }:
           {
             home-manager = {
-              backupFileExtension = "backup2";
+              backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.avie = {
+              users.${userSettings.username} = {
                 imports =
-                  if userSettings.wm != "none" then
-                    [ ./home-manger/users/avie/desktop ]
-                  else
-                    [ ./home-manger/users/avie/minimal ];
+                  if userSettings.wm != "none" then [ ./profiles/minimal.nix ] else [ ./profiles/desktop.nix ];
 
               };
               extraSpecialArgs = { inherit userSettings; };

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  userSettings,
   ...
 }:
 
@@ -42,7 +43,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf (userSettings.editor == "vscode") {
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;

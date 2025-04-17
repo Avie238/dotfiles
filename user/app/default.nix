@@ -2,11 +2,10 @@
 
 {
   imports = [
-    ../minimal
-    ./vscode
-    ./firefox.nix
-    ./gnome.nix
-    ./kitty.nix
+    ./editor
+    ./browser
+    ./terminal
+    ../shell
   ];
 
   xdg.autostart.enable = true;
