@@ -28,7 +28,5 @@
         package = pkgs.gnome-themes-extra;
       };
     };
-
-    systemd.user.sessionVariables = config.home.sessionVariables;
   };
 }

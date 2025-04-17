@@ -2,6 +2,7 @@
   lib,
   pkgs,
   userSettings,
+  inputs,
   ...
 }:
 
@@ -11,6 +12,7 @@
     programs.hyprland = {
       enable = true;
       xwayland.enable = true;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
 
     services.xserver.excludePackages = [ pkgs.xterm ];
