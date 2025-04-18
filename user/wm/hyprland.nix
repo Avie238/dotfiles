@@ -7,12 +7,6 @@
 }:
 
 {
-  options = {
-    mainMod = lib.mkOption {
-      default = "SUPER";
-      type = lib.types.str;
-    };
-  };
   config = lib.mkIf (userSettings.wm == "hyprland") {
 
     home.packages = with pkgs; [
@@ -25,27 +19,39 @@
       nautilus
       hypridle
       hyprlock
-      pamixer
-      pavucontrol
     ];
 
     gtk.cursorTheme = {
       package = pkgs.quintom-cursor-theme;
       name = "Quintom_Ink";
-      size = 30;
+      size = 36;
     };
 
     wayland.windowManager.hyprland = {
       enable = true;
       extraConfig = ''
-        source = ${userSettings.dotfilesDir}/user/wm/hyprland.conf
-        monitor = internal,2560x1664@60,0x0,1
-
+        exec-once = dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland
         exec-once = ${userSettings.term} & ${userSettings.editor}
         exec-once = sleep 3 && ${userSettings.browser}
         exec-once = hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}
         exec-once = hypridle & waybar
         exec-once = wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
+
+        env = XCURSOR_SIZE,2n4
+        env = HYPRCURSOR_SIZE,24
+        env = ELECTRON_OZONE_PLATFORM_HINT,auto
+        env = XDG_CURRENT_DESKTOP,Hyprland
+        env = XDG_SESSION_DESKTOP,Hyprland
+        env = XDG_SESSION_TYPE,wayland
+        env = GDK_BACKEND,wayland,x11,*
+        env = QT_QPA_PLATFORM,wayland;xcb
+        env = QT_QPA_PLATFORMTHEME,qt5ct
+        env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+        env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+        env = CLUTTER_BACKEND,wayland
+
+        source = ${userSettings.dotfilesDir}/user/wm/hyprland.conf
+        monitor = internal,2560x1664@60,0x0,1
 
         input {
             kb_layout = ${userSettings.kb_layout}
@@ -55,10 +61,6 @@
             clickfinger_behavior = true
             }
         }
-
-        env = XCURSOR_SIZE,24
-        env = HYPRCURSOR_SIZE,24
-        env = ELECTRON_OZONE_PLATFORM_HINT,auto
 
         $mainMod = SUPER
 
