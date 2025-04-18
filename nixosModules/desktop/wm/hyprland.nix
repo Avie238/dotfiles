@@ -20,5 +20,10 @@
     xdg.portal = {
       enable = true;
     };
+
+    qt = {
+      enable = true;
+    };
   };
+
 }

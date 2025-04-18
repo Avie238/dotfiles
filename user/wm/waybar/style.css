@@ -19,15 +19,13 @@ window#waybar {
 }
 
 #workspaces,
-#clock.1,
-#clock.2,
-#clock.3,
 #pulseaudio,
 #memory,
 #cpu,
 #battery,
 #disk,
-#tray {
+#tray,
+#temperature {
   background: #1a1a1a;
 }
 
@@ -69,6 +67,7 @@ window#waybar {
 #memory,
 #cpu,
 #battery,
-#disk {
+#disk,
+#temperature {
   padding: 0 10px;
 }

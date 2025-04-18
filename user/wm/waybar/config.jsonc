@@ -17,10 +17,10 @@
     "cpu",
     "custom/left-arrow-light",
     "custom/left-arrow-dark",
-    "battery",
+    "temperature",
     "custom/left-arrow-light",
     "custom/left-arrow-dark",
-    "temperature",
+    "battery",
     "custom/left-arrow-light",
     "custom/left-arrow-dark",
     "tray"
@@ -60,7 +60,7 @@
   "pulseaudio": {
     "format": "{icon} {volume:2}%",
     "format-bluetooth": "{icon}  {volume}%",
-    "format-muted": "MUTE",
+    "format-muted": " 0%",
     "format-icons": {
       "headphones": "",
       "default": [

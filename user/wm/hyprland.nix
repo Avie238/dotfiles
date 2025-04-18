@@ -25,12 +25,14 @@
       nautilus
       hypridle
       hyprlock
+      pamixer
+      pavucontrol
     ];
 
     gtk.cursorTheme = {
       package = pkgs.quintom-cursor-theme;
       name = "Quintom_Ink";
-      size = 36;
+      size = 30;
     };
 
     wayland.windowManager.hyprland = {
@@ -39,9 +41,11 @@
         source = ${userSettings.dotfilesDir}/user/wm/hyprland.conf
         monitor = internal,2560x1664@60,0x0,1
 
-        exec-once = ${userSettings.term} & ${userSettings.editor} & ${userSettings.browser}
+        exec-once = ${userSettings.term} & ${userSettings.editor}
+        exec-once = sleep 3 && ${userSettings.browser}
         exec-once = hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}
         exec-once = hypridle & waybar
+        exec-once = wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
 
         input {
             kb_layout = ${userSettings.kb_layout}
@@ -59,7 +63,7 @@
         $mainMod = SUPER
 
         bind = $mainMod, Q, killactive,
-        bind = $mainMod, M, exit,
+        bind = SUPERSHIFT, Q, exit,
         bind = $mainMod, E, exec, ${userSettings.editor}
         bind = $mainMod, B, exec, ${userSettings.browser}
         bind = $mainMod, T, exec, ${userSettings.term}
@@ -96,13 +100,6 @@
         bind = $mainMod SHIFT, 9, movetoworkspace, 9
         bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
-        # Laptop multimedia keys for volume and LCD brightness
-        bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-        bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-        bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-        bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
-        bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
-
         bindl=,switch:on:Lid Switch,exec, systemctl suspend
 
         #Disable MMB
@@ -127,6 +124,8 @@
             workspace_swipe_distance = 150
         }
       '';
+      xwayland.enable = true;
+      systemd.enable = true;
     };
 
     programs.waybar = {
