@@ -77,7 +77,7 @@
       userSettings = rec {
         username = "avie";
         name = "Avie";
-        dotfilesDir = "~/.dotfiles";
+        dotfilesDir = "~/dotfiles";
         wm = "hyprland"; # hyprland / gnome / none
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
