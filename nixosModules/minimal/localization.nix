@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  userSettings,
+  ...
+}:
 
 {
   options = {
@@ -9,7 +14,7 @@
   };
 
   config = lib.mkIf config.localization.enable {
-    time.timeZone = "Europe/Amsterdam";
+    time.timeZone = userSettings.timeZone;
 
     i18n = {
       defaultLocale = "en_IE.UTF-8";
@@ -21,7 +26,7 @@
       ];
     };
 
-    services.xserver.xkb.layout = "pl";
+    services.xserver.xkb.layout = userSettings.kb_layout;
   };
 
 }

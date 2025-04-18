@@ -74,14 +74,20 @@
           ];
         };
 
-      userSettings = {
+      userSettings = rec {
         username = "avie";
         name = "Avie";
         dotfilesDir = "~/.dotfiles";
         wm = "hyprland"; # hyprland / gnome / none
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
-        editor = "vscode"; # Default editor;
+        editor = "codium"; # Default editor;
+        fileManager = "nautilus";
+        menu = "rofi";
+        menu_spawn = "${menu} -show drun -show-icons";
+        timeZone = "Europe/Amsterdam";
+        kb_layout = "pl";
+        font = "Jetbrains Mono";
       };
 
     in

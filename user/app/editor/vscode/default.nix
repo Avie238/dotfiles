@@ -43,7 +43,7 @@
     };
   };
 
-  config = lib.mkIf (userSettings.editor == "vscode") {
+  config = lib.mkIf (userSettings.editor == "codium") {
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
