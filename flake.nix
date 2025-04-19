@@ -45,6 +45,10 @@
     hyprland.url = "github:hyprwm/Hyprland";
 
     stylix.url = "github:danth/stylix";
+
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+    };
   };
 
   outputs =
@@ -103,6 +107,7 @@
             ./hosts/asahi
             home-manager.nixosModules.home-manager
             self.nixosModules.my-user
+
           ];
           specialArgs = { inherit inputs userSettings self; };
         };
@@ -145,11 +150,12 @@
         my-user =
           {
             userSettings,
+            inputs,
             ...
           }:
           {
             home-manager = {
-              backupFileExtension = "backup3";
+              backupFileExtension = "backup4";
               useGlobalPkgs = true;
               useUserPackages = true;
               users.${userSettings.username} = {
@@ -158,6 +164,9 @@
 
               };
               extraSpecialArgs = { inherit userSettings; };
+              sharedModules = [
+                inputs.nixcord.homeManagerModules.nixcord
+              ];
             };
 
           };
