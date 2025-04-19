@@ -204,20 +204,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    impermanence.url = "github:nix-community/impermanence";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       flake = false;
     };
 
-    flake-compat = {
-      url = "github:nix-community/flake-compat";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-compat.url = "github:nix-community/flake-compat";
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";

@@ -32,7 +32,7 @@
       settings = {
         exec-once = [
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
-          "hyprpaper & hypridle & waybar & blueman-applet & nm-applet --indicator"
+          "waybar & blueman-applet & nm-applet --indicator"
           # "hyprctl setcursor ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}"
           "${userSettings.term} & ${userSettings.editor}"
           "sleep 2 && ${userSettings.browser}"
@@ -235,9 +235,8 @@
 
         label = [
           {
-
             text = "$TIME";
-            color = "rgb(${base06})";
+            color = "rgb(${base05})";
             font_size = 95;
             font_family = "${userSettings.font} Extrabold";
             position = "0, 130";
@@ -246,7 +245,7 @@
           }
           {
             text = ''cmd[update:1000] echo "$(date +"%A, %B %d")"'';
-            color = "rgb(${base06})";
+            color = "rgb(${base05})";
             font_size = 22;
             font_family = userSettings.font;
             position = "0, 230";
@@ -260,6 +259,8 @@
 
     programs.waybar = {
       enable = true;
+      #TODO: with UWSM
+      # systemd.enable = true;
       settings.mainBar = {
         layer = "bottom";
         position = "top";
