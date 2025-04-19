@@ -16,118 +16,272 @@
       wl-clipboard
       jq
       brightnessctl
-      nautilus
       hypridle
       hyprlock
+      pamixer
+      lxqt.pavucontrol-qt
+      networkmanagerapplet
+      blueman
+      hyprnome
+      xfce.thunar
+      hyprpaper
     ];
 
-    gtk.cursorTheme = {
-      package = pkgs.quintom-cursor-theme;
-      name = "Quintom_Ink";
-      size = 36;
+    home.pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 20;
+      # package = pkgs.quintom-cursor-theme;
+      # name = "Quintom_Ink";
+      # size = 21;
+    };
+
+    gtk = {
+      enable = true;
+
+      theme = {
+        package = pkgs.flat-remix-gtk;
+        name = "Flat-Remix-GTK-Grey-Darkest";
+      };
+
+      # theme = {
+      #   name = "Adwaita-dark";
+      #   package = pkgs.gnome-themes-extra;
+      # };
+
+      iconTheme = {
+        package = pkgs.adwaita-icon-theme;
+        name = "Adwaita";
+      };
+
+      font = {
+        name = "Sans";
+        size = 11;
+      };
     };
 
     wayland.windowManager.hyprland = {
       enable = true;
-      extraConfig = ''
-        exec-once = dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland
-        exec-once = ${userSettings.term} & ${userSettings.editor}
-        exec-once = sleep 3 && ${userSettings.browser}
-        exec-once = hyprctl setcursor ${config.gtk.cursorTheme.name} ${builtins.toString config.gtk.cursorTheme.size}
-        exec-once = hypridle & waybar
-        exec-once = wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
+      settings = {
+        exec-once = [
+          "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
+          "hyprpaper & hypridle & waybar & blueman-applet & nm-applet --indicator"
+          "hyprctl setcursor ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}"
+          "${userSettings.term} & ${userSettings.editor}"
+          "sleep 2 && ${userSettings.browser}"
+          "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
+        ];
 
-        env = XCURSOR_SIZE,2n4
-        env = HYPRCURSOR_SIZE,24
-        env = ELECTRON_OZONE_PLATFORM_HINT,auto
-        env = XDG_CURRENT_DESKTOP,Hyprland
-        env = XDG_SESSION_DESKTOP,Hyprland
-        env = XDG_SESSION_TYPE,wayland
-        env = GDK_BACKEND,wayland,x11,*
-        env = QT_QPA_PLATFORM,wayland;xcb
-        env = QT_QPA_PLATFORMTHEME,qt5ct
-        env = QT_AUTO_SCREEN_SCALE_FACTOR,1
-        env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
-        env = CLUTTER_BACKEND,wayland
+        env = [
+          "XCURSOR_SIZE,24"
+          "HYPRCURSOR_SIZE,24"
+          "ELECTRON_OZONE_PLATFORM_HINT,auto"
+          "XDG_CURRENT_DESKTOP,Hyprland"
+          "XDG_SESSION_DESKTOP,Hyprland"
+          "XDG_SESSION_TYPE,wayland"
+          "GDK_BACKEND,wayland,x11,*"
+          "QT_QPA_PLATFORM,wayland;xcb"
+          "QT_QPA_PLATFORMTHEME,qt5ct"
+          "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+          "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+          "CLUTTER_BACKEND,wayland"
+        ];
 
-        source = ${userSettings.dotfilesDir}/user/wm/hyprland.conf
-        monitor = internal,2560x1664@60,0x0,1
+        monitor = "internal,2560x1664@60,0x0,1";
 
-        input {
-            kb_layout = ${userSettings.kb_layout}
-            
-            touchpad  {
-            natural_scroll = true
-            clickfinger_behavior = true
-            }
-        }
+        input = {
+          kb_layout = userSettings.kb_layout;
 
-        $mainMod = SUPER
+          touchpad = {
+            natural_scroll = true;
+            clickfinger_behavior = true;
+          };
+        };
 
-        bind = $mainMod, Q, killactive,
-        bind = SUPERSHIFT, Q, exit,
-        bind = $mainMod, E, exec, ${userSettings.editor}
-        bind = $mainMod, B, exec, ${userSettings.browser}
-        bind = $mainMod, T, exec, ${userSettings.term}
+        "$mainMod" = "SUPER";
 
-        bind = $mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}
+        bind =
+          [
+            "$mainMod, Q, killactive,"
+            "SUPERSHIFT, Q, exit,"
+            "$mainMod, E, exec, ${userSettings.editor}"
+            "$mainMod, B, exec, ${userSettings.browser}"
+            "$mainMod, T, exec, ${userSettings.term}"
+            "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}"
+            "CTRL SHIFT, 3, exec, grim -o \"$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')\" - | wl-copy"
+            "CTRL SHIFT, 4, exec,  grim -g \"$(slurp -d)\" - | wl-copy"
+            "$mainMod, Left, exec, hyprnome --previous"
+            "$mainMod, Right, exec, hyprnome"
+            "SUPER_SHIFT, Left, exec, hyprnome --previous --move"
+            "SUPER_SHIFT, Right, exec, hyprnome --move"
+            #Disable MMB
+            ", mouse:274, exec,"
+          ]
+          ++ (
 
-        bind = CTRL SHIFT, 3, exec, grim -o "$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')" - | wl-copy
-        bind = CTRL SHIFT, 4, exec,  grim -g "$(slurp -d)" - | wl-copy
+            builtins.concatLists (
+              builtins.genList (
+                i:
+                let
+                  ws = i + 1;
+                in
+                [
+                  "$mainMod, code:1${toString i}, workspace, ${toString ws}"
+                  "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+                ]
+              ) 9
+            )
+          );
 
-        bind = $mainMod, Right, workspace, +1
-        bind = $mainMod, Left, workspace, -1
+        bindl = [
+          ",switch:on:Lid Switch,exec, systemctl suspend"
+        ];
 
-        # Switch workspaces with mainMod + [0-9]
-        bind = $mainMod, 1, workspace, 1
-        bind = $mainMod, 2, workspace, 2
-        bind = $mainMod, 3, workspace, 3
-        bind = $mainMod, 4, workspace, 4
-        bind = $mainMod, 5, workspace, 5
-        bind = $mainMod, 6, workspace, 6
-        bind = $mainMod, 7, workspace, 7
-        bind = $mainMod, 8, workspace, 8
-        bind = $mainMod, 9, workspace, 9
-        bind = $mainMod, 0, workspace, 10
+        bindel = [
+          ",XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+          ",XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
+          ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
+          ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+        ];
 
-        # Move active window to a workspace with mainMod + SHIFT + [0-9]
-        bind = $mainMod SHIFT, 1, movetoworkspace, 1
-        bind = $mainMod SHIFT, 2, movetoworkspace, 2
-        bind = $mainMod SHIFT, 3, movetoworkspace, 3
-        bind = $mainMod SHIFT, 4, movetoworkspace, 4
-        bind = $mainMod SHIFT, 5, movetoworkspace, 5
-        bind = $mainMod SHIFT, 6, movetoworkspace, 6
-        bind = $mainMod SHIFT, 7, movetoworkspace, 7
-        bind = $mainMod SHIFT, 8, movetoworkspace, 8
-        bind = $mainMod SHIFT, 9, movetoworkspace, 9
-        bind = $mainMod SHIFT, 0, movetoworkspace, 10
+        windowrule = [
+          "workspace 1, class:^(${userSettings.term})$,title:^(${userSettings.term})$"
+          "workspace 2,class:^(${userSettings.editor})$"
+          "workspace empty,class:^(${userSettings.browser})$"
+          # Ignore maximize requests from apps. You'll probably like this.
+          "suppressevent maximize, class:.*"
+          # Fix some dragging issues with XWayland
+          "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
 
-        bindl=,switch:on:Lid Switch,exec, systemctl suspend
+        ];
 
-        #Disable MMB
-        bind = , mouse:274, exec, 
+        ecosystem = {
+          no_update_news = true;
+        };
 
-        windowrule = workspace 1, class:^(${userSettings.term})$,title:^(${userSettings.term})$
-        windowrule = workspace 2,class:^(${userSettings.editor})$
-        windowrule = workspace empty,class:^(${userSettings.browser})$
+        gestures = {
+          workspace_swipe = true;
+          workspace_swipe_distance = 150;
+        };
 
-        # Ignore maximize requests from apps. You'll probably like this.
-        windowrule = suppressevent maximize, class:.*
+        misc = {
+          force_default_wallpaper = 2;
+        };
 
-        # Fix some dragging issues with XWayland
-        windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+        general = {
+          gaps_in = 5;
+          gaps_out = 7;
+          border_size = 2;
+          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.inactive_border" = "rgba(595959aa)";
 
-        misc {
-            force_default_wallpaper = 2
-        }
+          resize_on_border = false;
+          allow_tearing = false;
 
-        gestures {
-            workspace_swipe = true
-            workspace_swipe_distance = 150
-        }
-      '';
+          layout = "dwindle";
+        };
+
+        decoration = {
+          rounding = 10;
+          rounding_power = 2;
+
+          active_opacity = 1.0;
+          inactive_opacity = 1.0;
+
+          shadow = {
+            enabled = true;
+            range = 4;
+            render_power = 3;
+            color = "rgba(1a1a1aee)";
+          };
+
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 1;
+
+            vibrancy = 0.1696;
+          };
+        };
+
+        dwindle = {
+          pseudotile = true;
+          preserve_split = true;
+        };
+
+        master = {
+          new_status = "master";
+        };
+
+        animations = {
+          enabled = true;
+
+          bezier = [
+            "easeOutQuint,0.23,1,0.32,1"
+            "easeInOutCubic,0.65,0.05,0.36,1"
+            "linear,0,0,1,1"
+            "almostLinear,0.5,0.5,0.75,1.0"
+            "quick,0.15,0,0.1,1"
+          ];
+          animation = [
+            "global, 1, 10, default"
+            "border, 1, 5.39, easeOutQuint"
+            "windows, 1, 4.79, easeOutQuint"
+            "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
+            "windowsOut, 1, 1.49, linear, popin 87%"
+            "fadeIn, 1, 1.73, almostLinear"
+            "fadeOut, 1, 1.46, almostLinear"
+            "fade, 1, 3.03, quick"
+            "layers, 1, 3.81, easeOutQuint"
+            "layersIn, 1, 4, easeOutQuint, fade"
+            "layersOut, 1, 1.5, linear, fade"
+            "fadeLayersIn, 1, 1.79, almostLinear"
+            "fadeLayersOut, 1, 1.39, almostLinear"
+          ];
+        };
+      };
+
       xwayland.enable = true;
-      systemd.enable = true;
+      systemd.enable = false;
+    };
+
+    programs.hyprlock = {
+      enable = true;
+      settings = {
+        background = {
+          path = "${userSettings.dotfilesDir}/wallpaper.png";
+          color = "rgba(25, 20, 20, 1.0)";
+          blur_passes = 2;
+        };
+
+        input-field = {
+          size = "20%, 5%";
+          outline_thickness = 3;
+          inner_color = "rgba(0, 0, 0, 0.0)"; # no fill
+
+          outer_color = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          check_color = "rgba(00ff99ee) rgba(ff6633ee) 120deg";
+          fail_color = "rgba(ff6633ee) rgba(ff0066ee) 40deg";
+
+          font_color = "rgb(143, 143, 143)";
+          fade_on_empty = false;
+          rounding = 15;
+
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
+        };
+      };
+    };
+
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        preload = "${userSettings.dotfilesDir}/wallpaper.png";
+        wallpaper = ", ${userSettings.dotfilesDir}/wallpaper.png";
+      };
     };
 
     programs.waybar = {

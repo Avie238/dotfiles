@@ -1,11 +1,14 @@
 {
   "layer": "top",
   "position": "top",
+  "reload_style_on_change": true,
   "modules-left": [
+    "clock",
+    "custom/right-arrow-dark",
+    "custom/right-arrow-light",
     "hyprland/workspaces",
     "custom/right-arrow-dark"
   ],
-  "reload_style_on_change": true,
   "modules-right": [
     "custom/left-arrow-dark",
     "pulseaudio",
@@ -43,34 +46,33 @@
   },
   "hyprland/workspaces": {
     "disable-scroll": true,
-    "format": "{name}"
+    "format": "{id} {icon}"
   },
-  "clock#1": {
-    "format": "{:%a}",
-    "tooltip": false
-  },
-  "clock#2": {
+  "clock": {
     "format": "{:%H:%M}",
-    "tooltip": false
-  },
-  "clock#3": {
-    "format": "{:%m-%d}",
-    "tooltip": false
+    "tooltip": true
   },
   "pulseaudio": {
-    "format": "{icon} {volume:2}%",
-    "format-bluetooth": "{icon}  {volume}%",
-    "format-muted": " 0%",
+    "format": "{volume}% {icon}",
+    "format-bluetooth": "{volume}% {icon}",
+    "format-muted": "",
     "format-icons": {
-      "headphones": "",
+      "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
+      "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "phone-muted": "",
+      "portable": "",
+      "car": "",
       "default": [
         "",
         ""
       ]
     },
-    "scroll-step": 5,
-    "on-click": "pamixer -t",
-    "on-click-right": "pavucontrol"
+    "scroll-step": 1,
+    "on-click": "pavucontrol-qt"
   },
   "memory": {
     "interval": 5,

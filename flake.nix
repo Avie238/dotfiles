@@ -82,12 +82,12 @@
         browser = "firefox"; # Default browser; must select one from ./user/app/browser/
         term = "kitty"; # Default terminal command;
         editor = "codium"; # Default editor;
-        fileManager = "nautilus";
+        fileManager = "thunar";
         menu = "rofi";
         menu_spawn = "${menu} -show drun -show-icons";
         timeZone = "Europe/Amsterdam";
         kb_layout = "pl";
-        font = "Jetbrains Mono";
+        font = "MesloLGS NF";
       };
 
     in
@@ -145,7 +145,7 @@
           }:
           {
             home-manager = {
-              backupFileExtension = "backup";
+              backupFileExtension = "backup3";
               useGlobalPkgs = true;
               useUserPackages = true;
               users.${userSettings.username} = {
