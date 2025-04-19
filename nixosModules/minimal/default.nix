@@ -39,12 +39,9 @@ in
   ];
 
   boot.loader = {
-    grub = {
+    systemd-boot = {
       enable = true;
-      # font = lib.mkForce (toString (mkGrubFont config.stylix.fonts.monospace));
 
-      # gfxpayloadEfi = "2560x1600x32"; # TTY resolution (grub > videoinfo)
-      # gfxmodeEfi = "auto"; # Grub resolution (overridden by console mode)
     };
     timeout = 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
