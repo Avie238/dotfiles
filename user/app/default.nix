@@ -6,6 +6,7 @@
     ./browser
     ./terminal
     ../shell
+    ./nixcord.nix
   ];
 
   xdg.autostart.enable = true;

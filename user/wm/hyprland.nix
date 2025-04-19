@@ -16,7 +16,6 @@
       jq
       brightnessctl
       hypridle
-      hyprlock
       pamixer
       lxqt.pavucontrol-qt
       networkmanagerapplet
@@ -27,40 +26,6 @@
       hyprpicker
       grimblast
     ];
-
-    # home.pointerCursor = {
-    #   gtk.enable = true;
-    #   package = pkgs.bibata-cursors;
-    #   name = "Bibata-Modern-Classic";
-    #   size = 20;
-    #   # package = pkgs.quintom-cursor-theme;
-    #   # name = "Quintom_Ink";
-    #   # size = 21;
-    # };
-
-    # gtk = {
-    #   enable = true;
-
-    #   theme = {
-    #     package = pkgs.flat-remix-gtk;
-    #     name = "Flat-Remix-GTK-Grey-Darkest";
-    #   };
-
-    #   # theme = {
-    #   #   name = "Adwaita-dark";
-    #   #   package = pkgs.gnome-themes-extra;
-    #   # };
-
-    #   iconTheme = {
-    #     package = pkgs.adwaita-icon-theme;
-    #     name = "Adwaita";
-    #   };
-
-    #   font = {
-    #     name = "Sans";
-    #     size = 11;
-    #   };
-    # };
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -75,8 +40,6 @@
         ];
 
         env = [
-          "XCURSOR_SIZE,24"
-          "HYPRCURSOR_SIZE,24"
           "ELECTRON_OZONE_PLATFORM_HINT,auto"
           "XDG_CURRENT_DESKTOP,Hyprland"
           "XDG_SESSION_DESKTOP,Hyprland"
@@ -248,9 +211,13 @@
 
     programs.hyprlock = {
       enable = true;
-      settings = {
+      settings = with config.lib.stylix.colors; {
         background = {
           blur_passes = 2;
+          contrast = 1;
+          brightness = 0.5;
+          vibrancy = 0.2;
+          vibrancy_darkness = 0.2;
         };
 
         input-field = {
@@ -265,6 +232,29 @@
           halign = "center";
           valign = "center";
         };
+
+        label = [
+          {
+
+            text = "$TIME";
+            color = "rgb(${base06})";
+            font_size = 95;
+            font_family = "${userSettings.font} Extrabold";
+            position = "0, 130";
+            halign = "center";
+            valign = "center";
+          }
+          {
+            text = ''cmd[update:1000] echo "$(date +"%A, %B %d")"'';
+            color = "rgb(${base06})";
+            font_size = 22;
+            font_family = userSettings.font;
+            position = "0, 230";
+            halign = "center";
+            valign = "center";
+          }
+        ];
+
       };
     };
 
@@ -275,6 +265,9 @@
         position = "top";
         reload_style_on_change = true;
         modules-left = [
+          "group/power"
+          "custom/right-arrow-dark"
+          "custom/right-arrow-light"
           "clock"
           "custom/right-arrow-dark"
           "custom/right-arrow-light"
@@ -295,64 +288,129 @@
           "temperature"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
+          "group/backlight"
+          "custom/left-arrow-light"
+          "custom/left-arrow-dark"
           "battery"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
           "tray"
         ];
+        "group/power" = {
+          orientation = "horizontal";
+          drawer = {
+            transition-duration = 500;
+            children-class = "not-power";
+            transition-left-to-right = true;
+          };
+          modules = [
+            "custom/os"
+            "custom/lock"
+            "custom/power"
+            "custom/reboot"
+          ];
+        };
+        "custom/os" = {
+          format = "  ";
+          tooltip = false;
+        };
+        "custom/lock" = {
+          format = " 󰍁 ";
+          tooltip = false;
+          on-click = "hyprlock";
+        };
+        "custom/reboot" = {
+          format = "󰜉 ";
+          tooltip = false;
+          on-click = "reboot";
+        };
+        "custom/power" = {
+          format = "󰐥 ";
+          tooltip = false;
+          on-click = "shutdown now";
+        };
         "custom/left-arrow-dark" = {
-          "format" = "";
-          "tooltip" = false;
+          format = "";
+          tooltip = false;
         };
         "custom/left-arrow-light" = {
-          "format" = "";
-          "tooltip" = false;
+          format = "";
+          tooltip = false;
         };
         "custom/right-arrow-dark" = {
-          "format" = "";
-          "tooltip" = false;
+          format = "";
+          tooltip = false;
         };
         "custom/right-arrow-light" = {
-          "format" = "";
-          "tooltip" = false;
+          format = "";
+          tooltip = false;
         };
+        backlight = {
+          format = "{icon}";
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+        };
+        "backlight#text" = {
+          format = "{percent}%";
+        };
+        "group/backlight" = {
+          orientation = "horizontal";
+          drawer = {
+            transition-duration = 500;
+            transition-left-to-right = true;
+          };
+          modules = [
+            "backlight"
+            "backlight#text"
+          ];
+        };
+
         "hyprland/workspaces" = {
-          "disable-scroll" = true;
-          "format" = "{id}";
+          disable-scroll = true;
+          format = "{icon}";
         };
-        "clock" = {
-          "format" = " {:%H:%M}";
+        clock = {
+          format = " {:%H:%M}";
         };
-        "pulseaudio" = {
-          "format" = "{volume}% {icon} ";
-          "format-bluetooth" = "{volume}% {icon} ";
-          "format-muted" = "󰖁 ";
-          "format-icons" = {
-            "default" = [
+        pulseaudio = {
+          format = "{volume}% {icon} ";
+          format-bluetooth = "{volume}% {icon} ";
+          format-muted = "󰖁 ";
+          format-icons = {
+            default = [
               ""
               ""
             ];
           };
-          "scroll-step" = 1;
-          "on-click" = "pavucontrol-qt";
+          scroll-step = 1;
+          on-click = "pavucontrol-qt";
         };
-        "memory" = {
-          "interval" = 5;
-          "format" = "Mem {}%";
+        memory = {
+          interval = 5;
+          format = "Mem {}%";
         };
-        "cpu" = {
-          "interval" = 5;
-          "format" = "CPU {usage:2}%";
+        cpu = {
+          interval = 5;
+          format = "CPU {usage:2}%";
         };
-        "battery" = {
-          "states" = {
-            "good" = 95;
-            "warning" = 30;
-            "critical" = 15;
+        battery = {
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 15;
           };
-          "format" = "{icon} {capacity}%";
-          "format-charging" = "󱐋 {capacity}%";
-          "format-icons" = [
+          format = "{icon} {capacity}%";
+          format-charging = "󱐋 {capacity}%";
+          format-icons = [
             ""
             ""
             ""
@@ -360,33 +418,32 @@
             ""
           ];
         };
-        "tray" = {
-          "icon-size" = 20;
+        tray = {
+          icon-size = 20;
         };
-        "temperature" = {
-          "critical-threshold" = 80;
-          "format" = "{temperatureC}°C  ";
+        temperature = {
+          format = "{temperatureC}°C  ";
         };
       };
-      style = ''
+      style = with config.lib.stylix.colors.withHashtag; ''
         * {
           font-size: 15px;
           font-family: monospace;
         }
 
         window#waybar {
-          background: #${config.lib.stylix.colors.base00};
+          background: ${base00};
         }
 
         #custom-right-arrow-dark,
         #custom-left-arrow-dark {
-          color: #${config.lib.stylix.colors.base01};
+          color: ${base01};
           font-size: 20px;
         }
         #custom-right-arrow-light,
         #custom-left-arrow-light {
-          color: #${config.lib.stylix.colors.base00};
-          background: #${config.lib.stylix.colors.base01};
+          color: ${base00};
+          background: ${base01};
           font-size: 20px;
         }
 
@@ -398,25 +455,31 @@
         #battery,
         #disk,
         #tray,
-        #temperature {
-          background: #${config.lib.stylix.colors.base01};
+        #temperature,
+        #backlight,
+        #custom-os,
+        #custom-lock,
+        #custom-power,
+        #custom-reboot  {
+          background: ${base01};
         }
 
         #workspaces button {
           padding: 0 2px;
-          color: #fdf6e3;
+          color: ${base06};
 
         }
         #workspaces button.active {
-          color: #${config.lib.stylix.colors.base03};
+          color: ${base03};
+          background:  ${base00};
         }
         #workspaces button:hover {
           box-shadow: inherit;
           text-shadow: inherit;
         }
         #workspaces button:hover {
-          background:  #${config.lib.stylix.colors.base00};
-          border:  #${config.lib.stylix.colors.base00};
+          background:  ${base00};
+          border:  ${base00};
           padding: 0 3px;
         }
 
@@ -429,7 +492,7 @@
         #cpu {
           color: #6c71c4;
         }
-        #battery.good {
+        #battery {
           color: #859900;
         }
         #battery.warning {
@@ -446,12 +509,21 @@
         #battery,
         #disk,
         #temperature,
-        #tray {
+        #tray,
+        #backlight{
           padding-right: 10px;
         }
         #clock,
         #workspaces {
           padding-left: 10px;
+        }
+
+        #custom-os,
+        #custom-quit,
+        #custom-lock,
+        #custom-reboot,
+        #custom-power {
+          font-size: 18px;
         }
       '';
     };
@@ -495,9 +567,7 @@
       package = pkgs.rofi-wayland;
     };
 
-    services.hyprpaper = {
-      enable = true;
-    };
+    services.hyprpaper.enable = true;
 
   };
 
