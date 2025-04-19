@@ -9,35 +9,38 @@
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
-  stylix.enable = true;
-  stylix.autoEnable = true;
-  stylix.polarity = "dark";
-  stylix.image = ../../wallpaper.jpg;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
-  stylix.fonts = {
-    monospace = {
-      name = userSettings.font;
-      package = userSettings.fontPkg;
+  stylix = {
+    enable = true;
+    autoEnable = true;
+    image = ../../wallpaper.jpg;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
+    fonts = {
+      monospace = {
+        name = userSettings.font;
+        package = userSettings.fontPkg;
+      };
+      emoji = {
+        name = "Noto Color Emoji";
+        package = pkgs.noto-fonts-emoji-blob-bin;
+      };
+      sizes = {
+        desktop = 10;
+        applications = 10;
+      };
     };
-    # serif = {
-    #   name = userSettings.font;
-    #   package = userSettings.fontPkg;
-    # };
-    # sansSerif = {
-    #   name = userSettings.font;
-    #   package = userSettings.fontPkg;
-    # };
-    emoji = {
-      name = "Noto Color Emoji";
-      package = pkgs.noto-fonts-emoji-blob-bin;
+    opacity.terminal = 0.85;
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 20;
+      # package = pkgs.quintom-cursor-theme;
+      # name = "Quintom_Ink";
+      # size = 21;
     };
-    sizes = {
-      desktop = 10;
-      applications = 10;
-    };
-  };
 
-  stylix.targets.lightdm.enable = true;
+    targets.grub.enable = false;
+
+  };
 
   services.xserver.displayManager.lightdm = {
     greeters.slick.enable = true;

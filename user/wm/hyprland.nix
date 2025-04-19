@@ -270,116 +270,104 @@
 
     programs.waybar = {
       enable = true;
-      settings.mainBar = (
-        builtins.fromJSON ''
-          {
-            "layer": "top",
-            "position": "top",
-            "reload_style_on_change": true,
-            "modules-left": [
-              "clock",
-              "custom/right-arrow-dark",
-              "custom/right-arrow-light",
-              "hyprland/workspaces",
-              "custom/right-arrow-dark"
-            ],
-            "modules-right": [
-              "custom/left-arrow-dark",
-              "pulseaudio",
-              "custom/left-arrow-light",
-              "custom/left-arrow-dark",
-              "memory",
-              "custom/left-arrow-light",
-              "custom/left-arrow-dark",
-              "cpu",
-              "custom/left-arrow-light",
-              "custom/left-arrow-dark",
-              "temperature",
-              "custom/left-arrow-light",
-              "custom/left-arrow-dark",
-              "battery",
-              "custom/left-arrow-light",
-              "custom/left-arrow-dark",
-              "tray"
-            ],
-            "custom/left-arrow-dark": {
-              "format": "",
-              "tooltip": false
-            },
-            "custom/left-arrow-light": {
-              "format": "",
-              "tooltip": false
-            },
-            "custom/right-arrow-dark": {
-              "format": "",
-              "tooltip": false
-            },
-            "custom/right-arrow-light": {
-              "format": "",
-              "tooltip": false
-            },
-            "hyprland/workspaces": {
-              "disable-scroll": true,
-              "format": "{id}"
-            },
-            "clock": {
-              "format": " {:%H:%M}"
-            },
-            "pulseaudio": {
-              "format": "{volume}% {icon} ",
-              "format-bluetooth": "{volume}% {icon} ",
-              "format-muted": "󰖁 ",
-              "format-icons": {
-                "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
-                "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
-                "headphone": "",
-                "hands-free": "",
-                "headset": "",
-                "phone": "",
-                "phone-muted": "",
-                "portable": "",
-                "car": "",
-                "default": [
-                  "",
-                  ""
-                ]
-              },
-              "scroll-step": 1,
-              "on-click": "pavucontrol-qt"
-            },
-            "memory": {
-              "interval": 5,
-              "format": "Mem {}%"
-            },
-            "cpu": {
-              "interval": 5,
-              "format": "CPU {usage:2}%"
-            },
-            "battery": {
-              "states": {
-                "good": 95,
-                "warning": 30,
-                "critical": 15
-              },
-              "format": "{icon} {capacity}%",
-              "format-charging": "󱐋 {capacity}%",
-              "format-icons": [
-                "",
-                "",
-                "",
-                "",
-                ""
-              ]
-            },
-            "tray": {
-              "icon-size": 20
-            },
-            "temperature": {
-              "critical-threshold": 80,
-              "format": "{temperatureC}°C  "
-            }
-          }''
-      );
+      settings.mainBar = {
+        layer = "bottom";
+        position = "top";
+        reload_style_on_change = true;
+        modules-left = [
+          "clock"
+          "custom/right-arrow-dark"
+          "custom/right-arrow-light"
+          "hyprland/workspaces"
+          "custom/right-arrow-dark"
+        ];
+        modules-right = [
+          "custom/left-arrow-dark"
+          "pulseaudio"
+          "custom/left-arrow-light"
+          "custom/left-arrow-dark"
+          "memory"
+          "custom/left-arrow-light"
+          "custom/left-arrow-dark"
+          "cpu"
+          "custom/left-arrow-light"
+          "custom/left-arrow-dark"
+          "temperature"
+          "custom/left-arrow-light"
+          "custom/left-arrow-dark"
+          "battery"
+          "custom/left-arrow-light"
+          "custom/left-arrow-dark"
+          "tray"
+        ];
+        "custom/left-arrow-dark" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+        "custom/left-arrow-light" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+        "custom/right-arrow-dark" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+        "custom/right-arrow-light" = {
+          "format" = "";
+          "tooltip" = false;
+        };
+        "hyprland/workspaces" = {
+          "disable-scroll" = true;
+          "format" = "{id}";
+        };
+        "clock" = {
+          "format" = " {:%H:%M}";
+        };
+        "pulseaudio" = {
+          "format" = "{volume}% {icon} ";
+          "format-bluetooth" = "{volume}% {icon} ";
+          "format-muted" = "󰖁 ";
+          "format-icons" = {
+            "default" = [
+              ""
+              ""
+            ];
+          };
+          "scroll-step" = 1;
+          "on-click" = "pavucontrol-qt";
+        };
+        "memory" = {
+          "interval" = 5;
+          "format" = "Mem {}%";
+        };
+        "cpu" = {
+          "interval" = 5;
+          "format" = "CPU {usage:2}%";
+        };
+        "battery" = {
+          "states" = {
+            "good" = 95;
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "format" = "{icon} {capacity}%";
+          "format-charging" = "󱐋 {capacity}%";
+          "format-icons" = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+        };
+        "tray" = {
+          "icon-size" = 20;
+        };
+        "temperature" = {
+          "critical-threshold" = 80;
+          "format" = "{temperatureC}°C  ";
+        };
+      };
       style = ''
         * {
           font-size: 15px;
@@ -417,9 +405,10 @@
         #workspaces button {
           padding: 0 2px;
           color: #fdf6e3;
+
         }
-        #workspaces button.focused {
-          color: #268bd2;
+        #workspaces button.active {
+          color: #${config.lib.stylix.colors.base03};
         }
         #workspaces button:hover {
           box-shadow: inherit;

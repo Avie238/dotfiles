@@ -8,6 +8,7 @@
     ./wm
     ./zswap.nix
     ./stylix.nix
+    ./grub.nix
   ];
 
   services.flatpak.enable = true;
