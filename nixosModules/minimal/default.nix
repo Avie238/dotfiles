@@ -7,27 +7,6 @@
   ...
 }:
 
-let
-  mkGrubFont =
-    font:
-    pkgs.runCommand "${font.package.name}.pf2"
-      {
-        FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ font.package ]; };
-      }
-      ''
-        # Use fontconfig to select the correct .ttf or .otf file based on name
-        font=$(
-          ${lib.getExe' pkgs.fontconfig "fc-match"} \
-          ${lib.escapeShellArg font.name} \
-          --format=%{file}
-        )
-
-        # Convert to .pf2
-        ${pkgs.grub2}/bin/grub-mkfont $font --output $out --size ${toString 36}
-      '';
-
-in
-
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
@@ -39,10 +18,7 @@ in
   ];
 
   boot.loader = {
-    systemd-boot = {
-      enable = true;
-
-    };
+    systemd-boot.enable = true;
     timeout = 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
