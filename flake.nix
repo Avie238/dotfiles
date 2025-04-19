@@ -90,8 +90,8 @@
         timeZone = "Europe/Amsterdam";
         kb_layout = "pl";
         font = "Jetbrains Mono NF";
-        fontPkg = nixpkgs.nerd-fonts.jetbrains-mono;
-        theme = "catppuccin-mocha";
+        fontPkg = (pkgsFor "aarch64-linux").nerd-fonts.jetbrains-mono;
+        theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
       };
 
     in

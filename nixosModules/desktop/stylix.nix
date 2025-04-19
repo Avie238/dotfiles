@@ -7,17 +7,11 @@
 }:
 
 let
-  themePath = "../../../themes/" + userSettings.theme + "/" + userSettings.theme + ".yaml";
-  themePolarity = lib.removeSuffix "\n" (
-    builtins.readFile (./. + "../../../themes" + ("/" + userSettings.theme) + "/polarity.txt")
-  );
+  themePath = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
+  themePolarity = "dark";
   myLightDMTheme = if themePolarity == "light" then "Adwaita" else "Adwaita-dark";
-  backgroundUrl = builtins.readFile (
-    ./. + "../../../themes" + ("/" + userSettings.theme) + "/backgroundurl.txt"
-  );
-  backgroundSha256 = builtins.readFile (
-    ./. + "../../../themes/" + ("/" + userSettings.theme) + "/backgroundsha256.txt"
-  );
+  backgroundUrl = builtins.readFile (./. + "../../../themes" + ("/io") + "/backgroundurl.txt");
+  backgroundSha256 = builtins.readFile (./. + "../../../themes/" + ("/io") + "/backgroundsha256.txt");
 in
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
@@ -28,27 +22,32 @@ in
     url = backgroundUrl;
     sha256 = backgroundSha256;
   };
-  stylix.base16Scheme = ./. + themePath;
+  stylix.base16Scheme = themePath;
   stylix.fonts = {
     monospace = {
       name = userSettings.font;
       package = userSettings.fontPkg;
     };
-    serif = {
-      name = userSettings.font;
-      package = userSettings.fontPkg;
-    };
-    sansSerif = {
-      name = userSettings.font;
-      package = userSettings.fontPkg;
-    };
+    # serif = {
+    #   name = userSettings.font;
+    #   package = userSettings.fontPkg;
+    # };
+    # sansSerif = {
+    #   name = userSettings.font;
+    #   package = userSettings.fontPkg;
+    # };
     emoji = {
       name = "Noto Color Emoji";
       package = pkgs.noto-fonts-emoji-blob-bin;
     };
+    sizes = {
+      desktop = 10;
+      applications = 10;
+    };
   };
 
   stylix.targets.lightdm.enable = true;
+
   services.xserver.displayManager.lightdm = {
     greeters.slick.enable = true;
     greeters.slick.theme.name = myLightDMTheme;

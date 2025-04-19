@@ -306,7 +306,87 @@
     programs.waybar = {
       enable = true;
       settings.mainBar = (builtins.fromJSON (builtins.readFile ./waybar/config.jsonc));
-      style = builtins.toString (builtins.readFile ./waybar/style.css);
+      style = ''
+        * {
+          font-size: 15px;
+          font-family: monospace;
+        }
+
+        window#waybar {
+          background: #${config.lib.stylix.colors.base00};
+        }
+
+        #custom-right-arrow-dark,
+        #custom-left-arrow-dark {
+          color: #${config.lib.stylix.colors.base01};
+          font-size: 20px;
+        }
+        #custom-right-arrow-light,
+        #custom-left-arrow-light {
+          color: #${config.lib.stylix.colors.base00};
+          background: #${config.lib.stylix.colors.base01};
+          font-size: 20px;
+        }
+
+        #workspaces,
+        #clock,
+        #pulseaudio,
+        #memory,
+        #cpu,
+        #battery,
+        #disk,
+        #tray,
+        #temperature {
+          background: #${config.lib.stylix.colors.base01};
+        }
+
+        #workspaces button {
+          padding: 0 2px;
+          color: #fdf6e3;
+        }
+        #workspaces button.focused {
+          color: #268bd2;
+        }
+        #workspaces button:hover {
+          box-shadow: inherit;
+          text-shadow: inherit;
+        }
+        #workspaces button:hover {
+          background:  #${config.lib.stylix.colors.base00};
+          border:  #${config.lib.stylix.colors.base00};
+          padding: 0 3px;
+        }
+
+        #pulseaudio {
+          color: #268bd2;
+        }
+        #memory {
+          color: #2aa198;
+        }
+        #cpu {
+          color: #6c71c4;
+        }
+        #battery {
+          color: #859900;
+        }
+        #disk {
+          color: #b58900;
+        }
+
+        #pulseaudio,
+        #memory,
+        #cpu,
+        #battery,
+        #disk,
+        #temperature,
+        #tray {
+          padding-right: 10px;
+        }
+        #clock,
+        #workspaces {
+          padding-left: 10px;
+        }
+      '';
     };
 
     services.hypridle = {
