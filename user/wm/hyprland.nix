@@ -19,7 +19,6 @@
       pamixer
       lxqt.pavucontrol-qt
       networkmanagerapplet
-      blueman
       hyprnome
       xfce.thunar
       hyprpaper
@@ -32,10 +31,9 @@
       settings = {
         exec-once = [
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
-          "waybar & blueman-applet & nm-applet --indicator"
           # "hyprctl setcursor ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}"
-          "${userSettings.term} & ${userSettings.editor}"
-          "sleep 2 && ${userSettings.browser}"
+          # "${userSettings.term} & ${userSettings.editor}"
+          # "sleep 2 && ${userSettings.browser}"
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
         ];
 
@@ -259,8 +257,7 @@
 
     programs.waybar = {
       enable = true;
-      #TODO: with UWSM
-      # systemd.enable = true;
+      systemd.enable = true;
       settings.mainBar = {
         layer = "bottom";
         position = "top";

@@ -158,5 +158,9 @@
 
       };
     };
+
+    xdg.autostart.entries = [
+      "${pkgs.vscodium}/share/applications/codium.desktop"
+    ];
   };
 }
