@@ -5,7 +5,6 @@
     ./app
     ./shell
     ./wm
-    ./stylix.nix
   ];
 
 }

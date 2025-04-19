@@ -6,23 +6,14 @@
   ...
 }:
 
-let
-  themePath = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
-  themePolarity = "dark";
-  myLightDMTheme = if themePolarity == "light" then "Adwaita" else "Adwaita-dark";
-  backgroundUrl = builtins.readFile (./. + "../../../themes" + ("/io") + "/backgroundurl.txt");
-  backgroundSha256 = builtins.readFile (./. + "../../../themes/" + ("/io") + "/backgroundsha256.txt");
-in
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   stylix.enable = true;
-  stylix.polarity = themePolarity;
-  stylix.image = pkgs.fetchurl {
-    url = backgroundUrl;
-    sha256 = backgroundSha256;
-  };
-  stylix.base16Scheme = themePath;
+  stylix.autoEnable = true;
+  stylix.polarity = "dark";
+  stylix.image = ../../wallpaper.jpg;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
   stylix.fonts = {
     monospace = {
       name = userSettings.font;
@@ -50,9 +41,8 @@ in
 
   services.xserver.displayManager.lightdm = {
     greeters.slick.enable = true;
-    greeters.slick.theme.name = myLightDMTheme;
+    greeters.slick.theme.name = "Adwaita-dark";
   };
-  stylix.targets.console.enable = true;
 
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";

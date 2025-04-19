@@ -10,7 +10,6 @@
   config = lib.mkIf (userSettings.wm == "hyprland") {
 
     home.packages = with pkgs; [
-      rofi-wayland
       grim
       slurp
       wl-clipboard
@@ -25,6 +24,8 @@
       hyprnome
       xfce.thunar
       hyprpaper
+      hyprpicker
+      grimblast
     ];
 
     # home.pointerCursor = {
@@ -109,8 +110,8 @@
             "$mainMod, B, exec, ${userSettings.browser}"
             "$mainMod, T, exec, ${userSettings.term}"
             "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}"
-            "CTRL SHIFT, 3, exec, grim -o \"$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')\" - | wl-copy"
-            "CTRL SHIFT, 4, exec,  grim -g \"$(slurp -d)\" - | wl-copy"
+            "CTRL SHIFT, 3, exec, grimblast --freeze copysave output"
+            "CTRL SHIFT, 4, exec, grimblast --freeze copysave area"
             "$mainMod, Left, exec, hyprnome --previous"
             "$mainMod, Right, exec, hyprnome"
             "SUPER_SHIFT, Left, exec, hyprnome --previous --move"
@@ -141,7 +142,7 @@
         bindel = [
           ",XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
           ",XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
+          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
           ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
           ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
         ];
@@ -174,28 +175,6 @@
           gaps_in = 5;
           gaps_out = 7;
           border_size = 3;
-
-          # "col.active_border" = lib.mkForce (
-          #   " 0xff"
-          #   + config.lib.stylix.colors.base08
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base09
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base0A
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base0B
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base0C
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base0D
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base0E
-          #   + " 0xff"
-          #   + config.lib.stylix.colors.base0F
-          #   + " 270deg"
-          # );
-
-          # "col.inactive_border" = "0xaa" + config.lib.stylix.colors.base02;
 
           resize_on_border = false;
           allow_tearing = false;
@@ -268,39 +247,24 @@
 
     programs.hyprlock = {
       enable = true;
-      # settings = {
-      #   background = {
-      #     path = "${userSettings.dotfilesDir}/wallpaper.png";
-      #     color = "rgba(25, 20, 20, 1.0)";
-      #     blur_passes = 2;
-      #   };
+      settings = {
+        background = {
+          blur_passes = 2;
+        };
 
-      #   input-field = {
-      #     size = "20%, 5%";
-      #     outline_thickness = 3;
-      #     inner_color = "rgba(0, 0, 0, 0.0)"; # no fill
+        input-field = {
+          size = "20%, 5%";
+          outline_thickness = 3;
+          placeholder_text = "<i>Password</i>";
 
-      #     outer_color = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-      #     check_color = "rgba(00ff99ee) rgba(ff6633ee) 120deg";
-      #     fail_color = "rgba(ff6633ee) rgba(ff0066ee) 40deg";
+          fade_on_empty = false;
+          rounding = 15;
 
-      #     font_color = "rgb(143, 143, 143)";
-      #     fade_on_empty = false;
-      #     rounding = 15;
-
-      #     position = "0, -20";
-      #     halign = "center";
-      #     valign = "center";
-      #   };
-      # };
-    };
-
-    services.hyprpaper = {
-      enable = true;
-      # settings = {
-      #   preload = "${userSettings.dotfilesDir}/wallpaper.png";
-      #   wallpaper = ", ${userSettings.dotfilesDir}/wallpaper.png";
-      # };
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
+        };
+      };
     };
 
     programs.waybar = {
@@ -366,12 +330,16 @@
         #cpu {
           color: #6c71c4;
         }
-        #battery {
+        #battery.good {
           color: #859900;
         }
-        #disk {
+        #battery.warning {
           color: #b58900;
         }
+        #battery.critical {
+          color: #9c0425;
+        }
+
 
         #pulseaudio,
         #memory,
@@ -421,6 +389,15 @@
 
         ];
       };
+    };
+
+    programs.rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland;
+    };
+
+    services.hyprpaper = {
+      enable = true;
     };
 
   };

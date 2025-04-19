@@ -44,11 +44,14 @@
               };
             };
           };
-          extensions.packages = with pkgs.firefox-addons; [
-            ublock-origin
-            lastpass-password-manager
-            sponsorblock
-          ];
+          extensions = {
+            force = true;
+            packages = with pkgs.firefox-addons; [
+              ublock-origin
+              lastpass-password-manager
+              sponsorblock
+            ];
+          };
         };
       };
       policies = {
@@ -92,6 +95,8 @@
     xdg.autostart.entries = [
       "${pkgs.firefox}/share/applications/firefox.desktop"
     ];
+
+    stylix.targets.firefox.profileNames = [ "default" ];
   };
 
 }
