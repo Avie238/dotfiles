@@ -1,56 +1,6 @@
 {
   description = "Avie's NixOS Flake";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    apple-silicon = {
-      url = "github:Avie238/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-mananm-appletger = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      flake = false;
-    };
-
-    flake-compat.url = "github:nix-community/flake-compat";
-
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland.url = "github:hyprwm/Hyprland";
-
-    stylix.url = "github:danth/stylix";
-
-    nixcord = {
-      url = "github:kaylorben/nixcord";
-    };
-  };
-
   outputs =
     {
       self,
@@ -84,17 +34,17 @@
         username = "avie";
         name = "Avie";
         dotfilesDir = "~/dotfiles";
-        wm = "hyprland"; # hyprland / gnome / none
-        browser = "firefox"; # Default browser; must select one from ./user/app/browser/
-        term = "kitty"; # Default terminal command;
-        editor = "codium"; # Default editor;
+        wm = "hyprland";
+        browser = "firefox";
+        term = "kitty";
+        editor = "codium";
         fileManager = "thunar";
         menu = "rofi";
         menu_spawn = "${menu} -show drun -show-icons";
         timeZone = "Europe/Amsterdam";
         kb_layout = "pl";
         font = "Jetbrains Mono NF";
-        fontPkg = (pkgsFor "aarch64-linux").nerd-fonts.jetbrains-mono;
+        fontPkg = "jetbrains-mono";
         theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
       };
 
@@ -133,15 +83,6 @@
         #   ];
         #   specialArgs = { inherit inputs self; };
         # };
-        # asahi-iso2 = nixpkgs.lib.nixosSystem {
-        #   pkgs = pkgsFor "aarch64-linux";
-        #   modules = [
-        #     ./hosts/asahi/iso
-        #     home-manager.nixosModules.home-manager
-        #     (self.nixosModules.users-avie { desktop = false; })
-        #   ];
-        #   specialArgs = { inherit inputs self; };
-        # };
 
       };
 
@@ -150,12 +91,11 @@
         my-user =
           {
             userSettings,
-            inputs,
             ...
           }:
           {
             home-manager = {
-              backupFileExtension = "backup4";
+              backupFileExtension = "backup";
               useGlobalPkgs = true;
               useUserPackages = true;
               users.${userSettings.username} = {
@@ -235,4 +175,68 @@
         }
       );
     };
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    apple-silicon = {
+      url = "github:Avie238/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-mananm-appletger = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      flake = false;
+    };
+
+    flake-compat = {
+      url = "github:nix-community/flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 }

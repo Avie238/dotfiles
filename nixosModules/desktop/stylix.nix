@@ -17,7 +17,7 @@
     fonts = {
       monospace = {
         name = userSettings.font;
-        package = userSettings.fontPkg;
+        package = pkgs.nerd-fonts.${userSettings.fontPkg};
       };
       emoji = {
         name = "Noto Color Emoji";
