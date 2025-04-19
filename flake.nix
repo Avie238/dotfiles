@@ -43,6 +43,8 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs =
@@ -87,7 +89,9 @@
         menu_spawn = "${menu} -show drun -show-icons";
         timeZone = "Europe/Amsterdam";
         kb_layout = "pl";
-        font = "MesloLGS NF";
+        font = "Jetbrains Mono NF";
+        fontPkg = nixpkgs.nerd-fonts.jetbrains-mono;
+        theme = "catppuccin-mocha";
       };
 
     in

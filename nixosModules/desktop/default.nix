@@ -7,6 +7,7 @@
     ./../minimal
     ./wm
     ./zswap.nix
+    ./stylix.nix
   ];
 
   services.flatpak.enable = true;

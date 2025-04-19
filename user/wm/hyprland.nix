@@ -27,39 +27,39 @@
       hyprpaper
     ];
 
-    home.pointerCursor = {
-      gtk.enable = true;
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-      size = 20;
-      # package = pkgs.quintom-cursor-theme;
-      # name = "Quintom_Ink";
-      # size = 21;
-    };
+    # home.pointerCursor = {
+    #   gtk.enable = true;
+    #   package = pkgs.bibata-cursors;
+    #   name = "Bibata-Modern-Classic";
+    #   size = 20;
+    #   # package = pkgs.quintom-cursor-theme;
+    #   # name = "Quintom_Ink";
+    #   # size = 21;
+    # };
 
-    gtk = {
-      enable = true;
+    # gtk = {
+    #   enable = true;
 
-      theme = {
-        package = pkgs.flat-remix-gtk;
-        name = "Flat-Remix-GTK-Grey-Darkest";
-      };
+    #   theme = {
+    #     package = pkgs.flat-remix-gtk;
+    #     name = "Flat-Remix-GTK-Grey-Darkest";
+    #   };
 
-      # theme = {
-      #   name = "Adwaita-dark";
-      #   package = pkgs.gnome-themes-extra;
-      # };
+    #   # theme = {
+    #   #   name = "Adwaita-dark";
+    #   #   package = pkgs.gnome-themes-extra;
+    #   # };
 
-      iconTheme = {
-        package = pkgs.adwaita-icon-theme;
-        name = "Adwaita";
-      };
+    #   iconTheme = {
+    #     package = pkgs.adwaita-icon-theme;
+    #     name = "Adwaita";
+    #   };
 
-      font = {
-        name = "Sans";
-        size = 11;
-      };
-    };
+    #   font = {
+    #     name = "Sans";
+    #     size = 11;
+    #   };
+    # };
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -67,7 +67,7 @@
         exec-once = [
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
           "hyprpaper & hypridle & waybar & blueman-applet & nm-applet --indicator"
-          "hyprctl setcursor ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}"
+          # "hyprctl setcursor ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}"
           "${userSettings.term} & ${userSettings.editor}"
           "sleep 2 && ${userSettings.browser}"
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
@@ -173,9 +173,29 @@
         general = {
           gaps_in = 5;
           gaps_out = 7;
-          border_size = 2;
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          border_size = 3;
+
+          # "col.active_border" = lib.mkForce (
+          #   " 0xff"
+          #   + config.lib.stylix.colors.base08
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base09
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base0A
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base0B
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base0C
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base0D
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base0E
+          #   + " 0xff"
+          #   + config.lib.stylix.colors.base0F
+          #   + " 270deg"
+          # );
+
+          # "col.inactive_border" = "0xaa" + config.lib.stylix.colors.base02;
 
           resize_on_border = false;
           allow_tearing = false;
@@ -194,7 +214,6 @@
             enabled = true;
             range = 4;
             render_power = 3;
-            color = "rgba(1a1a1aee)";
           };
 
           blur = {
@@ -249,39 +268,39 @@
 
     programs.hyprlock = {
       enable = true;
-      settings = {
-        background = {
-          path = "${userSettings.dotfilesDir}/wallpaper.png";
-          color = "rgba(25, 20, 20, 1.0)";
-          blur_passes = 2;
-        };
+      # settings = {
+      #   background = {
+      #     path = "${userSettings.dotfilesDir}/wallpaper.png";
+      #     color = "rgba(25, 20, 20, 1.0)";
+      #     blur_passes = 2;
+      #   };
 
-        input-field = {
-          size = "20%, 5%";
-          outline_thickness = 3;
-          inner_color = "rgba(0, 0, 0, 0.0)"; # no fill
+      #   input-field = {
+      #     size = "20%, 5%";
+      #     outline_thickness = 3;
+      #     inner_color = "rgba(0, 0, 0, 0.0)"; # no fill
 
-          outer_color = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          check_color = "rgba(00ff99ee) rgba(ff6633ee) 120deg";
-          fail_color = "rgba(ff6633ee) rgba(ff0066ee) 40deg";
+      #     outer_color = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+      #     check_color = "rgba(00ff99ee) rgba(ff6633ee) 120deg";
+      #     fail_color = "rgba(ff6633ee) rgba(ff0066ee) 40deg";
 
-          font_color = "rgb(143, 143, 143)";
-          fade_on_empty = false;
-          rounding = 15;
+      #     font_color = "rgb(143, 143, 143)";
+      #     fade_on_empty = false;
+      #     rounding = 15;
 
-          position = "0, -20";
-          halign = "center";
-          valign = "center";
-        };
-      };
+      #     position = "0, -20";
+      #     halign = "center";
+      #     valign = "center";
+      #   };
+      # };
     };
 
     services.hyprpaper = {
       enable = true;
-      settings = {
-        preload = "${userSettings.dotfilesDir}/wallpaper.png";
-        wallpaper = ", ${userSettings.dotfilesDir}/wallpaper.png";
-      };
+      # settings = {
+      #   preload = "${userSettings.dotfilesDir}/wallpaper.png";
+      #   wallpaper = ", ${userSettings.dotfilesDir}/wallpaper.png";
+      # };
     };
 
     programs.waybar = {
