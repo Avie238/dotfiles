@@ -9,7 +9,7 @@
     ./nixcord.nix
   ];
 
-  xdg.autostart.enable = true;
+  xdg.autostart.enable = false;
 
   home.packages = with pkgs; [
     jetbrains.idea-ultimate

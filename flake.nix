@@ -40,7 +40,7 @@
         editor = "codium";
         fileManager = "thunar";
         menu = "rofi";
-        menu_spawn = "${menu} -show drun -show-icons";
+        menu_spawn = "${menu} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";
         timeZone = "Europe/Amsterdam";
         kb_layout = "pl";
         font = "Jetbrains Mono NF";

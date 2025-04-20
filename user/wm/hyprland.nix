@@ -31,10 +31,10 @@
       settings = {
         exec-once = [
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
-          # "hyprctl setcursor ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}"
-          # "${userSettings.term} & ${userSettings.editor}"
-          # "sleep 2 && ${userSettings.browser}"
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
+          "[workspace 1 silent] uwsm app -- ${userSettings.term}"
+          "[workspace 2 silent] uwsm app -- ${userSettings.editor}"
+          "[workspace 3 silent] uwsm app -- ${userSettings.browser}"
         ];
 
         env = [
@@ -66,10 +66,9 @@
         bind =
           [
             "$mainMod, Q, killactive,"
-            "SUPERSHIFT, Q, exit,"
-            "$mainMod, E, exec, ${userSettings.editor}"
-            "$mainMod, B, exec, ${userSettings.browser}"
-            "$mainMod, T, exec, ${userSettings.term}"
+            "SUPERSHIFT, Q, exec, uwsm stop"
+            "$mainMod, E, exec, uwsm app -- ${userSettings.editor}"
+            "$mainMod, T, exec, uwsm app -- ${userSettings.term}"
             "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}"
             "CTRL SHIFT, 3, exec, grimblast --freeze copysave output"
             "CTRL SHIFT, 4, exec, grimblast --freeze copysave area"
@@ -80,6 +79,10 @@
             "SUPER_SHIFT, Right, exec, hyprnome --move"
             #Disable MMB
             ", mouse:274, exec,"
+            "SUPER, RETURN, exec, if hyprctl clients | grep scratch_term; then echo \"scratch_term respawn not needed\"; else uwsm app -- kitty --class scratch_term; fi"
+            "SUPER, RETURN, togglespecialworkspace,scratch_term"
+            "SUPER, L, exec, if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager}; fi"
+            "SUPER, L, togglespecialworkspace,scratch_files"
           ]
           ++ (
 
@@ -97,6 +100,20 @@
             )
           );
 
+        "$scratchpadsize" = "size 80% 85%";
+
+        "$scratch_term" = "class:^(scratch_term)$";
+        "$scratch_files" = "class:^(${userSettings.fileManager})$";
+
+        windowrulev2 = [
+          "float,$scratch_term"
+          "$scratchpadsize,$scratch_term"
+          "workspace special:scratch_term ,$scratch_term"
+          "float,$scratch_files"
+          "$scratchpadsize,$scratch_files"
+          "workspace special:scratch_files ,$scratch_files"
+        ];
+
         bindl = [
           ",switch:on:Lid Switch,exec, systemctl suspend"
         ];
@@ -110,14 +127,16 @@
         ];
 
         windowrule = [
-          "workspace 1, class:^(${userSettings.term})$,title:^(${userSettings.term})$"
-          "workspace 2,class:^(${userSettings.editor})$"
-          "workspace empty,class:^(${userSettings.browser})$"
-          # Ignore maximize requests from apps. You'll probably like this.
+          "workspace empty,class:^(vesktop)$"
+          "float, title:^(Volume Control|Bluetooth Devices|Network Connections)$"
+          "size 50% 50%, title:^(Volume Control|Bluetooth Devices|Network Connections)$"
           "suppressevent maximize, class:.*"
-          # Fix some dragging issues with XWayland
           "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+        ];
 
+        workspace = [
+          #Auto open firefox on new workspace
+          "r[3-6], on-created-empty:[] firefox"
         ];
 
         ecosystem = {
@@ -127,10 +146,6 @@
         gestures = {
           workspace_swipe = true;
           workspace_swipe_distance = 150;
-        };
-
-        misc = {
-          force_default_wallpaper = 2;
         };
 
         general = {
@@ -199,6 +214,8 @@
             "layersOut, 1, 1.5, linear, fade"
             "fadeLayersIn, 1, 1.79, almostLinear"
             "fadeLayersOut, 1, 1.39, almostLinear"
+            "specialWorkspace, 1, 4, default, slidefadevert -50%"
+
           ];
         };
       };
@@ -303,6 +320,7 @@
           };
           modules = [
             "custom/os"
+            "custom/logout"
             "custom/lock"
             "custom/power"
             "custom/reboot"
@@ -312,8 +330,13 @@
           format = "  ";
           tooltip = false;
         };
+        "custom/logout" = {
+          format = " 󰍃 ";
+          tooltip = false;
+          on-click = "uwsm stop";
+        };
         "custom/lock" = {
-          format = " 󰍁 ";
+          format = "󰍁 ";
           tooltip = false;
           on-click = "hyprlock";
         };
@@ -456,9 +479,7 @@
         #temperature,
         #backlight,
         #custom-os,
-        #custom-lock,
-        #custom-power,
-        #custom-reboot  {
+        .not-power {
           background: ${base01};
         }
 
@@ -520,6 +541,7 @@
         #custom-quit,
         #custom-lock,
         #custom-reboot,
+        #custom-logout,
         #custom-power {
           font-size: 18px;
         }
