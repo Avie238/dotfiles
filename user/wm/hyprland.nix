@@ -30,6 +30,7 @@
       cmatrix
       cava
       (import ./../scripts/pokefetch.nix { inherit pkgs; })
+      (import ./../scripts/nix-cleanup.nix { inherit pkgs; })
     ];
 
     wayland.windowManager.hyprland = {
