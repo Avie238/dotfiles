@@ -42,6 +42,7 @@
     iso_x86 = "nix run nixpkgs\#nixos-generators --  --format iso --flake ./#msi-iso -o results/iso-msi --system x86_64-linux";
     nsr = "sudo nixos-rebuild switch --flake ./#";
     nix-rebuild = "sudo nixos-rebuild switch --flake ./#";
+    rebuild = "sudo nixos-rebuild switch --flake ./#";
     nix-list = "nixos-rebuild list-generations";
   };
 

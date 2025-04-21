@@ -9,8 +9,8 @@
       "discordBranch" = "stable";
       "minimizeToTray" = true;
       "arRPC" = false;
-      "splashColor" = "${config.lib.stylix.colors.withHashtag.base05}";
-      "splashBackground" = "${config.lib.stylix.colors.withHashtag.base00}";
+      "splashColor" = config.lib.stylix.colors.withHashtag.base05;
+      "splashBackground" = config.lib.stylix.colors.withHashtag.base00;
     };
 
   };

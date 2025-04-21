@@ -48,6 +48,8 @@
       jack.enable = true;
     };
 
+    services.gvfs.enable = true;
+
   };
 
 }

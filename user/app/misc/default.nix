@@ -1,9 +1,6 @@
 { ... }:
-
 {
   imports = [
-    ./vscode
-    ./nvim
+    ./nixcord.nix
   ];
-
 }
