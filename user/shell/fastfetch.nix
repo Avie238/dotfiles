@@ -27,7 +27,7 @@
           },
           {
             "type": "cpu",
-            "key": "│ ├󰍛",
+            "key": "│ ├",
             "keyColor": "green"
           },
           {
@@ -37,12 +37,12 @@
           },
           {
             "type": "memory",
-            "key": "│ ├󰍛",
+            "key": "│ ├",
             "keyColor": "green"
           },
           {
             "type": "disk",
-            "key": "└ └",
+            "key": "└ └",
             "keyColor": "green"
           },
           {
@@ -56,7 +56,7 @@
           },
           {
             "type": "os",
-            "key": " OS",
+            "key": " OS",
             "keyColor": "yellow"
           },
           {

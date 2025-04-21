@@ -27,6 +27,7 @@
             inputs.apple-silicon.overlays.default
             inputs.nix-vscode-extensions.overlays.default
             inputs.firefox-addons.overlays.default
+            inputs.nur.overlays.default
           ];
         };
 
@@ -230,6 +231,11 @@
 
     nixcord = {
       url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

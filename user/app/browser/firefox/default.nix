@@ -1,7 +1,5 @@
 {
   pkgs,
-  inputs,
-  firefox-addons,
   userSettings,
   lib,
   ...
@@ -41,6 +39,11 @@
                 ];
                 icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@np" ];
+              };
+              "My NixOS" = {
+                urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
+                icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@mn" ];
               };
             };
           };

@@ -24,6 +24,11 @@
       hyprpaper
       hyprpicker
       grimblast
+      hyprsysteminfo
+      hyprsunset
+      nur.repos.Ex-32.pokemon-colorscripts
+      cmatrix
+      cava
     ];
 
     wayland.windowManager.hyprland = {
@@ -329,6 +334,7 @@
         "custom/os" = {
           format = "  ";
           tooltip = false;
+          on-click = "hyprsysteminfo";
         };
         "custom/logout" = {
           format = " 󰍃 ";
@@ -336,17 +342,17 @@
           on-click = "uwsm stop";
         };
         "custom/lock" = {
-          format = "󰍁 ";
+          format = " ";
           tooltip = false;
           on-click = "hyprlock";
         };
         "custom/reboot" = {
-          format = "󰜉 ";
+          format = " ";
           tooltip = false;
           on-click = "reboot";
         };
         "custom/power" = {
-          format = "󰐥 ";
+          format = " ";
           tooltip = false;
           on-click = "shutdown now";
         };
