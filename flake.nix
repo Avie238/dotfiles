@@ -107,6 +107,7 @@
               extraSpecialArgs = { inherit userSettings; };
               sharedModules = [
                 inputs.nixcord.homeManagerModules.nixcord
+                inputs.nix-index-database.hmModules.nix-index
               ];
             };
 
@@ -236,6 +237,11 @@
 
     nur = {
       url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

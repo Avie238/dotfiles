@@ -29,6 +29,7 @@
       nur.repos.Ex-32.pokemon-colorscripts
       cmatrix
       cava
+      (import ./../scripts/pokefetch.nix { inherit pkgs; })
     ];
 
     wayland.windowManager.hyprland = {
@@ -424,6 +425,7 @@
         memory = {
           interval = 5;
           format = "Mem {}%";
+          tooltip = false;
         };
         cpu = {
           interval = 5;

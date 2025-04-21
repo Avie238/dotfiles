@@ -20,7 +20,7 @@
 
     initExtraFirst = ''
       any-nix-shell zsh --info-right | source /dev/stdin
-      fastfetch --logo "$(pokemon-colorscripts -rn lunala,noivern,palkia,espeon,sylveon,corviknight,tapu-fini,goodra --no-title)" --logo-type data
+      pokefetch
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
@@ -41,7 +41,6 @@
     iso_arm = "nix build .#installer-bootstrap -o results/iso-asahi -j6 -L --impure";
     iso_x86 = "nix run nixpkgs\#nixos-generators --  --format iso --flake ./#msi-iso -o results/iso-msi --system x86_64-linux";
     nrs = "sudo nixos-rebuild switch --flake ./#";
-    pokefetch = "fastfetch --logo \"$(pokemon-colorscripts -rn lunala,noivern,palkia,espeon,sylveon,corviknight,tapu-fini,goodra --no-title)\" --logo-type data";
   };
 
   home.sessionVariables = {
