@@ -32,7 +32,12 @@
       (import ./../scripts/pokefetch.nix { inherit pkgs; })
       (import ./../scripts/nix-cleanup.nix { inherit pkgs; })
       gcc
+      fd
+      lazygit
+      fzf
     ];
+
+    programs.neovim.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;

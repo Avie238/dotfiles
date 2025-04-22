@@ -4,155 +4,245 @@
   pkgs,
   ...
 }:
+let
+  isMaximal = true;
+  vim = {
+    viAlias = true;
+    vimAlias = true;
+    debugMode = {
+      enable = false;
+      level = 16;
+      logFile = "/tmp/nvim.log";
+    };
 
-{
-  programs.neovim = {
-    enable = true;
-    extraPackages = with pkgs; [
-      # LazyVim
-      lua-language-server
-      stylua
-      # Telescope
-      ripgrep
-    ];
+    spellcheck = {
+      enable = true;
+    };
 
-    plugins = with pkgs.vimPlugins; [
-      lazy-nvim
-    ];
+    lsp = {
+      formatOnSave = true;
+      lspkind.enable = false;
+      lightbulb.enable = true;
+      lspsaga.enable = false;
+      trouble.enable = true;
+      lspSignature.enable = true;
+      otter-nvim.enable = isMaximal;
+      nvim-docs-view.enable = isMaximal;
+    };
 
-    extraLuaConfig =
-      let
-        plugins = with pkgs.vimPlugins; [
-          # LazyVim
-          LazyVim
-          bufferline-nvim
-          cmp-buffer
-          cmp-nvim-lsp
-          cmp-path
-          cmp_luasnip
-          conform-nvim
-          dashboard-nvim
-          dressing-nvim
-          flash-nvim
-          friendly-snippets
-          gitsigns-nvim
-          indent-blankline-nvim
-          lualine-nvim
-          neo-tree-nvim
-          neoconf-nvim
-          neodev-nvim
-          noice-nvim
-          nui-nvim
-          nvim-cmp
-          nvim-lint
-          nvim-lspconfig
-          nvim-notify
-          nvim-spectre
-          nvim-treesitter
-          nvim-treesitter-context
-          nvim-treesitter-textobjects
-          nvim-ts-autotag
-          nvim-ts-context-commentstring
-          nvim-web-devicons
-          persistence-nvim
-          plenary-nvim
-          telescope-fzf-native-nvim
-          telescope-nvim
-          todo-comments-nvim
-          tokyonight-nvim
-          trouble-nvim
-          vim-illuminate
-          vim-startuptime
-          which-key-nvim
-          {
-            name = "LuaSnip";
-            path = luasnip;
-          }
-          {
-            name = "catppuccin";
-            path = catppuccin-nvim;
-          }
-          {
-            name = "mini.ai";
-            path = mini-nvim;
-          }
-          {
-            name = "mini.bufremove";
-            path = mini-nvim;
-          }
-          {
-            name = "mini.comment";
-            path = mini-nvim;
-          }
-          {
-            name = "mini.indentscope";
-            path = mini-nvim;
-          }
-          {
-            name = "mini.pairs";
-            path = mini-nvim;
-          }
-          {
-            name = "mini.surround";
-            path = mini-nvim;
-          }
-        ];
-        mkEntryFromDrv =
-          drv:
-          if lib.isDerivation drv then
-            {
-              name = "${lib.getName drv}";
-              path = drv;
-            }
-          else
-            drv;
-        lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
-      in
-      ''
-        require("lazy").setup({
-          defaults = {
-            lazy = true,
-          },
-          dev = {
-            -- reuse files from pkgs.vimPlugins.*
-            path = "${lazyPath}",
-            patterns = { "" },
-            -- fallback to download
-            fallback = true,
-          },
-          spec = {
-            { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-            -- The following configs are needed for fixing lazyvim on nix
-            -- force enable telescope-fzf-native.nvim
-            { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
-            -- disable mason.nvim, use programs.neovim.extraPackages
-            { "williamboman/mason-lspconfig.nvim", enabled = false },
-            { "williamboman/mason.nvim", enabled = false },
-            -- import/override with your plugins
-            { import = "plugins" },
-            -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
-            { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
-          },
-        })
-      '';
+    debugger = {
+      nvim-dap = {
+        enable = true;
+        ui.enable = true;
+      };
+    };
+
+    # This section does not include a comprehensive list of available language modules.
+    # To list all available language module options, please visit the nvf manual.
+    languages = {
+      enableLSP = true;
+      enableFormat = true;
+      enableTreesitter = true;
+      enableExtraDiagnostics = true;
+
+      nix.enable = true;
+      markdown.enable = true;
+      bash.enable = isMaximal;
+      css.enable = isMaximal;
+      html.enable = isMaximal;
+      sql.enable = isMaximal;
+      java.enable = isMaximal;
+      ts.enable = isMaximal;
+      lua.enable = isMaximal;
+      python.enable = isMaximal;
+      tailwind.enable = false;
+
+    };
+
+    visuals = {
+      nvim-scrollbar.enable = isMaximal;
+      nvim-web-devicons.enable = true;
+      nvim-cursorline.enable = true;
+      cinnamon-nvim.enable = true;
+      fidget-nvim.enable = true;
+
+      highlight-undo.enable = true;
+      indent-blankline.enable = true;
+
+      # Fun
+      cellular-automaton.enable = false;
+    };
+
+    statusline.lualine.enable = true;
+
+    autopairs.nvim-autopairs.enable = true;
+
+    autocomplete.nvim-cmp.enable = true;
+    snippets.luasnip.enable = true;
+
+    filetree = {
+      neo-tree = {
+        enable = true;
+      };
+    };
+
+    tabline = {
+      nvimBufferline.enable = true;
+    };
+
+    treesitter.context.enable = true;
+
+    binds = {
+      whichKey.enable = true;
+      cheatsheet.enable = true;
+    };
+
+    telescope.enable = true;
+
+    git = {
+      enable = true;
+      gitsigns.enable = true;
+      gitsigns.codeActions.enable = false; # throws an annoying debug message
+    };
+
+    minimap = {
+      minimap-vim.enable = false;
+      codewindow.enable = isMaximal; # lighter, faster, and uses lua for configuration
+    };
+
+    dashboard = {
+      dashboard-nvim.enable = false;
+      alpha.enable = isMaximal;
+    };
+
+    notify = {
+      nvim-notify.enable = true;
+    };
+
+    projects = {
+      project-nvim.enable = isMaximal;
+    };
+
+    utility = {
+      ccc.enable = false;
+      vim-wakatime.enable = false;
+      diffview-nvim.enable = true;
+      yanky-nvim.enable = false;
+      icon-picker.enable = isMaximal;
+      surround.enable = isMaximal;
+      leetcode-nvim.enable = isMaximal;
+      multicursors.enable = isMaximal;
+
+      motion = {
+        hop.enable = true;
+        leap.enable = true;
+        precognition.enable = isMaximal;
+      };
+      images = {
+        image-nvim.enable = false;
+      };
+    };
+
+    notes = {
+      obsidian.enable = false; # FIXME: neovim fails to build if obsidian is enabled
+      neorg.enable = false;
+      orgmode.enable = false;
+      mind-nvim.enable = isMaximal;
+      todo-comments.enable = true;
+    };
+
+    terminal = {
+      toggleterm = {
+        enable = true;
+        lazygit.enable = true;
+      };
+    };
+
+    ui = {
+      borders.enable = true;
+      noice.enable = true;
+      colorizer.enable = true;
+      modes-nvim.enable = false; # the theme looks terrible with catppuccin
+      illuminate.enable = true;
+      breadcrumbs = {
+        enable = isMaximal;
+        navbuddy.enable = isMaximal;
+      };
+      smartcolumn = {
+        enable = true;
+        setupOpts.custom_colorcolumn = {
+          # this is a freeform module, it's `buftype = int;` for configuring column position
+          nix = "110";
+          ruby = "120";
+          java = "130";
+          go = [
+            "90"
+            "130"
+          ];
+        };
+      };
+      fastaction.enable = true;
+    };
+
+    assistant = {
+      chatgpt.enable = false;
+      copilot = {
+        enable = false;
+        cmp.enable = isMaximal;
+      };
+      codecompanion-nvim.enable = false;
+    };
+
+    session = {
+      nvim-session-manager.enable = false;
+    };
+
+    gestures = {
+      gesture-nvim.enable = false;
+    };
+
+    comments = {
+      comment-nvim.enable = true;
+    };
+
+    presence = {
+      neocord.enable = false;
+    };
   };
 
-  # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-  xdg.configFile."nvim/parser".source =
-    let
-      parsers = pkgs.symlinkJoin {
-        name = "treesitter-parsers";
-        paths =
-          (pkgs.vimPlugins.nvim-treesitter.withPlugins (
-            plugins: with plugins; [
-              c
-              lua
-            ]
-          )).dependencies;
-      };
-    in
-    "${parsers}/parser";
+in
 
-  # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-  xdg.configFile."nvim/lua".source = ./lua;
+{
+  programs.nvf = {
+    enable = true;
+    settings.vim = vim;
+    # {
+    #   viAlias = false;
+    #   vimAlias = true;
+    #   lsp = {
+    #     enable = true;
+    #   };
+    #   statusline.lualine.enable = true;
+    #   telescope.enable = true;
+    #   autocomplete.nvim-cmp.enable = true;
+    #   binds.whichKey.enable = true;
+
+    #   languages = {
+    #     enableLSP = true;
+    #     enableTreesitter = true;
+
+    #     nix.enable = true;
+    #     # json.enable = true;
+    #     css.enable = true;
+    #   };
+    # };
+
+  };
+
+  # This is the sample configuration for nvf, aiming to give you a feel of the default options
+  # while certain plugins are enabled. While it may partially act as one, this is *not* quite
+  # an overview of nvf's module options. To find a complete and curated list of nvf module
+  # options, examples, instruction tutorials and more; please visit the online manual.
+  # https://notashelf.github.io/nvf/options.html
+
 }

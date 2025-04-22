@@ -79,6 +79,8 @@
             wayou.vscode-todo-highlight
             zainchen.json
             christian-kohler.path-intellisense
+            # vscodevim.vim
+            asvetliakov.vscode-neovim
           ])
           ++ (
             with pkgs.vscode-marketplace;

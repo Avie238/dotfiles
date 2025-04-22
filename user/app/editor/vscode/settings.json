@@ -180,5 +180,6 @@
   "nix.serverPath": "nixd",
   "files.associations": {
     "*.h": "cpp"
-  }
+  },
+  "editor.lineNumbers": "relative"
 }

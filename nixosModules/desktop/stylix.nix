@@ -39,7 +39,7 @@
     };
 
     targets.grub.enable = false;
-
+    targets.nvf.transparentBackground.main = true;
   };
 
   services.xserver.displayManager.lightdm = {

@@ -108,6 +108,8 @@
               sharedModules = [
                 inputs.nixcord.homeManagerModules.nixcord
                 inputs.nix-index-database.hmModules.nix-index
+                inputs.nvf.homeManagerModules.default
+
               ];
             };
 
@@ -242,6 +244,10 @@
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nvf = {
+      url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
