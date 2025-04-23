@@ -5,10 +5,8 @@
   lib,
   ...
 }:
-
 {
   config = lib.mkIf (userSettings.wm == "hyprland") {
-
     home.packages = with pkgs; [
       grim
       slurp
@@ -35,6 +33,8 @@
       fd
       lazygit
       fzf
+      unar
+      octaveFull
     ];
 
     programs.neovim.enable = true;
@@ -97,28 +97,26 @@
             "SUPER, L, exec, [workspace special:scratch_files silent] if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager}; fi"
             "SUPER, L, togglespecialworkspace,scratch_files"
           ]
-          ++ (
-
-            builtins.concatLists (
-              builtins.genList (
-                i:
-                let
-                  ws = i + 1;
-                in
-                [
-                  "$mainMod, code:1${toString i}, workspace, ${toString ws}"
-                  "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-                ]
-              ) 9
-            )
-          );
+          ++ (builtins.concatLists (
+            builtins.genList (
+              i:
+              let
+                ws = i + 1;
+              in
+              [
+                "$mainMod, code:1${toString i}, workspace, ${toString ws}"
+                "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              ]
+            ) 9
+          ));
 
         "$scratchpadsize" = "size 80% 85%";
         "$scratchpad" = "onworkspace:n[s:special:scratch]";
-
         windowrulev2 = [
           "float,$scratchpad"
           "$scratchpadsize,$scratchpad"
+          "opacity 0.95, title:.vi."
+          "opacity 0.85, class:kitty, title:negative:.vi."
         ];
 
         bindl = [
@@ -222,7 +220,6 @@
             "fadeLayersIn, 1, 1.79, almostLinear"
             "fadeLayersOut, 1, 1.39, almostLinear"
             "specialWorkspace, 1, 4, default, slidefadevert -50%"
-
           ];
         };
       };
@@ -275,7 +272,6 @@
             valign = "center";
           }
         ];
-
       };
     };
 
@@ -586,7 +582,6 @@
             timeout = 1000;
             on-timeout = "systemctl suspend";
           }
-
         ];
       };
     };
@@ -751,7 +746,5 @@
 
     # # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
     # # xdg.configFile."nvim/lua".source = ./lua;
-
   };
-
 }

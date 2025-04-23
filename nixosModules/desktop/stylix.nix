@@ -5,7 +5,6 @@
   userSettings,
   ...
 }:
-
 {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
@@ -28,7 +27,7 @@
         applications = 10;
       };
     };
-    opacity.terminal = 0.85;
+    # opacity.terminal = 0.85;
     cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Classic";
@@ -39,7 +38,8 @@
     };
 
     targets.grub.enable = false;
-    targets.nvf.transparentBackground.main = true;
+    #targets.nvf.transparentBackground.main = true;
+    targets.nixvim.transparentBackground.main = true;
   };
 
   services.xserver.displayManager.lightdm = {
@@ -50,5 +50,4 @@
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
   };
-
 }

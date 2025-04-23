@@ -38,6 +38,8 @@
     tree
     git
     nixfmt-rfc-style
+    gparted
+    # muvm
   ];
 
 }

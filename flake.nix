@@ -28,6 +28,7 @@
             inputs.nix-vscode-extensions.overlays.default
             inputs.firefox-addons.overlays.default
             inputs.nur.overlays.default
+            inputs.nixos-mmuvm-fex.overlays.default
           ];
         };
 
@@ -249,6 +250,10 @@
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-mmuvm-fex = {
+      url = "github:nrabulinski/nixos-muvm-fex";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }
