@@ -22,7 +22,7 @@
       enable = true;
       xwayland.enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-      withUWSM = true;
+      #withUWSM = true;
     };
 
     services.xserver.excludePackages = [pkgs.xterm];

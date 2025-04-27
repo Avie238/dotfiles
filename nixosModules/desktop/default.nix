@@ -1,7 +1,4 @@
-{ inputs, ... }:
-
-{
-
+{inputs, ...}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./../minimal
@@ -10,7 +7,7 @@
     ./stylix.nix
   ];
 
-  # services.flatpak.enable = true;
+  services.flatpak.enable = true;
 
   hardware.graphics = {
     enable = true;
