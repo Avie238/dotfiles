@@ -62,7 +62,7 @@
         };
 
       msi-nixos = let
-        system = "aarch64-linux";
+        system = "x86_64-linux";
         #userSettings.profile = "dekstop";
       in
         nixpkgs.lib.nixosSystem {
