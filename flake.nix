@@ -4,7 +4,6 @@
   outputs = {
     self,
     nixpkgs,
-    home-manager,
     ...
   } @ inputs: let
     systems = [
@@ -45,28 +44,37 @@
       font = "Jetbrains Mono NF";
       fontPkg = "jetbrains-mono";
       theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
+      profile = "desktop";
     };
   in {
     nixosConfigurations = {
-      avie-nixos = nixpkgs.lib.nixosSystem {
-        pkgs = pkgsFor "aarch64-linux";
-        modules = [
-          ./hosts/asahi
-          home-manager.nixosModules.home-manager
-          self.nixosModules.my-user
-        ];
-        specialArgs = {inherit inputs userSettings self;};
-      };
+      avie-nixos = let
+        system = "aarch64-linux";
+        userSettings.profile = "dekstop";
+      in
+        nixpkgs.lib.nixosSystem {
+          pkgs = pkgsFor system;
+          modules = [
+            ./hosts/asahi
+            inputs.home-manager.nixosModules.home-manager
+            self.nixosModules.my-user
+          ];
+          specialArgs = {inherit inputs userSettings self;};
+        };
 
-      msi-nixos = nixpkgs.lib.nixosSystem {
-        pkgs = pkgsFor "x86_64-linux";
-        modules = [
-          ./hosts/msi
-          home-manager.nixosModules.home-manager
-          self.nixosModules.my-user
-        ];
-        specialArgs = {inherit inputs userSettings self;};
-      };
+      msi-nixos = let
+        system = "aarch64-linux";
+        userSettings.profile = "dekstop";
+      in
+        nixpkgs.lib.nixosSystem {
+          pkgs = pkgsFor system;
+          modules = [
+            ./hosts/msi
+            inputs.home-manager.nixosModules.home-manager
+            self.nixosModules.my-user
+          ];
+          specialArgs = {inherit inputs userSettings self;};
+        };
 
       # msi-iso = nixpkgs.lib.nixosSystem {
       #   pkgs = pkgsFor "x86_64-linux";
