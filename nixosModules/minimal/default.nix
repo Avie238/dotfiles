@@ -5,9 +5,7 @@
   userSettings,
   config,
   ...
-}:
-
-{
+}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./localization.nix
@@ -22,7 +20,7 @@
     timeout = lib.mkForce 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
-  boot.supportedFilesystems = [ "apfs" ];
+  boot.supportedFilesystems = ["apfs"];
 
   nix.settings = {
     experimental-features = [
@@ -39,7 +37,5 @@
     git
     nixfmt-rfc-style
     gparted
-    # muvm
   ];
-
 }
