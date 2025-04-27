@@ -4,6 +4,7 @@
   outputs = {
     self,
     nixpkgs,
+    home-manager,
     ...
   } @ inputs: let
     systems = [
@@ -50,7 +51,6 @@
     nixosConfigurations = {
       avie-nixos = let
         system = "aarch64-linux";
-        userSettings.profile = "dekstop";
       in
         nixpkgs.lib.nixosSystem {
           pkgs = pkgsFor system;
@@ -64,7 +64,7 @@
 
       msi-nixos = let
         system = "aarch64-linux";
-        userSettings.profile = "dekstop";
+        #userSettings.profile = "dekstop";
       in
         nixpkgs.lib.nixosSystem {
           pkgs = pkgsFor system;
@@ -153,7 +153,7 @@
               ./hosts/asahi/iso
               (inputs.apple-silicon + "/iso-configuration")
               {hardware.asahi.pkgsSystem = system;}
-              home-manager.nixosModules.home-manager
+              inputs.home-manager.nixosModules.home-manager
               (self.nixosModules.users-avie {desktop = false;})
             ];
           };
