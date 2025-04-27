@@ -12,6 +12,8 @@
     ./impermanence.nix
   ];
 
+  binfmt.emulatedSystems = ["aarch64-linux"];
+
   networking.hostName = "msi-nixos";
 
   system.stateVersion = "25.05";
