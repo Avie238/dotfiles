@@ -90,7 +90,7 @@
             imports =
               if userSettings.wm != "none"
               then [./profiles/minimal.nix]
-              else [./profiles/desktop.nix];
+              else [./profiles/desktop/home.nix];
           };
           extraSpecialArgs = {inherit userSettings;};
           sharedModules = [
