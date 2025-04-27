@@ -1,12 +1,13 @@
 {
   lib,
   inputs,
+  userSettings,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./../../nixosModules/desktop
     (import ./disko.nix {device = "/dev/nvme0n1";})
+    (userSettings.dotfilesDir + "/profiles/desktop.nix")
     inputs.disko.nixosModules.default
     ./impermanence.nix
   ];
