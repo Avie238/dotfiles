@@ -1,15 +1,32 @@
-{ inputs, ... }:
-
 {
+  inputs,
+  userSettings,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
-    ./asahi.nix
-    ./boot.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
-    ./../../nixosModules/desktop
+    (userSettings.dotfilesDir + "/profiles/desktop.nix")
   ];
 
+  #Boot
+  #binfmt.emulatedSystems = [ "x86_64-linux" ];
+  loader.efi.canTouchEfiVariables = false;
+  kernelParams = [
+    "apple_dcp.show_notch=1"
+  ];
+
+  #Asahi
+  hardware.asahi = {
+    enable = true;
+    withRust = true;
+    useExperimentalGPUDriver = true;
+    experimentalGPUInstallMode = "replace";
+    setupAsahiSound = true;
+    peripheralFirmwareDirectory = ./firmware;
+  };
+
+  #General
   networking.hostName = "avie-nixos";
   system.stateVersion = "25.05";
-
 }

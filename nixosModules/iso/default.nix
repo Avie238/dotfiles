@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./../minimal
+    ./../desktop
   ];
 
   sops.enable = false;

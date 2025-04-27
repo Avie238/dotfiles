@@ -4,8 +4,7 @@
   userSettings,
   lib,
   ...
-}:
-{
+}: {
   config = lib.mkIf (userSettings.wm == "hyprland") {
     home.packages = with pkgs; [
       grim
@@ -27,14 +26,23 @@
       nur.repos.Ex-32.pokemon-colorscripts
       cmatrix
       cava
-      (import ./../scripts/pokefetch.nix { inherit pkgs; })
-      (import ./../scripts/nix-cleanup.nix { inherit pkgs; })
+      (import ./../scripts/pokefetch.nix {inherit pkgs;})
+      (import ./../scripts/nix-cleanup.nix {inherit pkgs;})
       gcc
       fd
       lazygit
       fzf
       unar
-      octaveFull
+      # octaveFull
+      ripgrep
+      ns-usbloader
+      ast-grep
+      unzip
+      wget
+      tree-sitter
+      ghostscript
+      tectonic
+      mermaid-cli
     ];
 
     programs.neovim.enable = true;
@@ -99,15 +107,14 @@
           ]
           ++ (builtins.concatLists (
             builtins.genList (
-              i:
-              let
+              i: let
                 ws = i + 1;
-              in
-              [
+              in [
                 "$mainMod, code:1${toString i}, workspace, ${toString ws}"
                 "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
               ]
-            ) 9
+            )
+            9
           ));
 
         "$scratchpadsize" = "size 80% 85%";
@@ -594,7 +601,7 @@
     services.hyprpaper.enable = true;
 
     xdg.mimeApps.defaultApplications = {
-      "inode/directory" = [ "${pkgs.xfce.thunar}/bin/thunar" ];
+      "inode/directory" = ["${pkgs.xfce.thunar}/bin/thunar"];
     };
 
     # programs.neovim = {
@@ -741,8 +748,6 @@
     #           ]
     #         )).dependencies;
     #     };
-    #   in
-    #   "${parsers}/parser";
 
     # # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
     # # xdg.configFile."nvim/lua".source = ./lua;

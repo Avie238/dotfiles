@@ -80,7 +80,7 @@
             zainchen.json
             christian-kohler.path-intellisense
             # vscodevim.vim
-            asvetliakov.vscode-neovim
+            # asvetliakov.vscode-neovim
           ])
           ++ (
             with pkgs.vscode-marketplace;

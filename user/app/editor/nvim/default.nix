@@ -272,7 +272,6 @@ in {
           },
         })
       '';
-
       lsp = {
         formatOnSave = true;
         lspkind.enable = false;

@@ -19,7 +19,7 @@
 
   boot.loader = {
     systemd-boot.enable = true;
-    timeout = 2;
+    timeout = lib.mkForce 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
   boot.supportedFilesystems = [ "apfs" ];

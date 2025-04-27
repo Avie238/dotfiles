@@ -1,7 +1,10 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
+    (import ./networks/wpa-psk.nix {
+      name = "sun2";
+      SSID = "$SUN2_SSID";
+      PASSWORD = "$SUN2_PASSWORD";
+    })
     (import ./networks/wpa-psk.nix {
       name = "sun";
       SSID = "$SUN_SSID";
@@ -32,5 +35,4 @@
   networking.networkmanager = {
     enable = true;
   };
-
 }

@@ -1,7 +1,11 @@
-{ lib, ... }:
-
 {
-
+  lib,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.impermanence.nixosModules.impermanence
+  ];
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /btrfs_tmp
     mount /dev/root_vg/root /btrfs_tmp
@@ -54,5 +58,4 @@
       }
     ];
   };
-
 }

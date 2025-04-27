@@ -1,8 +1,5 @@
-{ ... }:
-
-{
+{userSettings, ...}: {
   imports = [
     ./../user
   ];
-
 }
