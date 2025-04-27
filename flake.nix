@@ -64,7 +64,6 @@
           ./hosts/msi
           home-manager.nixosModules.home-manager
           self.nixosModules.my-user
-          inputs.impermanence.nixosModules.impermanence
         ];
         specialArgs = {inherit inputs userSettings self;};
       };

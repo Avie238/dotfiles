@@ -11,10 +11,12 @@
 
   #Boot
   #binfmt.emulatedSystems = [ "x86_64-linux" ];
-  loader.efi.canTouchEfiVariables = false;
-  kernelParams = [
-    "apple_dcp.show_notch=1"
-  ];
+  boot = {
+    loader.efi.canTouchEfiVariables = false;
+    kernelParams = [
+      "apple_dcp.show_notch=1"
+    ];
+  };
 
   #Asahi
   hardware.asahi = {
