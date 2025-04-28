@@ -6,6 +6,8 @@
   ...
 }: {
   config = lib.mkIf (userSettings.wm == "hyprland") {
+    xdg.autostart.enable = false;
+
     home.packages = with pkgs; [
       brightnessctl
       hypridle
@@ -19,9 +21,8 @@
       hyprsunset
       cmatrix
       cava
-      (import ./../scripts/pokefetch.nix {inherit pkgs;})
-      (import ./../scripts/nix-cleanup.nix {inherit pkgs;})
-      ns-usbloader
+      (import (userSettings.dotfilesDir + "/scripts/pokefetch.nix") {inherit pkgs;})
+      (import (userSettings.dotfilesDir + "/scripts/nix-cleanup.nix") {inherit pkgs;})
     ];
 
     wayland.windowManager.hyprland = {

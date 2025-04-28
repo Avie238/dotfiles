@@ -4,6 +4,7 @@
     extraConfig = ''
       Host *
         AddKeysToAgent yes
-        IdentityFile ${config.sops.secrets."id_ed25519".path}'';
+        IdentityFile ${config.sops.secrets."id_ed25519".path}
+    '';
   };
 }

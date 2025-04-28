@@ -1,5 +1,5 @@
 {userSettings, ...}: {
   imports = [
-    (userSettings.dotfilesDir + "/nixosModules/minimal")
+    (userSettings.dotfilesDir + "/nixosModules/iso")
   ];
 }

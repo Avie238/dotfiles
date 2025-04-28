@@ -1,8 +1,6 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   imports = [
-    ./../desktop
+    ./../minimal
   ];
 
   sops.enable = false;
@@ -20,11 +18,10 @@
 
   #Users
   users.users.avie.initialHashedPassword = "";
-  nix.settings.trusted-users = lib.mkForce [ "avie" ];
+  nix.settings.trusted-users = lib.mkForce ["avie"];
   users.users.nixos.enable = false;
 
   #Network
   networking.wireless.enable = false;
-  networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce [ "/wifi.env" ];
-
+  networking.networkmanager.ensureProfiles.environmentFiles = lib.mkForce ["/wifi.env"];
 }
