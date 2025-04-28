@@ -28,7 +28,14 @@
         ];
       };
 
-    userSettings = rec {
+    genUserSettings = {
+      system_type,
+      selectedProfile,
+      iso,
+    }: rec {
+      system = system_type;
+      profile = selectedProfile;
+      isIso = iso;
       username = "avie";
       name = "Avie";
       dotfilesDir = ./.;
@@ -48,74 +55,56 @@
   in {
     nixosConfigurations = {
       avie-nixos = let
-        system = "aarch64-linux";
-        profile = "desktop";
+        userSettings = genUserSettings {
+          system_type = "aarch64-linux";
+          selectedProfile = "desktop";
+          iso = false;
+        };
       in
         nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor system;
+          pkgs = pkgsFor userSettings.system;
           modules = [
-            ./hosts/asahi
+            (
+              if !userSettings.isIso
+              then ./hosts/asahi
+              else ./hosts/asahi/iso
+            )
             inputs.home-manager.nixosModules.home-manager
             self.nixosModules.my-user
           ];
-          specialArgs = {inherit inputs userSettings profile self;};
+          specialArgs = {inherit inputs userSettings self;};
         };
 
       msi-nixos = let
-        system = "x86_64-linux";
-        profile = "dekstop";
-      in
-        nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor system;
-          modules = [
-            ./hosts/msi
-            inputs.home-manager.nixosModules.home-manager
-            self.nixosModules.my-user
-          ];
-          specialArgs = {inherit inputs userSettings profile self;};
+        userSettings = genUserSettings {
+          system_type = "x86_64-linux";
+          selectedProfile = "dekstop";
+          iso = false;
         };
-
-      msi-installer = let
-        system = "x86_64-linux";
-        profile = "installer";
       in
         nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor system;
+          pkgs = pkgsFor userSettings.system;
           modules = [
-            ./hosts/msi/iso
+            (
+              if !userSettings.isIso
+              then ./hosts/msi
+              else ./hosts/msi/iso
+            )
             inputs.home-manager.nixosModules.home-manager
             self.nixosModules.my-user
           ];
-          specialArgs = {inherit inputs userSettings profile self;};
-        };
-
-      msi-recovery = let
-        system = "x86_64-linux";
-        profile = "recovery";
-      in
-        nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor system;
-          modules = [
-            ./hosts/msi/iso
-            inputs.home-manager.nixosModules.home-manager
-            self.nixosModules.my-user
-          ];
-          specialArgs = {inherit inputs userSettings profile self;};
+          specialArgs = {inherit inputs userSettings self;};
         };
     };
 
     nixosModules = {
-      my-user = {
-        userSettings,
-        profile,
-        ...
-      }: {
+      my-user = {userSettings, ...}: {
         home-manager = {
           backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = {
-            imports = [./profiles/${profile}/home.nix];
+            imports = [./profiles/${userSettings.profile}/home.nix];
           };
           extraSpecialArgs = {inherit userSettings;};
           sharedModules = [

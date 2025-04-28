@@ -2,15 +2,14 @@
   modulesPath,
   lib,
   config,
+  userSettings,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/profiles/minimal.nix")
     (modulesPath + "/profiles/installation-device.nix")
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
-    ./../../../nixosModules/iso
+    ./../../../system/iso
   ];
 
   environment.shellAliases = {
@@ -21,14 +20,13 @@
 
   # An installation media cannot tolerate a host config defined file
   # system layout on a fresh machine, before it has been formatted.
-  swapDevices = lib.mkImageMediaOverride [ ];
+  swapDevices = lib.mkImageMediaOverride [];
   fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = userSettings.system;
   system.stateVersion = "25.05";
 
   #Debug
   isoImage.compressImage = false;
   isoImage.squashfsCompression = null;
-
 }

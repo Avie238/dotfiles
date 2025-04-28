@@ -21,6 +21,7 @@
       hyprsunset
       cmatrix
       cava
+      btop
       (import (userSettings.dotfilesDir + "/scripts/pokefetch.nix") {inherit pkgs;})
       (import (userSettings.dotfilesDir + "/scripts/nix-cleanup.nix") {inherit pkgs;})
     ];
@@ -68,7 +69,9 @@
             "SUPERSHIFT, Q, exec, uwsm stop"
             "$mainMod, E, exec, uwsm app -- ${userSettings.editor}"
             "$mainMod, T, exec, uwsm app -- ${userSettings.term}"
+            #App launcher
             "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}"
+            #Screenshot
             "CTRL SHIFT, 3, exec, grimblast --freeze copysave output"
             "CTRL SHIFT, 4, exec, grimblast --freeze copysave area"
             "SUPERSHIFT, P, exec, hyprpicker --autocopy --format=hex"
@@ -78,6 +81,7 @@
             "SUPER_SHIFT, Right, exec, hyprnome --move"
             #Disable MMB
             ", mouse:274, exec,"
+            #Scratch pads
             "SUPER, RETURN, exec, [workspace special:scratch_term silent] if hyprctl clients | grep scratch_term; then echo \"scratch_term respawn not needed\"; else uwsm app -- kitty; fi"
             "SUPER, RETURN, togglespecialworkspace,scratch_term"
             "SUPER, L, exec, [workspace special:scratch_files silent] if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager}; fi"
@@ -139,7 +143,7 @@
         };
 
         general = {
-          gaps_in = 5;
+          gaps_in = 3;
           gaps_out = 7;
           border_size = 3;
 

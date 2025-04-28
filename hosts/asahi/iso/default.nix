@@ -1,9 +1,6 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
-
-    ./../../../nixosModules/iso
+    ./../../../system/iso
   ];
 
   environment.shellAliases = {
@@ -12,5 +9,4 @@
     install = "nixos-install --flake ./dotfiles#avie-nixos --no-root-passwd";
     custom-install = "clone; format-nixos; mount-filesystems; copy; install";
   };
-
 }
