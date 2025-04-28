@@ -7,45 +7,22 @@
 }: {
   config = lib.mkIf (userSettings.wm == "hyprland") {
     home.packages = with pkgs; [
-      grim
-      slurp
-      wl-clipboard
-      jq
       brightnessctl
       hypridle
-      pamixer
       lxqt.pavucontrol-qt
       networkmanagerapplet
       hyprnome
       xfce.thunar
       hyprpaper
-      hyprpicker
       grimblast
       hyprsysteminfo
       hyprsunset
-      #nur.repos.Ex-32.pokemon-colorscripts
       cmatrix
       cava
-      #(import ./../scripts/pokefetch.nix {inherit pkgs;})
-      #(import ./../scripts/nix-cleanup.nix {inherit pkgs;})
-      gcc
-      fd
-      lazygit
-      fzf
-      unar
-      # octaveFull
-      ripgrep
+      (import ./../scripts/pokefetch.nix {inherit pkgs;})
+      (import ./../scripts/nix-cleanup.nix {inherit pkgs;})
       ns-usbloader
-      ast-grep
-      unzip
-      wget
-      tree-sitter
-      ghostscript
-      tectonic
-      mermaid-cli
     ];
-
-    programs.neovim.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;

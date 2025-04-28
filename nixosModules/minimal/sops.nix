@@ -1,6 +1,9 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  userSettings,
+  ...
+}: {
   options = {
     sops.enable = lib.mkOption {
       default = true;
@@ -9,13 +12,11 @@
   };
 
   config = lib.mkIf config.sops.enable {
-
     #General
     sops = {
-      defaultSopsFile = ../../secrets/secrets.yaml;
+      defaultSopsFile = userSettings.dotfilesDir + "/secrets/secrets.yaml";
       defaultSopsFormat = "yaml";
-
-      age.keyFile = (config.users.users.avie.home + "/.config/sops/age/keys.txt");
+      age.keyFile = config.users.users.avie.home + "/.config/sops/age/keys.txt";
     };
 
     #Users
@@ -27,7 +28,6 @@
     sops.secrets."wifi.env" = {
       owner = config.users.users.avie.name;
     };
-    networking.networkmanager.ensureProfiles.environmentFiles = [ config.sops.secrets."wifi.env".path ];
-
+    networking.networkmanager.ensureProfiles.environmentFiles = [config.sops.secrets."wifi.env".path];
   };
 }

@@ -4,14 +4,13 @@
   inputs,
   userSettings,
   ...
-}:
-{
-  imports = [ inputs.stylix.nixosModules.stylix ];
+}: {
+  imports = [inputs.stylix.nixosModules.stylix];
 
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ../../wallpaper.jpg;
+    image = userSettings.dotfilesDir + "/wallpaper.jpg";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
     fonts = {
       monospace = {
@@ -37,15 +36,14 @@
       # size = 21;
     };
 
-    targets.grub.enable = false;
-    #targets.nvf.transparentBackground.main = true;
-    targets.nixvim.transparentBackground.main = true;
+    #targets.grub.enable = false;
+    targets.nvf.transparentBackground.main = true;
   };
 
-  services.xserver.displayManager.lightdm = {
-    greeters.slick.enable = true;
-    greeters.slick.theme.name = "Adwaita-dark";
-  };
+  #services.xserver.displayManager.lightdm = {
+  #  greeters.slick.enable = true;
+  #  greeters.slick.theme.name = "Adwaita-dark";
+  #};
 
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";

@@ -6,33 +6,30 @@
   ...
 }: {
   config = lib.mkIf (userSettings.wm == "hyprland") {
-    services = {
-      displayManager = {
-        sddm = {
-          enable = true;
-          #autoLogin.relogin = true;
-          wayland = {
-            enable = true;
-          };
-        };
-      };
+    services.displayManager.sddm = {
+      enable = true;
+      autoLogin.relogin = true;
+      wayland.enable = true;
     };
 
     programs.hyprland = {
       enable = true;
       xwayland.enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-      #withUWSM = true;
+      withUWSM = true;
     };
 
-    services.xserver.excludePackages = [pkgs.xterm];
-    hardware.bluetooth.enable = true;
-    hardware.bluetooth.powerOnBoot = true;
-    services.blueman.enable = true;
-    programs.nm-applet.enable = true;
-    xdg.portal = {
+    #Bluetooth
+    hardware.bluetooth = {
       enable = true;
+      powerOnBoot = true;
     };
+    services.blueman.enable = true;
+
+    #Wifi
+    programs.nm-applet.enable = true;
+
+    xdg.portal.enable = true;
 
     security.pam.services.hyprlock = {};
 
@@ -46,8 +43,10 @@
       jack.enable = true;
     };
 
+    #Trash bin
     services.gvfs.enable = true;
 
+    #Keyring
     security.pam.services.sddm.enableGnomeKeyring = true;
     services.gnome.gnome-keyring.enable = true;
   };

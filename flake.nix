@@ -1,174 +1,181 @@
 {
   description = "Avie's NixOS Flake";
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    systems = [
-      "aarch64-linux"
-      "x86_64-linux"
-    ];
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    let
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
 
-    forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
+      forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
-    pkgsFor = system:
-      import nixpkgs {
-        system = system;
-        config = {
-          allowUnfree = true;
-        };
-        overlays = [
-          inputs.apple-silicon.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
-          inputs.firefox-addons.overlays.default
-          inputs.nur.overlays.default
-        ];
-      };
-
-    userSettings = rec {
-      username = "avie";
-      name = "Avie";
-      dotfilesDir = ./.;
-      wm = "hyprland";
-      browser = "firefox";
-      term = "kitty";
-      editor = "codium";
-      fileManager = "thunar";
-      menu = "rofi";
-      menu_spawn = "${menu} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";
-      timeZone = "Europe/Amsterdam";
-      kb_layout = "pl";
-      font = "Jetbrains Mono NF";
-      fontPkg = "jetbrains-mono";
-      theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
-      profile = "desktop";
-    };
-  in {
-    nixosConfigurations = {
-      avie-nixos = let
-        system = "aarch64-linux";
-      in
-        nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor system;
-          modules = [
-            ./hosts/asahi
-            inputs.home-manager.nixosModules.home-manager
-            self.nixosModules.my-user
-          ];
-          specialArgs = {inherit inputs userSettings self;};
-        };
-
-      msi-nixos = let
-        system = "x86_64-linux";
-        #userSettings.profile = "dekstop";
-      in
-        nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor system;
-          modules = [
-            ./hosts/msi
-            inputs.home-manager.nixosModules.home-manager
-            self.nixosModules.my-user
-          ];
-          specialArgs = {inherit inputs userSettings self;};
-        };
-
-      # msi-iso = nixpkgs.lib.nixosSystem {
-      #   pkgs = pkgsFor "x86_64-linux";
-      #   modules = [
-      #     ./hosts/msi/iso
-      #     home-manager.nixosModules.home-manager
-      #     (self.nixosModules.users-avie { desktop = false; })
-      #   ];
-      #   specialArgs = { inherit inputs self; };
-      # };
-    };
-
-    nixosModules = {
-      my-user = {userSettings, ...}: {
-        home-manager = {
-          backupFileExtension = "backup";
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.${userSettings.username} = {
-            imports =
-              if userSettings.wm != "none"
-              then [./profiles/minimal.nix]
-              else [./profiles/desktop/home.nix];
+      pkgsFor =
+        system:
+        import nixpkgs {
+          system = system;
+          config = {
+            allowUnfree = true;
           };
-          extraSpecialArgs = {inherit userSettings;};
-          sharedModules = [
-            inputs.nixcord.homeManagerModules.nixcord
-            inputs.nix-index-database.hmModules.nix-index
-            inputs.nvf.homeManagerModules.default
-          ];
-        };
-      };
-    };
-
-    packages = forAllSystems (
-      system: let
-        pkgs = import inputs.nixpkgs {
-          crossSystem.system = "aarch64-linux";
-          localSystem.system = system;
           overlays = [
-            (import inputs.rust-overlay)
             inputs.apple-silicon.overlays.default
             inputs.nix-vscode-extensions.overlays.default
+            inputs.firefox-addons.overlays.default
+            inputs.nur.overlays.default
           ];
         };
-      in {
-        inherit
-          (pkgs)
-          m1n1
-          uboot-asahi
-          linux-asahi
-          asahi-fwextract
-          mesa-asahi-edge
-          ;
-        inherit (pkgs) asahi-audio;
 
-        installer-bootstrap = let
-          installer-system = inputs.nixpkgs.lib.nixosSystem {
-            inherit system;
-
-            pkgs = import inputs.nixpkgs {
-              crossSystem.system = "aarch64-linux";
-              localSystem.system = system;
-              overlays = [
-                inputs.apple-silicon.overlays.default
-                inputs.nix-vscode-extensions.overlays.default
-              ];
-            };
-
-            specialArgs = {
-              modulesPath = inputs.nixpkgs + "/nixos/modules";
-              inputs = inputs;
-            };
-
+      userSettings = rec {
+        username = "avie";
+        name = "Avie";
+        dotfilesDir = ./.;
+        wm = "hyprland";
+        browser = "firefox";
+        term = "kitty";
+        editor = "codium";
+        fileManager = "thunar";
+        menu = "rofi";
+        menu_spawn = "${menu} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";
+        timeZone = "Europe/Amsterdam";
+        kb_layout = "pl";
+        font = "Jetbrains Mono NF";
+        fontPkg = "jetbrains-mono";
+        theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
+        profile = "desktop";
+      };
+    in
+    {
+      nixosConfigurations = {
+        avie-nixos =
+          let
+            system = "aarch64-linux";
+          in
+          nixpkgs.lib.nixosSystem {
+            pkgs = pkgsFor system;
             modules = [
-              ./hosts/asahi/iso
-              (inputs.apple-silicon + "/iso-configuration")
-              {hardware.asahi.pkgsSystem = system;}
+              ./hosts/asahi
               inputs.home-manager.nixosModules.home-manager
-              (self.nixosModules.users-avie {desktop = false;})
+              self.nixosModules.my-user
             ];
+            specialArgs = { inherit inputs userSettings self; };
           };
 
-          config = installer-system.config;
-        in (config.system.build.isoImage.overrideAttrs (old: {
-          # add ability to access the whole config from the command line
-          passthru =
-            (old.passthru or {})
-            // {
-              inherit config;
+        msi-nixos =
+          let
+            system = "x86_64-linux";
+            #userSettings.profile = "dekstop";
+          in
+          nixpkgs.lib.nixosSystem {
+            pkgs = pkgsFor system;
+            modules = [
+              ./hosts/msi
+              inputs.home-manager.nixosModules.home-manager
+              self.nixosModules.my-user
+            ];
+            specialArgs = { inherit inputs userSettings self; };
+          };
+
+        # msi-iso = nixpkgs.lib.nixosSystem {
+        #   pkgs = pkgsFor "x86_64-linux";
+        #   modules = [
+        #     ./hosts/msi/iso
+        #     home-manager.nixosModules.home-manager
+        #     (self.nixosModules.users-avie { desktop = false; })
+        #   ];
+        #   specialArgs = { inherit inputs self; };
+        # };
+      };
+
+      nixosModules = {
+        my-user =
+          { userSettings, ... }:
+          {
+            home-manager = {
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${userSettings.username} = {
+                imports =
+                  if userSettings.wm != "none" then [ ./profiles/minimal.nix ] else [ ./profiles/desktop/home.nix ];
+              };
+              extraSpecialArgs = { inherit userSettings; };
+              sharedModules = [
+                inputs.nixcord.homeManagerModules.nixcord
+                inputs.nix-index-database.hmModules.nix-index
+                inputs.nvf.homeManagerModules.default
+              ];
             };
-        }));
-      }
-    );
-  };
+          };
+      };
+
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import inputs.nixpkgs {
+            crossSystem.system = "aarch64-linux";
+            localSystem.system = system;
+            overlays = [
+              (import inputs.rust-overlay)
+              inputs.apple-silicon.overlays.default
+              inputs.nix-vscode-extensions.overlays.default
+            ];
+          };
+        in
+        {
+          inherit (pkgs)
+            m1n1
+            uboot-asahi
+            linux-asahi
+            asahi-fwextract
+            mesa-asahi-edge
+            ;
+          inherit (pkgs) asahi-audio;
+
+          installer-bootstrap =
+            let
+              installer-system = inputs.nixpkgs.lib.nixosSystem {
+                inherit system;
+
+                pkgs = import inputs.nixpkgs {
+                  crossSystem.system = "aarch64-linux";
+                  localSystem.system = system;
+                  overlays = [
+                    inputs.apple-silicon.overlays.default
+                    inputs.nix-vscode-extensions.overlays.default
+                  ];
+                };
+
+                specialArgs = {
+                  modulesPath = inputs.nixpkgs + "/nixos/modules";
+                  inputs = inputs;
+                };
+
+                modules = [
+                  ./hosts/asahi/iso
+                  (inputs.apple-silicon + "/iso-configuration")
+                  { hardware.asahi.pkgsSystem = system; }
+                  inputs.home-manager.nixosModules.home-manager
+                  (self.nixosModules.users-avie { desktop = false; })
+                ];
+              };
+
+              config = installer-system.config;
+            in
+            (config.system.build.isoImage.overrideAttrs (old: {
+              # add ability to access the whole config from the command line
+              passthru = (old.passthru or { }) // {
+                inherit config;
+              };
+            }));
+        }
+      );
+    };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
