@@ -29,5 +29,10 @@
       owner = config.users.users.avie.name;
     };
     networking.networkmanager.ensureProfiles.environmentFiles = [config.sops.secrets."wifi.env".path];
+
+    #ssh
+    sops.secrets."id_ed25519" = {
+      owner = config.users.users.avie.name;
+    };
   };
 }

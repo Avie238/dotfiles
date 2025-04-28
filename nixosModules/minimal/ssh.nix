@@ -1,9 +1,9 @@
 {config, ...}: {
   programs.ssh = {
-    enable = true;
+    startAgent = true;
     extraConfig = ''
       Host *
         AddKeysToAgent yes
-        IdentityFile ${config.sops.secrets."id_ed25519"}'';
+        IdentityFile ${config.sops.secrets."id_ed25519".path}'';
   };
 }

@@ -13,6 +13,7 @@
     ./users.nix
     ./sops.nix
     ./terminal.nix
+    ./ssh.nix
   ];
 
   boot.loader = {
