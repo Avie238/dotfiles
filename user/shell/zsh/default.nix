@@ -1,5 +1,9 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
@@ -18,7 +22,7 @@
       }
     ];
 
-    initExtraFirst = ''
+    initContent = lib.mkBefore ''
       any-nix-shell zsh --info-right | source /dev/stdin
       pokefetch
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
@@ -33,7 +37,6 @@
         "sudo"
       ];
     };
-
   };
 
   home.shellAliases = {
@@ -55,5 +58,4 @@
   home.file.".hushlogin" = {
     text = "";
   };
-
 }
