@@ -22,6 +22,7 @@
       cmatrix
       cava
       btop
+      baobab
       (import (userSettings.dotfilesDir + "/scripts/pokefetch.nix") {inherit pkgs;})
       (import (userSettings.dotfilesDir + "/scripts/nix-cleanup.nix") {inherit pkgs;})
     ];

@@ -32,6 +32,7 @@
       system_type,
       selectedProfile,
       iso,
+      windowManager ? "hyprland",
     }: rec {
       system = system_type;
       profile = selectedProfile;
@@ -39,7 +40,7 @@
       username = "avie";
       name = "Avie";
       dotfilesDir = ./.;
-      wm = "hyprland";
+      wm = windowManager;
       browser = "firefox";
       term = "kitty";
       editor = "codium";
@@ -121,11 +122,22 @@
         pkgs = import inputs.nixpkgs {
           crossSystem.system = "aarch64-linux";
           localSystem.system = system;
+          config = {
+            allowUnfree = true;
+          };
           overlays = [
             (import inputs.rust-overlay)
             inputs.apple-silicon.overlays.default
             inputs.nix-vscode-extensions.overlays.default
+            inputs.firefox-addons.overlays.default
+            inputs.nur.overlays.default
           ];
+        };
+        userSettings = genUserSettings {
+          system_type = "aarch64-linux";
+          selectedProfile = "recovery";
+          iso = true;
+          windowManager = "gnome";
         };
       in {
         inherit
@@ -145,15 +157,20 @@
             pkgs = import inputs.nixpkgs {
               crossSystem.system = "aarch64-linux";
               localSystem.system = system;
+              config = {
+                allowUnfree = true;
+              };
               overlays = [
                 inputs.apple-silicon.overlays.default
                 inputs.nix-vscode-extensions.overlays.default
+                inputs.firefox-addons.overlays.default
+                inputs.nur.overlays.default
               ];
             };
-
             specialArgs = {
               modulesPath = inputs.nixpkgs + "/nixos/modules";
               inputs = inputs;
+              userSettings = userSettings;
             };
 
             modules = [
@@ -161,7 +178,7 @@
               (inputs.apple-silicon + "/iso-configuration")
               {hardware.asahi.pkgsSystem = system;}
               inputs.home-manager.nixosModules.home-manager
-              (self.nixosModules.users-avie {desktop = false;})
+              self.nixosModules.my-user
             ];
           };
 

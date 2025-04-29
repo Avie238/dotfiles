@@ -12,18 +12,18 @@
         "org/gnome/desktop/interface" = {
           show-battery-percentage = true;
         };
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-        };
+        # "org/gnome/desktop/interface" = {
+        #   color-scheme = "prefer-dark";
+        # };
       };
     };
 
-    gtk = {
-      enable = true;
-      theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome-themes-extra;
-      };
-    };
+    # gtk = {
+    #   enable = true;
+    #   theme = {
+    #     name = "Adwaita-dark";
+    #     package = pkgs.gnome-themes-extra;
+    #   };
+    # };
   };
 }

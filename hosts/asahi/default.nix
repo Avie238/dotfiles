@@ -6,7 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     inputs.apple-silicon.nixosModules.apple-silicon-support
-    (userSettings.dotfilesDir + "/profiles/desktop/configuration.nix")
+    (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
   ];
 
   #Boot

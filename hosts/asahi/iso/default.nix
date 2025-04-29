@@ -1,6 +1,8 @@
-{...}: {
+{userSettings, ...}: {
   imports = [
     ./../../../system/iso
+
+    (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
   ];
 
   environment.shellAliases = {

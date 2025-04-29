@@ -45,7 +45,7 @@
   #  greeters.slick.theme.name = "Adwaita-dark";
   #};
 
-  environment.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "qt5ct";
-  };
+  # environment.sessionVariables = {
+  #   QT_QPA_PLATFORMTHEME = "qt5ct";
+  # };
 }
