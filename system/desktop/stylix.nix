@@ -35,7 +35,6 @@
       # name = "Quintom_Ink";
       # size = 21;
     };
-
     #targets.grub.enable = false;
     targets.nvf.transparentBackground.main = true;
   };

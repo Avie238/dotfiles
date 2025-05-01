@@ -43,7 +43,19 @@
       wm = windowManager;
       browser = "firefox";
       term = "kitty";
-      editor = "codium";
+      editor = "nvim";
+      spawnEditor =
+        if
+          ((editor == "vim")
+            || (editor == "nvim")
+            || (editor == "nano"))
+        then term + " -e " + editor
+        else
+          (
+            if (editor == "neovide")
+            then "neovide -- --listen /tmp/nvimsocket"
+            else editor
+          );
       fileManager = "thunar";
       menu = "rofi";
       menu_spawn = "${menu} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";

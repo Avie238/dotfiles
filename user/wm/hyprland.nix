@@ -8,6 +8,11 @@
   config = lib.mkIf (userSettings.wm == "hyprland") {
     xdg.autostart.enable = false;
 
+    gtk.iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
+    };
+
     home.packages = with pkgs; [
       brightnessctl
       hypridle
@@ -34,7 +39,7 @@
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
           "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
           "[workspace 1 silent] uwsm app -- ${userSettings.term}"
-          "[workspace 2 silent] uwsm app -- ${userSettings.editor}"
+          "[workspace 2 silent] uwsm app -- ${userSettings.spawnEditor}"
           "[workspace 3 silent] uwsm app -- ${userSettings.browser}"
         ];
 
@@ -68,7 +73,7 @@
           [
             "$mainMod, Q, killactive,"
             "SUPERSHIFT, Q, exec, uwsm stop"
-            "$mainMod, E, exec, uwsm app -- ${userSettings.editor}"
+            "$mainMod, E, exec, uwsm app -- ${userSettings.spawnEditor}"
             "$mainMod, T, exec, uwsm app -- ${userSettings.term}"
             #App launcher
             "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}"
@@ -129,10 +134,10 @@
           "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
         ];
 
-        workspace = [
-          #Auto open firefox on new workspace
-          "r[3-9], on-created-empty:[] firefox"
-        ];
+        # workspace = [
+        #   #Auto open firefox on new workspace
+        #   "r[3-9], on-created-empty:[] firefox"
+        # ];
 
         ecosystem = {
           no_update_news = true;
