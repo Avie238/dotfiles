@@ -148,8 +148,9 @@
         userSettings = genUserSettings {
           system_type = "aarch64-linux";
           selectedProfile = "recovery";
+          # selectedProfile = "installer";
           iso = true;
-          windowManager = "gnome";
+          windowManager = "hyprland";
         };
       in {
         inherit

@@ -8,7 +8,6 @@
   ];
 
   home.packages = with pkgs; [
-    jetbrains.idea-ultimate
     qbittorrent
     nixd
     nodejs_23

@@ -399,7 +399,8 @@
           format = "{icon}";
         };
         clock = {
-          format = " {:%H:%M}";
+          format = " {:%H:%M :%d-%m %a}";
+          on-click = "uwsm app -- firefox -new-window \"https://calendar.google.com/calendar/u/0/r\"";
         };
         pulseaudio = {
           format = "{volume}% {icon} ";
