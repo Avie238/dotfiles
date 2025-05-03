@@ -16,10 +16,10 @@
     home.packages = with pkgs; [
       brightnessctl
       hypridle
-      lxqt.pavucontrol-qt
+      # lxqt.pavucontrol-qt
       networkmanagerapplet
       hyprnome
-      xfce.thunar
+      # xfce.thunar
       hyprpaper
       grimblast
       hyprsysteminfo
@@ -28,8 +28,9 @@
       cava
       btop
       baobab
-      (import (userSettings.dotfilesDir + "/scripts/pokefetch.nix") {inherit pkgs;})
       (import (userSettings.dotfilesDir + "/scripts/nix-cleanup.nix") {inherit pkgs;})
+      dunst
+      (import (userSettings.dotfilesDir + "/scripts/volumeControl.nix") {inherit pkgs;})
     ];
 
     wayland.windowManager.hyprland = {
@@ -37,7 +38,6 @@
       settings = {
         exec-once = [
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
-          "wpctl set-mute @DEFAULT_AUDIO_SINK@ 1"
           "[workspace 1 silent] uwsm app -- ${userSettings.term}"
           "[workspace 2 silent] uwsm app -- ${userSettings.spawnEditor}"
           "[workspace 3 silent] uwsm app -- ${userSettings.browser}"
@@ -119,9 +119,9 @@
         ];
 
         bindel = [
-          ",XF86AudioRaiseVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-          ",XF86AudioLowerVolume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ",XF86AudioRaiseVolume, exec, volumeControl -i"
+          ",XF86AudioLowerVolume, exec, volumeControl -d"
+          ",XF86AudioMute, exec, volumeControl -m"
           ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
           ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
         ];
@@ -281,13 +281,14 @@
           "group/power"
           "custom/right-arrow-dark"
           "custom/right-arrow-light"
-          "clock"
+          "custom/clock"
           "custom/right-arrow-dark"
           "custom/right-arrow-light"
           "hyprland/workspaces"
           "custom/right-arrow-dark"
         ];
         modules-right = [
+          "idle_inhibitor"
           "custom/left-arrow-dark"
           "pulseaudio"
           "custom/left-arrow-light"
@@ -365,6 +366,13 @@
           format = "";
           tooltip = false;
         };
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            "activated" = "";
+            "deactivated" = "";
+          };
+        };
         backlight = {
           format = "{icon}";
           format-icons = [
@@ -398,9 +406,11 @@
           disable-scroll = true;
           format = "{icon}";
         };
-        clock = {
-          format = " {:%H:%M :%d-%m %a}";
+        "custom/clock" = {
+          exec = "date +\"%H:%M %a %-d %b\"";
+          interval = 1;
           on-click = "uwsm app -- firefox -new-window \"https://calendar.google.com/calendar/u/0/r\"";
+          tooltip = false;
         };
         pulseaudio = {
           format = "{volume}% {icon} ";
@@ -470,7 +480,7 @@
         }
 
         #workspaces,
-        #clock,
+        #custom-clock,
         #pulseaudio,
         #memory,
         #cpu,
@@ -533,7 +543,7 @@
         #backlight{
           padding-right: 10px;
         }
-        #clock,
+        #custom-clock,
         #workspaces {
           padding-left: 10px;
         }
@@ -588,6 +598,8 @@
     };
 
     services.hyprpaper.enable = true;
+
+    services.dunst.enable = true;
 
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = ["${pkgs.xfce.thunar}/bin/thunar"];

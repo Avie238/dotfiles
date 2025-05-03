@@ -8,5 +8,11 @@
   services.kmscon = {
     enable = true;
     autologinUser = "avie";
+    fonts = [
+      {
+        name = "MesloLGS NF";
+        package = pkgs.meslo-lgs-nf;
+      }
+    ];
   };
 }

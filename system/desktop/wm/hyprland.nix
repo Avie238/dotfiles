@@ -21,13 +21,13 @@
 
     #Bluetooth
     hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
+      enable = !userSettings.isIso;
+      powerOnBoot = !userSettings.isIso;
     };
-    services.blueman.enable = true;
+    services.blueman.enable = !userSettings.isIso;
 
     #Wifi
-    programs.nm-applet.enable = true;
+    programs.nm-applet.enable = !userSettings.isIso;
 
     xdg.portal.enable = true;
 
@@ -41,13 +41,14 @@
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
+      wireplumber.extraConfig = {"wireplumber.settings" = {"device.routes.default-sink-volume" = 0;};};
     };
 
     #Trash bin
-    services.gvfs.enable = true;
+    services.gvfs.enable = !userSettings.isIso;
 
     #Keyring
-    security.pam.services.sddm.enableGnomeKeyring = true;
-    services.gnome.gnome-keyring.enable = true;
+    security.pam.services.sddm.enableGnomeKeyring = !userSettings.isIso;
+    services.gnome.gnome-keyring.enable = !userSettings.isIso;
   };
 }

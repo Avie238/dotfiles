@@ -1,6 +1,12 @@
-{ ... }:
-
 {
+  pkgs,
+  userSettings,
+  ...
+}: {
+  home.packages = [
+    (import (userSettings.dotfilesDir + "/scripts/pokefetch.nix") {inherit pkgs;})
+  ];
+
   programs.fastfetch = {
     enable = true;
     settings = builtins.fromJSON ''
