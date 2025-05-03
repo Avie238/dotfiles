@@ -7,31 +7,31 @@ pkgs.writeShellScriptBin "volumeControl" ''
     i)
       if [ $isMuted -ge 1 ]; then
         ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-        notify-send -t 1500 " " -h int:value:$(($(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100))
       else
         ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-        notify-send -t 1500 " " -h int:value:$(($(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100))
       fi
+      notify-send -t 1500 " " -h int:value:$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100" | ${pkgs.bc}/bin/bc)
       exit 1
       ;;
     d)
       if [ $isMuted -ge 1 ]; then
         ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-        notify-send -t 1500 " " -h int:value:$(($(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100))
       else
         ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-        notify-send -t 1500 " " -h int:value:$(($(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100))
       fi
+      notify-send -t 1500 " " -h int:value:$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100" | ${pkgs.bc}/bin/bc)
       exit 1
       ;;
     m)
       if [ $isMuted -ge 1 ]; then
         ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+
         notify-send -t 1500 " " -h int:value:$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100" | ${pkgs.bc}/bin/bc)
 
       else
         ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
-        notify-send -t 1500 "󰖁 " -h int:value:0
+        notify-send -t 1500 " " -h int:value:0
+        # notify-send -t 1500 "󰖁 " -h int:value:0
       fi
       exit 1
       ;;
