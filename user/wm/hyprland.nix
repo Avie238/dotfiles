@@ -281,6 +281,9 @@
           "group/power"
           "custom/right-arrow-dark"
           "custom/right-arrow-light"
+          "idle_inhibitor"
+          "custom/right-arrow-dark"
+          "custom/right-arrow-light"
           "custom/clock"
           "custom/right-arrow-dark"
           "custom/right-arrow-light"
@@ -288,7 +291,6 @@
           "custom/right-arrow-dark"
         ];
         modules-right = [
-          "idle_inhibitor"
           "custom/left-arrow-dark"
           "pulseaudio"
           "custom/left-arrow-light"
@@ -367,7 +369,7 @@
           tooltip = false;
         };
         idle_inhibitor = {
-          format = "{icon}";
+          format = "{icon} ";
           format-icons = {
             "activated" = "";
             "deactivated" = "";
@@ -490,7 +492,8 @@
         #temperature,
         #backlight,
         #custom-os,
-        .not-power {
+        .not-power,
+        #idle_inhibitor{
           background: ${base01};
         }
 
@@ -532,7 +535,6 @@
           color: #9c0425;
         }
 
-
         #pulseaudio,
         #memory,
         #cpu,
@@ -543,6 +545,7 @@
         #backlight{
           padding-right: 10px;
         }
+
         #custom-clock,
         #workspaces {
           padding-left: 10px;
