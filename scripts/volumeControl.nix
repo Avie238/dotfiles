@@ -27,10 +27,8 @@ pkgs.writeShellScriptBin "volumeControl" ''
     m)
       if [ $isMuted -ge 1 ]; then
         ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-        A=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2)
-        B=$(echo "$A * 100" | ${pkgs.bc}/bin/bc)
+        notify-send -t 1500 " " -h int:value:$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100" | ${pkgs.bc}/bin/bc)
 
-        notify-send -t 1500 " " -h int:value:$B
       else
         ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
         notify-send -t 1500 "󰖁 " -h int:value:0
