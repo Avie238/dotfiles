@@ -16,10 +16,10 @@
     home.packages = with pkgs; [
       brightnessctl
       hypridle
-      # lxqt.pavucontrol-qt
+      lxqt.pavucontrol-qt
       networkmanagerapplet
       hyprnome
-      # xfce.thunar
+      xfce.thunar
       hyprpaper
       grimblast
       hyprsysteminfo
@@ -31,6 +31,7 @@
       (import (userSettings.dotfilesDir + "/scripts/nix-cleanup.nix") {inherit pkgs;})
       dunst
       (import (userSettings.dotfilesDir + "/scripts/volumeControl.nix") {inherit pkgs;})
+      (import (userSettings.dotfilesDir + "/scripts/brightnessControl.nix") {inherit pkgs;})
     ];
 
     wayland.windowManager.hyprland = {
@@ -122,8 +123,8 @@
           ",XF86AudioRaiseVolume, exec, volumeControl -i"
           ",XF86AudioLowerVolume, exec, volumeControl -d"
           ",XF86AudioMute, exec, volumeControl -m"
-          ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
-          ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+          ",XF86MonBrightnessUp, exec, brightnessControl -i"
+          ",XF86MonBrightnessDown, exec, brightnessControl -d"
         ];
 
         windowrule = [
