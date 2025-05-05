@@ -3,9 +3,7 @@
   userSettings,
   lib,
   ...
-}:
-
-{
+}: {
   config = lib.mkIf (userSettings.browser == "firefox") {
     programs.firefox = {
       enable = true;
@@ -38,12 +36,12 @@
                   }
                 ];
                 icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = [ "@np" ];
+                definedAliases = ["@np"];
               };
               "My NixOS" = {
-                urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
+                urls = [{template = "https://mynixos.com/search?q={searchTerms}";}];
                 icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = [ "@mn" ];
+                definedAliases = ["@mn"];
               };
             };
           };
@@ -55,6 +53,14 @@
               sponsorblock
             ];
           };
+          settings = {
+            "media.gmp-widevinecdm.version" = "system-installed";
+            "media.gmp-widevinecdm.visible" = true;
+            "media.gmp-widevinecdm.enabled" = true;
+            "media.gmp-widevinecdm.autoupdate" = false;
+            "media.eme.enabled" = true;
+            "media.eme.encrypted-media-encryption-scheme.enabled" = true;
+          };
         };
       };
       policies = {
@@ -63,43 +69,16 @@
         DontCheckDefaultBrowser = true;
         DisablePocket = true;
         SearchBar = "unified";
-
-        # Preferences = {
-        #   # Privacy settings
-        #   "extensions.pocket.enabled" = lock-false;
-        #   "browser.newtabpage.pinned" = lock-empty-string;
-        #   "browser.topsites.contile.enabled" = lock-false;
-        #   "browser.newtabpage.activity-stream.showSponsored" = lock-false;
-        #   "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
-        #   "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
-        # };
-
-        # ExtensionSettings = {
-        #   "uBlock0@raymondhill.net" = {
-        #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-        #     installation_mode = "force_installed";
-        #   };
-        #   "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-        #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-        #     installation_mode = "force_installed";
-        #   };
-        #   "jid1-MnnxcxisBPnSXQ@jetpack" = {
-        #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-        #     installation_mode = "force_installed";
-        #   };
-        #   "extension@tabliss.io" = {
-        #     install_url = "https://addons.mozilla.org/firefox/downloads/file/3940751/tabliss-2.6.0.xpi";
-        #     installation_mode = "force_installed";
-        #   };
-        # };
       };
-
     };
     xdg.autostart.entries = [
       "${pkgs.firefox}/share/applications/firefox.desktop"
     ];
 
-    stylix.targets.firefox.profileNames = [ "default" ];
-  };
+    stylix.targets.firefox.profileNames = ["default"];
 
+    home.sessionVariables = {
+      MOZ_GMP_PATH = "${pkgs.widevine-firefox}/gmp-widevinecdm/system-installed";
+    };
+  };
 }

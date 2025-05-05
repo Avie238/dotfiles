@@ -3,6 +3,7 @@
   config,
   userSettings,
   lib,
+  inputs,
   ...
 }: {
   config = lib.mkIf (userSettings.wm == "hyprland") {
@@ -28,12 +29,11 @@
       cava
       btop
       baobab
-      (import (userSettings.dotfilesDir + "/scripts/nix-cleanup.nix") {inherit pkgs;})
       dunst
-      (import (userSettings.dotfilesDir + "/scripts/volumeControl.nix") {inherit pkgs;})
-      (import (userSettings.dotfilesDir + "/scripts/brightnessControl.nix") {inherit pkgs;})
+      nix-cleanup
+      volumeControl
+      brightnessControl
     ];
-
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
@@ -128,7 +128,7 @@
         ];
 
         windowrule = [
-          "workspace empty,class:^(vesktop|firefox)$"
+          # "workspace empty,class:^(vesktop|firefox)$"
           "float, title:^(Volume Control|Bluetooth Devices|Network Connections)$"
           "size 50% 50%, title:^(Volume Control|Bluetooth Devices|Network Connections)$"
           "suppressevent maximize, class:.*"
@@ -604,6 +604,9 @@
     services.hyprpaper.enable = true;
 
     services.dunst.enable = true;
+    programs.tmux = {
+      enable = true;
+    };
 
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = ["${pkgs.xfce.thunar}/bin/thunar"];

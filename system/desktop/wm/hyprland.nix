@@ -25,7 +25,6 @@
       powerOnBoot = !userSettings.isIso;
     };
     services.blueman.enable = !userSettings.isIso;
-
     #Wifi
     programs.nm-applet.enable = !userSettings.isIso;
 

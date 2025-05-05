@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  lib,
+  ...
+}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./../minimal
@@ -11,5 +15,6 @@
 
   hardware.graphics = {
     enable = true;
+    enable32Bit = lib.mkForce false;
   };
 }

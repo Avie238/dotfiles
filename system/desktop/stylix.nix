@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   inputs,
   userSettings,
@@ -26,25 +25,11 @@
         applications = 10;
       };
     };
-    # opacity.terminal = 0.85;
     cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Classic";
       size = 20;
-      # package = pkgs.quintom-cursor-theme;
-      # name = "Quintom_Ink";
-      # size = 21;
     };
-    #targets.grub.enable = false;
     targets.nvf.transparentBackground.main = true;
   };
-
-  #services.xserver.displayManager.lightdm = {
-  #  greeters.slick.enable = true;
-  #  greeters.slick.theme.name = "Adwaita-dark";
-  #};
-
-  # environment.sessionVariables = {
-  #   QT_QPA_PLATFORMTHEME = "qt5ct";
-  # };
 }

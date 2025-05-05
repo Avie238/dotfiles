@@ -25,22 +25,26 @@
           inputs.nix-vscode-extensions.overlays.default
           inputs.firefox-addons.overlays.default
           inputs.nur.overlays.default
+          (import ./packages/overlay.nix)
+          (import ./scripts/overlay.nix)
         ];
       };
 
     genUserSettings = {
-      system_type,
-      selectedProfile,
-      iso,
-      windowManager ? "hyprland",
+      systemArg,
+      hostArg,
+      profileArg ? "desktop",
+      isIsoArg ? false,
+      wmArg ? "hyprland",
     }: rec {
-      system = system_type;
-      profile = selectedProfile;
-      isIso = iso;
+      system = systemArg;
+      host = hostArg;
+      profile = profileArg;
+      isIso = isIsoArg;
       username = "avie";
       name = "Avie";
       dotfilesDir = ./.;
-      wm = windowManager;
+      wm = wmArg;
       browser = "firefox";
       term = "kitty";
       editor = "nvim";
@@ -65,51 +69,44 @@
       fontPkg = "jetbrains-mono";
       theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
     };
+
+    nixosSystemFor = userSettings:
+      nixpkgs.lib.nixosSystem {
+        pkgs = pkgsFor userSettings.system;
+        modules = [
+          (
+            if !userSettings.isIso
+            then ./hosts/${userSettings.host}
+            else ./hosts/${userSettings.host}/iso
+          )
+          inputs.home-manager.nixosModules.home-manager
+          self.nixosModules.my-user
+        ];
+        specialArgs = {inherit inputs userSettings self;};
+      };
   in {
     nixosConfigurations = {
-      avie-nixos = let
-        userSettings = genUserSettings {
-          system_type = "aarch64-linux";
-          selectedProfile = "desktop";
-          iso = false;
-        };
-      in
-        nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor userSettings.system;
-          modules = [
-            (
-              if !userSettings.isIso
-              then ./hosts/asahi
-              else ./hosts/asahi/iso
-            )
-            inputs.home-manager.nixosModules.home-manager
-            self.nixosModules.my-user
-          ];
-          specialArgs = {inherit inputs userSettings self;};
-        };
+      avie-nixos = nixosSystemFor (genUserSettings {
+        systemArg = "aarch64-linux";
+        hostArg = "asahi";
+      });
 
-      msi-nixos = let
-        userSettings = genUserSettings {
-          system_type = "x86_64-linux";
-          selectedProfile = "dekstop";
-          iso = false;
-        };
-      in
-        nixpkgs.lib.nixosSystem {
-          pkgs = pkgsFor userSettings.system;
-          modules = [
-            (
-              if !userSettings.isIso
-              then ./hosts/msi
-              else ./hosts/msi/iso
-            )
-            inputs.home-manager.nixosModules.home-manager
-            self.nixosModules.my-user
-          ];
-          specialArgs = {inherit inputs userSettings self;};
-        };
+      avie-nixos-iso = nixosSystemFor (genUserSettings {
+        systemArg = "aarch64-linux";
+        hostArg = "asahi";
+        isIsoArg = true;
+      });
+
+      vie-nixos = nixosSystemFor (genUserSettings {
+        systemArg = "aarch64-linux";
+        hostArg = "asahi";
+      });
+
+      msi-nixos = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "msi";
+      });
     };
-
     nixosModules = {
       my-user = {userSettings, ...}: {
         home-manager = {
@@ -119,9 +116,9 @@
           users.${userSettings.username} = {
             imports = [./profiles/${userSettings.profile}/home.nix];
           };
-          extraSpecialArgs = {inherit userSettings;};
+          extraSpecialArgs = {inherit userSettings inputs;};
           sharedModules = [
-            inputs.nixcord.homeManagerModules.nixcord
+            inputs.nixcord.homeModules.nixcord
             inputs.nix-index-database.hmModules.nix-index
             inputs.nvf.homeManagerModules.default
           ];

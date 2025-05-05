@@ -1,10 +1,6 @@
-{
-  pkgs,
-  userSettings,
-  ...
-}: {
-  home.packages = [
-    (import (userSettings.dotfilesDir + "/scripts/pokefetch.nix") {inherit pkgs;})
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    pokefetch
   ];
 
   programs.fastfetch = {

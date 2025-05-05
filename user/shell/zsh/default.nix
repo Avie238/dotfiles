@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  userSettings,
   ...
 }: {
   programs.zsh = {
@@ -53,6 +54,7 @@
     VISUAL = "codium --wait";
     EDITOR = "${config.home.sessionVariables.VISUAL}";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    NIXPKGS_ALLOW_UNFREE = 1;
   };
 
   home.file.".hushlogin" = {
