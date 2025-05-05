@@ -1,9 +1,7 @@
 {
   pkgs,
-  config,
   userSettings,
   lib,
-  inputs,
   ...
 }: {
   imports = [
@@ -21,14 +19,11 @@
 
     home.packages = with pkgs; [
       brightnessctl
-      hypridle
-      lxqt.pavucontrol-qt
       networkmanagerapplet
       hyprnome
-      xfce.thunar
       hyprpaper
+      (userSettings.fileManager.package)
       grimblast
-      hyprsysteminfo
       hyprsunset
       cmatrix
       cava
@@ -46,7 +41,7 @@
         exec-once = [
           "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
           "[workspace 1 silent] uwsm app -- ${userSettings.term}"
-          "[workspace 2 silent] uwsm app -- ${userSettings.spawnEditor}"
+          "[workspace 2 silent] uwsm app -- ${userSettings.editor.spawn}"
           "[workspace 3 silent] uwsm app -- ${userSettings.browser}"
         ];
 
@@ -80,10 +75,10 @@
           [
             "$mainMod, Q, killactive,"
             "SUPERSHIFT, Q, exec, uwsm stop"
-            "$mainMod, E, exec, uwsm app -- ${userSettings.spawnEditor}"
+            "$mainMod, E, exec, uwsm app -- ${userSettings.editor.spawn}"
             "$mainMod, T, exec, uwsm app -- ${userSettings.term}"
             #App launcher
-            "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu} || ${userSettings.menu_spawn}"
+            "$mainMod, $mainMod_L, exec, pkill ${userSettings.menu.name} || ${userSettings.menu.spawn}"
             #Screenshot
             "CTRL SHIFT, 3, exec, grimblast --freeze copysave output"
             "CTRL SHIFT, 4, exec, grimblast --freeze copysave area"
@@ -97,7 +92,7 @@
             #Scratch pads
             "SUPER, RETURN, exec, [workspace special:scratch_term silent] if hyprctl clients | grep scratch_term; then echo \"scratch_term respawn not needed\"; else uwsm app -- kitty; fi"
             "SUPER, RETURN, togglespecialworkspace,scratch_term"
-            "SUPER, L, exec, [workspace special:scratch_files silent] if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager}; fi"
+            "SUPER, L, exec, [workspace special:scratch_files silent] if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager.name}; fi"
             "SUPER, L, togglespecialworkspace,scratch_files"
           ]
           ++ (builtins.concatLists (
@@ -232,7 +227,8 @@
       systemd.enable = false;
     };
 
-    programs.rofi = {
+    programs.rofi = lib.mkIf (userSettings.menu.name
+      == "rofi") {
       enable = true;
       package = pkgs.rofi-wayland;
     };
@@ -240,12 +236,13 @@
     services.hyprpaper.enable = true;
 
     services.dunst.enable = true;
+
     programs.tmux = {
       enable = true;
     };
 
     xdg.mimeApps.defaultApplications = {
-      "inode/directory" = ["${pkgs."${userSettings.fileManager}"}/bin/${userSettings.fileManager}"];
+      "inode/directory" = ["${pkgs."${userSettings.fileManager.package}"}/bin/${userSettings.fileManager}"];
     };
   };
 }

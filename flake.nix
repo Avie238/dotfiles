@@ -47,26 +47,24 @@
       wm = wmArg;
       browser = "firefox";
       term = "kitty";
-      editor = "nvim";
-      spawnEditor =
-        if
-          ((editor == "vim")
-            || (editor == "nvim")
-            || (editor == "nano"))
-        then term + " -e " + editor
-        else
-          (
-            if (editor == "neovide")
-            then "neovide -- --listen /tmp/nvimsocket"
-            else editor
-          );
-      fileManager = "thunar";
-      menu = "rofi";
-      menu_spawn = "${menu} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";
+      editor = {
+        name = "nvim";
+        spawn = term + " -e " + editor.name;
+      };
+      fileManager = {
+        name = "thunar";
+        package = (pkgsFor system).xfce.thunar;
+      };
+      menu = {
+        name = "rofi";
+        spawn = "${menu.name} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";
+      };
       timeZone = "Europe/Amsterdam";
       kb_layout = "pl";
-      font = "Jetbrains Mono NF";
-      fontPkg = "jetbrains-mono";
+      font = {
+        name = "Jetbrains Mono NF";
+        package = (pkgsFor system).nerd-fonts.jetbrains-mono;
+      };
       theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
     };
 

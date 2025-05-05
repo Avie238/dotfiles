@@ -13,8 +13,8 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/${userSettings.theme}.yaml";
     fonts = {
       monospace = {
-        name = userSettings.font;
-        package = pkgs.nerd-fonts.${userSettings.fontPkg};
+        name = userSettings.font.name;
+        package = userSettings.font.package;
       };
       emoji = {
         name = "Noto Color Emoji";

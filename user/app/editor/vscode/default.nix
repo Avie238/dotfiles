@@ -4,10 +4,7 @@
   config,
   userSettings,
   ...
-}:
-
-{
-
+}: {
   options = {
     vscode.js = lib.mkOption {
       default = true;
@@ -43,7 +40,7 @@
     };
   };
 
-  config = lib.mkIf (userSettings.editor == "codium") {
+  config = lib.mkIf (userSettings.editor.name == "codium") {
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
@@ -85,79 +82,76 @@
           ++ (
             with pkgs.vscode-marketplace;
             # JS/TS
-            lib.optionals config.vscode.js [
-              anbuselvanrocky.bootstrap5-vscode
-              bradlc.vscode-tailwindcss
-              christian-kohler.npm-intellisense
-              chflick.firecode
-              dsznajder.es7-react-js-snippets
-              equimper.react-native-react-redux
-              ms-vscode.vscode-typescript-next
-              wix.glean
-              xabikos.javascriptsnippets
-            ]
-            #Python
-            ++ lib.optionals config.vscode.python [
-              ms-python.black-formatter
-              ms-python.debugpy
-              ms-python.isort
-              ms-python.python
-              detachhead.basedpyright
-              kevinrose.vsc-python-indent
-              ms-toolsai.jupyter-keymap
-              ms-toolsai.jupyter-renderers
-              ms-toolsai.vscode-jupyter-cell-tags
-              ms-toolsai.vscode-jupyter-slideshow
-              percy.vscode-numpy-viewer
-              percy.vscode-pydata-viewer
-            ]
-            #C++
-            ++ lib.optionals config.vscode.C [
-              hars.cppsnippets
-              jeff-hykin.better-cpp-syntax
-              ms-vscode.cpptools
-              ms-vscode.cpptools-extension-pack
-              ms-vscode.cpptools-themes
-            ]
-            #Java
-            ++ lib.optionals config.vscode.Java [
-              redhat.java
-              vscjava.vscode-gradle
-              vscjava.vscode-java-debug
-              vscjava.vscode-java-dependency
-              vscjava.vscode-java-pack
-              vscjava.vscode-java-test
-            ]
-            #Unity
-            ++ lib.optionals config.vscode.Unity [
-              tobiah.unity-tools
-              yclepticstudios.unity-snippets
-              kleber-swf.unity-code-snippets
-            ]
-            #SQL
-            ++ lib.optionals config.vscode.SQL [
-              mtxr.sqltools
-              mtxr.sqltools-driver-mysql
-            ]
-
+              lib.optionals config.vscode.js [
+                anbuselvanrocky.bootstrap5-vscode
+                bradlc.vscode-tailwindcss
+                christian-kohler.npm-intellisense
+                chflick.firecode
+                dsznajder.es7-react-js-snippets
+                equimper.react-native-react-redux
+                ms-vscode.vscode-typescript-next
+                wix.glean
+                xabikos.javascriptsnippets
+              ]
+              #Python
+              ++ lib.optionals config.vscode.python [
+                ms-python.black-formatter
+                ms-python.debugpy
+                ms-python.isort
+                ms-python.python
+                detachhead.basedpyright
+                kevinrose.vsc-python-indent
+                ms-toolsai.jupyter-keymap
+                ms-toolsai.jupyter-renderers
+                ms-toolsai.vscode-jupyter-cell-tags
+                ms-toolsai.vscode-jupyter-slideshow
+                percy.vscode-numpy-viewer
+                percy.vscode-pydata-viewer
+              ]
+              #C++
+              ++ lib.optionals config.vscode.C [
+                hars.cppsnippets
+                jeff-hykin.better-cpp-syntax
+                ms-vscode.cpptools
+                ms-vscode.cpptools-extension-pack
+                ms-vscode.cpptools-themes
+              ]
+              #Java
+              ++ lib.optionals config.vscode.Java [
+                redhat.java
+                vscjava.vscode-gradle
+                vscjava.vscode-java-debug
+                vscjava.vscode-java-dependency
+                vscjava.vscode-java-pack
+                vscjava.vscode-java-test
+              ]
+              #Unity
+              ++ lib.optionals config.vscode.Unity [
+                tobiah.unity-tools
+                yclepticstudios.unity-snippets
+                kleber-swf.unity-code-snippets
+              ]
+              #SQL
+              ++ lib.optionals config.vscode.SQL [
+                mtxr.sqltools
+                mtxr.sqltools-driver-mysql
+              ]
           )
           ++ (
             with pkgs.vscode-extensions;
             #C#
-            lib.optionals config.vscode.CSharp [
-              ms-dotnettools.csdevkit
-              ms-dotnettools.csharp
-              ms-dotnettools.vscode-dotnet-runtime
-              ms-dotnettools.vscodeintellicode-csharp
-            ]
-            #Git
-            ++ lib.optionals config.vscode.Git [
-
-              gitlab.gitlab-workflow
-              eamodio.gitlens
-            ]
+              lib.optionals config.vscode.CSharp [
+                ms-dotnettools.csdevkit
+                ms-dotnettools.csharp
+                ms-dotnettools.vscode-dotnet-runtime
+                ms-dotnettools.vscodeintellicode-csharp
+              ]
+              #Git
+              ++ lib.optionals config.vscode.Git [
+                gitlab.gitlab-workflow
+                eamodio.gitlens
+              ]
           );
-
       };
     };
 

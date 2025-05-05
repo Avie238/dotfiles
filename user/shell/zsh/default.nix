@@ -51,7 +51,7 @@
   };
 
   home.sessionVariables = {
-    VISUAL = "codium --wait";
+    VISUAL = "nvim";
     EDITOR = "${config.home.sessionVariables.VISUAL}";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     NIXPKGS_ALLOW_UNFREE = 1;
