@@ -1,10 +1,10 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "pokefetch" ''
+  name="-rn lunala,noivern,palkia,espeon,sylveon,corviknight,tapu-fini,goodra"
   while getopts "n:" flag; do
    case $flag in
      n)
-      ${pkgs.fastfetch}/bin/fastfetch --logo "$(${pkgs.nur.repos.Ex-32.pokemon-colorscripts}/bin/pokemon-colorscripts -n $OPTARG --no-title)" --logo-type data
+     name="-n $OPTARG"
       exit 1
       ;;
      \?)
@@ -13,5 +13,5 @@ pkgs.writeShellScriptBin "pokefetch" ''
       ;;
    esac
   done
-  ${pkgs.fastfetch}/bin/fastfetch --logo "$(${pkgs.nur.repos.Ex-32.pokemon-colorscripts}/bin/pokemon-colorscripts -rn lunala,noivern,palkia,espeon,sylveon,corviknight,tapu-fini,goodra --no-title)" --logo-type data
+  ${pkgs.fastfetch}/bin/fastfetch --logo "$(${pkgs.nur.repos.Ex-32.pokemon-colorscripts}/bin/pokemon-colorscripts $name --no-title)" --logo-type data
 ''

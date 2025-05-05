@@ -1,11 +1,8 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   imports = [
     ./gnome.nix
-    ./hyprland.nix
+    ./hyprland
   ];
 
   systemd.user.sessionVariables = config.home.sessionVariables;
-
 }
