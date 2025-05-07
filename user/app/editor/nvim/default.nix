@@ -15,6 +15,7 @@
         lspsaga.enable = false;
         trouble.enable = true;
         lspSignature.enable = true;
+        otter-nvim.enable = true;
       };
 
       languages = {
@@ -33,7 +34,6 @@
         ts.enable = true;
         lua.enable = true;
         python.enable = true;
-        tailwind.enable = false;
       };
 
       extraPackages = with pkgs; [
@@ -121,6 +121,14 @@
                 { "nvim-treesitter/nvim-treesitter", enabled = false },
                 { "williamboman/mason-lspconfig.nvim", enabled = false },
                 { "williamboman/mason.nvim", enabled = false },
+                {
+                  "stevearc/conform.nvim",
+                  opts = {
+                    formatters_by_ft = {
+                        java = { "google-java-format" },
+                    }
+                  }
+                }
               },
             })
           '';

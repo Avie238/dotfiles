@@ -21,7 +21,7 @@
     timeout = lib.mkForce 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
-  boot.supportedFilesystems = ["apfs" "ntfs"];
+  boot.supportedFilesystems = ["ntfs"];
 
   nix.settings = {
     experimental-features = [
@@ -37,6 +37,5 @@
     tree
     git
     nixfmt-rfc-style
-    gparted
   ];
 }

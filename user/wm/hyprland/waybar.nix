@@ -206,107 +206,109 @@
           format = "{temperatureC}°C  ";
         };
       };
-      style = with config.lib.stylix.colors.withHashtag; ''
-        * {
-          font-size: 15px;
-          font-family: monospace;
-        }
+      style = with config.lib.stylix.colors.withHashtag;
+      #css
+        ''
+          * {
+            font-size: 15px;
+            font-family: monospace;
+          }
 
-        window#waybar {
-          background: ${base00};
-        }
+          window#waybar {
+            background: ${base00};
+          }
 
-        #custom-right-arrow-dark,
-        #custom-left-arrow-dark {
-          color: ${base01};
-          font-size: 20px;
-        }
-        #custom-right-arrow-light,
-        #custom-left-arrow-light {
-          color: ${base00};
-          background: ${base01};
-          font-size: 20px;
-        }
+          #custom-right-arrow-dark,
+          #custom-left-arrow-dark {
+            color: ${base01};
+            font-size: 20px;
+          }
+          #custom-right-arrow-light,
+          #custom-left-arrow-light {
+            color: ${base00};
+            background: ${base01};
+            font-size: 20px;
+          }
 
-        #workspaces,
-        #custom-clock,
-        #pulseaudio,
-        #memory,
-        #cpu,
-        #battery,
-        #disk,
-        #tray,
-        #temperature,
-        #backlight,
-        #custom-os,
-        .not-power,
-        #idle_inhibitor{
-          background: ${base01};
-        }
+          #workspaces,
+          #custom-clock,
+          #pulseaudio,
+          #memory,
+          #cpu,
+          #battery,
+          #disk,
+          #tray,
+          #temperature,
+          #backlight,
+          #custom-os,
+          .not-power,
+          #idle_inhibitor{
+            background: ${base01};
+          }
 
-        #workspaces button {
-          padding: 0 2px;
-          color: ${base06};
+          #workspaces button {
+            padding: 0 2px;
+            color: ${base06};
 
-        }
-        #workspaces button.active {
-          color: ${base03};
-          background:  ${base00};
-        }
-        #workspaces button:hover {
-          box-shadow: inherit;
-          text-shadow: inherit;
-        }
-        #workspaces button:hover {
-          background:  ${base00};
-          border:  ${base00};
-          padding: 0 3px;
-        }
+          }
+          #workspaces button.active {
+            color: ${base03};
+            background:  ${base00};
+          }
+          #workspaces button:hover {
+            box-shadow: inherit;
+            text-shadow: inherit;
+          }
+          #workspaces button:hover {
+            background:  ${base00};
+            border:  ${base00};
+            padding: 0 3px;
+          }
 
-        #pulseaudio {
-          color: #268bd2;
-        }
-        #memory {
-          color: #2aa198;
-        }
-        #cpu {
-          color: #6c71c4;
-        }
-        #battery {
-          color: #859900;
-        }
-        #battery.warning {
-          color: #b58900;
-        }
-        #battery.critical {
-          color: #9c0425;
-        }
+          #pulseaudio {
+            color: #268bd2;
+          }
+          #memory {
+            color: #2aa198;
+          }
+          #cpu {
+            color: #6c71c4;
+          }
+          #battery {
+            color: #859900;
+          }
+          #battery.warning {
+            color: #b58900;
+          }
+          #battery.critical {
+            color: #9c0425;
+          }
 
-        #pulseaudio,
-        #memory,
-        #cpu,
-        #battery,
-        #disk,
-        #temperature,
-        #tray,
-        #backlight{
-          padding-right: 10px;
-        }
+          #pulseaudio,
+          #memory,
+          #cpu,
+          #battery,
+          #disk,
+          #temperature,
+          #tray,
+          #backlight{
+            padding-right: 10px;
+          }
 
-        #custom-clock,
-        #workspaces {
-          padding-left: 10px;
-        }
+          #custom-clock,
+          #workspaces {
+            padding-left: 10px;
+          }
 
-        #custom-os,
-        #custom-quit,
-        #custom-lock,
-        #custom-reboot,
-        #custom-logout,
-        #custom-power {
-          font-size: 18px;
-        }
-      '';
+          #custom-os,
+          #custom-quit,
+          #custom-lock,
+          #custom-reboot,
+          #custom-logout,
+          #custom-power {
+            font-size: 18px;
+          }
+        '';
     };
   };
 }

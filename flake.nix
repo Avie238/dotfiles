@@ -4,7 +4,6 @@
   outputs = {
     self,
     nixpkgs,
-    home-manager,
     ...
   } @ inputs: let
     systems = [
@@ -27,6 +26,7 @@
           inputs.nur.overlays.default
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
+          # inputs.nixos-mmuvm-fex.overlays.default
         ];
       };
 
@@ -52,8 +52,8 @@
         spawn = term + " -e " + editor.name;
       };
       fileManager = {
-        name = "thunar";
-        package = (pkgsFor system).xfce.thunar;
+        name = "ranger";
+        package = (pkgsFor system).ranger;
       };
       menu = {
         name = "rofi";
@@ -89,25 +89,25 @@
         hostArg = "asahi";
       });
 
-      avie-nixos-iso = nixosSystemFor (genUserSettings {
-        systemArg = "aarch64-linux";
-        hostArg = "asahi";
-        isIsoArg = true;
-      });
-
-      vie-nixos = nixosSystemFor (genUserSettings {
-        systemArg = "aarch64-linux";
-        hostArg = "asahi";
-      });
-
       msi-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";
       });
+
+      msi-nixos-live = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "msi";
+        isIsoArg = true;
+      });
     };
+
     nixosModules = {
-      my-user = {userSettings, ...}: {
-        home-manager = {
+      my-user = {
+        userSettings,
+        inputs,
+        ...
+      }: {
+        inputs.home-manager = {
           backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
@@ -133,19 +133,20 @@
             allowUnfree = true;
           };
           overlays = [
-            (import inputs.rust-overlay)
             inputs.apple-silicon.overlays.default
             inputs.nix-vscode-extensions.overlays.default
             inputs.firefox-addons.overlays.default
             inputs.nur.overlays.default
+            (import ./packages/overlay.nix)
+            (import ./scripts/overlay.nix)
           ];
         };
         userSettings = genUserSettings {
-          system_type = "aarch64-linux";
-          selectedProfile = "recovery";
-          # selectedProfile = "installer";
-          iso = true;
-          windowManager = "hyprland";
+          systemArg = "aarch64-linux";
+          hostArg = "asahi";
+          profileArg = "installer";
+          isIsoArg = true;
+          wmArg = "none";
         };
       in {
         inherit
@@ -173,8 +174,11 @@
                 inputs.nix-vscode-extensions.overlays.default
                 inputs.firefox-addons.overlays.default
                 inputs.nur.overlays.default
+                (import ./packages/overlay.nix)
+                (import ./scripts/overlay.nix)
               ];
             };
+
             specialArgs = {
               modulesPath = inputs.nixpkgs + "/nixos/modules";
               inputs = inputs;
@@ -207,7 +211,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     apple-silicon = {
-      url = "github:Avie238/nixos-apple-silicon";
+      # url = "github:Avie238/nixos-apple-silicon";
+      # url = "github:flokli/nixos-apple-silicon/wip";
+      url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -274,5 +280,6 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-mmuvm-fex.url = "github:nrabulinski/nixos-muvm-fex";
   };
 }

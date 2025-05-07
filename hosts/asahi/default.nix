@@ -21,9 +21,9 @@
   #Asahi
   hardware.asahi = {
     enable = true;
-    withRust = true;
+    # withRust = true;
     useExperimentalGPUDriver = true;
-    experimentalGPUInstallMode = "replace";
+    # experimentalGPUInstallMode = "replace";
     setupAsahiSound = true;
     peripheralFirmwareDirectory = ./firmware;
   };

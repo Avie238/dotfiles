@@ -2,6 +2,7 @@
   pkgs,
   userSettings,
   lib,
+  inputs,
   ...
 }: {
   imports = [
@@ -240,6 +241,8 @@
     programs.tmux = {
       enable = true;
     };
+
+    home.file.".config/environment.d/gsk.conf".text = "GSK_RENDERER=gl";
 
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = ["${pkgs."${userSettings.fileManager.package}"}/bin/${userSettings.fileManager}"];
