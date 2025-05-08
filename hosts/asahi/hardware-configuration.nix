@@ -16,8 +16,8 @@
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/vg-nixos-root/lv-ania";
-    fsType = "btrfs";
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
   };
 
   fileSystems."/boot" = {
