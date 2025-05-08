@@ -4,6 +4,7 @@
   outputs = {
     self,
     nixpkgs,
+    home-manager,
     ...
   } @ inputs: let
     systems = [
@@ -102,12 +103,8 @@
     };
 
     nixosModules = {
-      my-user = {
-        userSettings,
-        inputs,
-        ...
-      }: {
-        inputs.home-manager = {
+      my-user = {userSettings, ...}: {
+        home-manager = {
           backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
