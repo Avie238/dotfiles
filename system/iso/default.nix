@@ -13,7 +13,6 @@
 
   environment.shellAliases = {
     clone = "git clone https://github.com/Avie238/dotfiles && cd dotfiles";
-    copy = "sudo mkdir -p /mnt/var/lib/sops-nix && sudo cp /keys.txt /mnt/var/lib/sops-nix/keys.txt";
   };
 
   #Users

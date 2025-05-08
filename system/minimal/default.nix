@@ -2,8 +2,6 @@
   pkgs,
   lib,
   inputs,
-  userSettings,
-  config,
   ...
 }: {
   imports = [
@@ -34,7 +32,6 @@
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
-    tree
     git
     nixfmt-rfc-style
   ];

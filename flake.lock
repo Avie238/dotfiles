@@ -24,16 +24,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1745702639,
-        "narHash": "sha256-YwsgMXuq1+yJiRKMWcOmyy6ZxZo4uvSMwGfXnCbRCgQ=",
-        "owner": "flokli",
+        "lastModified": 1746452339,
+        "narHash": "sha256-rbMQTD4NygYcWjw+6Z/Ze9Vvzi9Sz4GfRJcy3B5t57Y=",
+        "owner": "yuyuyureka",
         "repo": "nixos-apple-silicon",
-        "rev": "88b5a309cda528ba3829a2cffb64960c97bbddce",
+        "rev": "d0abfb0f8feaaa1ad7640f518f5fcc97fd7979ab",
         "type": "github"
       },
       "original": {
-        "owner": "flokli",
-        "ref": "wip",
+        "owner": "yuyuyureka",
+        "ref": "minimize-patches",
         "repo": "nixos-apple-silicon",
         "type": "github"
       }

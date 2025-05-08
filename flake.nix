@@ -27,7 +27,7 @@
           inputs.nur.overlays.default
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
-          # inputs.nixos-mmuvm-fex.overlays.default
+          inputs.nixos-mmuvm-fex.overlays.default
         ];
       };
 
@@ -55,6 +55,7 @@
       fileManager = {
         name = "ranger";
         package = (pkgsFor system).ranger;
+        spawn = term + " -e " + fileManager.name;
       };
       menu = {
         name = "rofi";
@@ -209,8 +210,8 @@
 
     apple-silicon = {
       # url = "github:Avie238/nixos-apple-silicon";
-      url = "github:flokli/nixos-apple-silicon/wip";
-      # url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
+      # url = "github:flokli/nixos-apple-silicon/wip";
+      url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

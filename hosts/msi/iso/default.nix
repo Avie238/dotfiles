@@ -14,6 +14,7 @@
 
   environment.shellAliases = {
     partition = "sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/msi/disko.nix --arg device \'\"/dev/nvme0n1\"\' --yes-wipe-all-disks";
+    copy = "sudo mkdir -p /mnt/var/lib/sops-nix && sudo cp /keys.txt /mnt/var/lib/sops-nix/keys.txt";
     install = "sudo nixos-install --flake ./#msi-nixos --no-root-passwd";
     custom-install = "clone; partition; copy; install";
   };
