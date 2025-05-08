@@ -209,8 +209,8 @@
 
     apple-silicon = {
       # url = "github:Avie238/nixos-apple-silicon";
-      # url = "github:flokli/nixos-apple-silicon/wip";
-      url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
+      url = "github:flokli/nixos-apple-silicon/wip";
+      # url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
