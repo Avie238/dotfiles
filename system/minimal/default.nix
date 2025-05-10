@@ -34,5 +34,6 @@
   environment.systemPackages = with pkgs; [
     git
     nixfmt-rfc-style
+    (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
   ];
 }

@@ -33,7 +33,6 @@
       nix-cleanup
       volumeControl
       brightnessControl
-      # muvm
     ];
 
     wayland.windowManager.hyprland = {

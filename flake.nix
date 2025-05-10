@@ -27,7 +27,7 @@
           inputs.nur.overlays.default
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
-          inputs.nixos-mmuvm-fex.overlays.default
+          inputs.nixos-muvm-fex.overlays.default
         ];
       };
 
@@ -209,10 +209,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     apple-silicon = {
-      # url = "github:Avie238/nixos-apple-silicon";
-      # url = "github:flokli/nixos-apple-silicon/wip";
       url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -236,11 +234,6 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      flake = false;
-    };
 
     flake-compat.url = "github:nix-community/flake-compat";
 
@@ -278,6 +271,6 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-mmuvm-fex.url = "github:nrabulinski/nixos-muvm-fex";
+    nixos-muvm-fex.url = "github:nrabulinski/nixos-muvm-fex";
   };
 }

@@ -9,6 +9,7 @@
     settings.vim = {
       useSystemClipboard = true;
       lsp = {
+        enable = true;
         formatOnSave = true;
         lspkind.enable = false;
         lightbulb.enable = true;
@@ -19,7 +20,6 @@
       };
 
       languages = {
-        enableLSP = true;
         enableFormat = true;
         enableTreesitter = true;
         enableExtraDiagnostics = true;
@@ -33,7 +33,10 @@
         java.enable = true;
         ts.enable = true;
         lua.enable = true;
-        python.enable = true;
+        python = {
+          enable = true;
+          format.type = "black-and-isort";
+        };
       };
 
       extraPackages = with pkgs; [
@@ -44,7 +47,6 @@
         tree-sitter
         ghostscript
         tectonic
-        mermaid-cli
         wl-clipboard
         gcc
         fd
@@ -85,6 +87,11 @@
               tokyonight-nvim
               trouble-nvim
               which-key-nvim
+              snacks-nvim
+              mini-ai
+              mini-icons
+              mini-pairs
+              ts-comments-nvim
               {
                 name = "LuaSnip";
                 path = luasnip;
@@ -121,14 +128,6 @@
                 { "nvim-treesitter/nvim-treesitter", enabled = false },
                 { "williamboman/mason-lspconfig.nvim", enabled = false },
                 { "williamboman/mason.nvim", enabled = false },
-                {
-                  "stevearc/conform.nvim",
-                  opts = {
-                    formatters_by_ft = {
-                        java = { "google-java-format" },
-                    }
-                  }
-                }
               },
             })
           '';
