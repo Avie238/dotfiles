@@ -1,5 +1,11 @@
-{ config, ... }:
 {
+  config,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.nixcord.homeModules.nixcord
+  ];
 
   programs.nixcord = {
     enable = true;
@@ -12,6 +18,5 @@
       "splashColor" = config.lib.stylix.colors.withHashtag.base05;
       "splashBackground" = config.lib.stylix.colors.withHashtag.base00;
     };
-
   };
 }

@@ -13,5 +13,5 @@ pkgs.writeShellScriptBin "pokefetch" ''
       ;;
    esac
   done
-  ${pkgs.fastfetch}/bin/fastfetch --logo "$(${pkgs.nur.repos.Ex-32.pokemon-colorscripts}/bin/pokemon-colorscripts $name --no-title)" --logo-type data
+  ${pkgs.fastfetch}/bin/fastfetch --logo "$(${pkgs.pokemon-colorscripts}/bin/pokemon-colorscripts $name --no-title)" --logo-type data
 ''

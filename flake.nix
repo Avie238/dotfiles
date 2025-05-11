@@ -24,10 +24,9 @@
           inputs.apple-silicon.overlays.default
           inputs.nix-vscode-extensions.overlays.default
           inputs.firefox-addons.overlays.default
-          inputs.nur.overlays.default
+          inputs.nixos-muvm-fex.overlays.default
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
-          inputs.nixos-muvm-fex.overlays.default
         ];
       };
 
@@ -114,9 +113,7 @@
           };
           extraSpecialArgs = {inherit userSettings inputs;};
           sharedModules = [
-            inputs.nixcord.homeModules.nixcord
             inputs.nix-index-database.hmModules.nix-index
-            inputs.nvf.homeManagerModules.default
           ];
         };
       };
@@ -210,7 +207,6 @@
 
     apple-silicon = {
       url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -257,11 +253,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -271,6 +262,7 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nixos-muvm-fex.url = "github:nrabulinski/nixos-muvm-fex";
   };
 }
