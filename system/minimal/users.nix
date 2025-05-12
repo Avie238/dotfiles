@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{...}: {
   security.sudo.wheelNeedsPassword = false;
 
   users.users.avie = {
@@ -12,7 +9,5 @@
       "docker"
     ];
     createHome = true;
-    shell = pkgs.zsh;
   };
-
 }

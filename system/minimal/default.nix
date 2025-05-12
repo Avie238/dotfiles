@@ -1,11 +1,5 @@
-{
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: {
+{lib, ...}: {
   imports = [
-    inputs.sops-nix.nixosModules.sops
     ./localization.nix
     ./network.nix
     ./users.nix
@@ -28,12 +22,4 @@
     ];
     download-buffer-size = 524288000;
   };
-
-  virtualisation.docker.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    git
-    nixfmt-rfc-style
-    (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
-  ];
 }

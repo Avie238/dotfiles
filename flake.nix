@@ -207,6 +207,7 @@
 
     apple-silicon = {
       url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
+      # url = "github:tpwrules/nixos-apple-silicon";
     };
 
     home-manager = {

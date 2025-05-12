@@ -2,8 +2,11 @@
   config,
   lib,
   userSettings,
+  inputs,
   ...
 }: {
+  imports = [inputs.sops-nix.nixosModules.sops];
+
   options = {
     sops.enable = lib.mkOption {
       default = true;
@@ -21,8 +24,8 @@
 
     #Users
     sops.secrets."user_passwords/avie".neededForUsers = true;
-    users.users.avie.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
-    users.users.root.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
+    users.users.avie.hashedPassword = config.sops.secrets."user_passwords/avie".path;
+    users.users.root.hashedPassword = config.sops.secrets."user_passwords/avie".path;
 
     #Network
     sops.secrets."wifi.env" = {

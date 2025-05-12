@@ -2,6 +2,7 @@
   pkgs,
   userSettings,
   lib,
+  inputs,
   ...
 }: {
   imports = [
@@ -33,6 +34,7 @@
       nix-cleanup
       volumeControl
       brightnessControl
+      (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
     ];
 
     wayland.windowManager.hyprland = {

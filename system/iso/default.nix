@@ -4,6 +4,8 @@
   ];
 
   sops.enable = false;
+
+  #FIXME: Cross compilation not working for some reason
   localization.enable = false;
 
   system.activationScripts.copySecrets.text = ''
