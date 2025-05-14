@@ -4,7 +4,8 @@
   lib,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./hypridle.nix
     ./hyprlock.nix
@@ -99,14 +100,15 @@
           ]
           ++ (builtins.concatLists (
             builtins.genList (
-              i: let
+              i:
+              let
                 ws = i + 1;
-              in [
+              in
+              [
                 "$mainMod, code:1${toString i}, workspace, ${toString ws}"
                 "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
               ]
-            )
-            9
+            ) 9
           ));
 
         "$scratchpadsize" = "size 80% 85%";
@@ -114,8 +116,8 @@
         windowrulev2 = [
           "float,$scratchpad"
           "$scratchpadsize,$scratchpad"
-          "opacity 0.95, title:.vi."
-          "opacity 0.85, class:kitty, title:negative:.vi."
+          "opacity 0.95, title:.vi.*"
+          "opacity 0.85, class:kitty, title:negative:.vi.*"
         ];
 
         bindl = [
@@ -229,8 +231,7 @@
       systemd.enable = false;
     };
 
-    programs.rofi = lib.mkIf (userSettings.menu.name
-      == "rofi") {
+    programs.rofi = lib.mkIf (userSettings.menu.name == "rofi") {
       enable = true;
       package = pkgs.rofi-wayland;
     };
@@ -246,7 +247,9 @@
     home.file.".config/environment.d/gsk.conf".text = "GSK_RENDERER=gl";
 
     xdg.mimeApps.defaultApplications = {
-      "inode/directory" = ["${pkgs."${userSettings.fileManager.package}"}/bin/${userSettings.fileManager}"];
+      "inode/directory" = [
+        "${pkgs."${userSettings.fileManager.package}"}/bin/${userSettings.fileManager}"
+      ];
     };
   };
 }

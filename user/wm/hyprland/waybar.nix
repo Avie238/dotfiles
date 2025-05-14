@@ -4,7 +4,8 @@
   userSettings,
   lib,
   ...
-}: {
+}:
+{
   options = {
     hyprland.waybar = lib.mkOption {
       default = userSettings.wm == "hyprland";
@@ -206,8 +207,9 @@
           format = "{temperatureC}°C  ";
         };
       };
-      style = with config.lib.stylix.colors.withHashtag;
-      #css
+      style =
+        with config.lib.stylix.colors.withHashtag;
+        #css
         ''
           * {
             font-size: 15px;

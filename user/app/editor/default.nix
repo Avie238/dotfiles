@@ -3,7 +3,7 @@
 {
   imports = [
     ./vscode
-    ./nvim/nvim.nix
+    ./nvim
   ];
 
 }
