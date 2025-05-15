@@ -1,13 +1,10 @@
 {
   config,
-  lib,
   inputs,
   ...
-}:
-let
+}: let
   utils = inputs.nixCats.utils;
-in
-{
+in {
   imports = [
     inputs.nixCats.homeModule
   ];
@@ -17,21 +14,12 @@ in
       addOverlays = [
         (utils.standardPluginOverlay inputs)
       ];
-      packageNames = [ "myHomeModuleNvim" ];
+      packageNames = ["nvim"];
 
       luaPath = ./.;
 
       categoryDefinitions.replace = (
-        {
-          pkgs,
-          settings,
-          categories,
-          extra,
-          name,
-          mkPlugin,
-          ...
-        }@packageDef:
-        {
+        {pkgs, ...}: {
           lspsAndRuntimeDeps = {
             general = with pkgs; [
               universal-ctags
@@ -43,12 +31,11 @@ in
               fd
               stdenv.cc.cc
               lua-language-server
-              nil # I would go for nixd but lazy chooses this one idk
               stylua
               wl-clipboard
-              nixfmt-rfc-style
+              nil
+              alejandra
             ];
-
           };
 
           startupPlugins = {
@@ -85,10 +72,7 @@ in
               snacks-nvim
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
-              {
-                plugin = catppuccin-nvim;
-                name = "catppuccin";
-              }
+              precognition-nvim
               {
                 plugin = mini-ai;
                 name = "mini.ai";
@@ -105,61 +89,53 @@ in
                 plugin = mini-base16;
                 name = "mini.base16";
               }
-              {
-                plugin = base16-nvim;
-                name = "base16-colorscheme";
-              }
             ];
           };
         }
       );
 
-      # see :help nixCats.flake.outputs.packageDefinitions
       packageDefinitions.replace = {
-        # These are the names of your packages
-        # you can include as many as you wish.
-        myHomeModuleNvim =
-          { pkgs, name, ... }:
-          {
-            # they contain a settings set defined above
-            # see :help nixCats.flake.outputs.settings
-            settings = {
-              suffix-path = true;
-              suffix-LD = true;
-              wrapRc = true;
-              aliases = [
-                "vim"
-                "homeVim"
-                "nvim"
-              ];
-              hosts.python3.enable = true;
-              hosts.node.enable = true;
-              colors = with config.lib.stylix.colors.withHashtag; {
-                base00 = base00;
-                base01 = base01;
-                base02 = base02;
-                base03 = base03;
-                base04 = base04;
-                base05 = base05;
-                base06 = base06;
-                base07 = base07;
-                base08 = base08;
-                base09 = base09;
-                base0A = base0A;
-                base0B = base0B;
-                base0C = base0C;
-                base0D = base0D;
-                base0E = base0E;
-                base0F = base0F;
-              };
+        nvim = {
+          pkgs,
+          name,
+          ...
+        }: {
+          settings = {
+            suffix-path = true;
+            suffix-LD = true;
+            wrapRc = true;
+            aliases = [
+              "vim"
+              "vi"
+            ];
+            hosts.python3.enable = true;
+            hosts.node.enable = true;
+            colors = with config.lib.stylix.colors.withHashtag; {
+              base00 = base00;
+              base01 = base01;
+              base02 = base02;
+              base03 = base03;
+              base04 = base04;
+              base05 = base05;
+              base06 = base06;
+              base07 = base07;
+              base08 = base08;
+              base09 = base09;
+              base0A = base0A;
+              base0B = base0B;
+              base0C = base0C;
+              base0D = base0D;
+              base0E = base0E;
+              base0F = base0F;
             };
-
-            categories = {
-              general = true;
-              test = false;
-            };
-            extra = { };
           };
+
+          categories = {
+            general = true;
+            test = false;
+          };
+          extra = {};
+        };
       };
     };
   };

@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     ./localization.nix
     ./network.nix
@@ -22,4 +26,5 @@
     ];
     download-buffer-size = 524288000;
   };
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 }

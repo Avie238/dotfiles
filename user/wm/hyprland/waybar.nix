@@ -163,13 +163,13 @@
           tooltip = false;
         };
         pulseaudio = {
-          format = "{volume}% {icon} ";
+          format = "{volume}% {icon}";
           format-bluetooth = "{volume}% {icon} ";
           format-muted = "󰖁 ";
           format-icons = {
             default = [
-              ""
-              ""
+              " "
+              " "
             ];
           };
           scroll-step = 1;
