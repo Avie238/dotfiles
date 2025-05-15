@@ -3,4 +3,5 @@ final: prev: {
   volumeControl = final.callPackage ./volumeControl.nix {};
   brightnessControl = final.callPackage ./brightnessControl.nix {};
   nix-cleanup = final.callPackage ./nix-cleanup.nix {};
+  # runtimeShell = prev.zsh;
 }

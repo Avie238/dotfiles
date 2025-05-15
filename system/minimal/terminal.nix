@@ -10,8 +10,8 @@
     autologinUser = "avie";
     fonts = [
       {
-        name = "MesloLGS NF";
-        package = pkgs.meslo-lgs-nf;
+        name = "Jetbrains Mono NF";
+        package = pkgs.nerd-fonts.jetbrains-mono;
       }
     ];
     extraConfig = "font-size=22";

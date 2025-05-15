@@ -35,6 +35,7 @@ in {
               wl-clipboard
               nixd
               alejandra
+              pokemon-colorscripts
             ];
           };
 
