@@ -6,7 +6,6 @@ require("nixCatsUtils").setup({
 	non_nix_value = true,
 })
 
--- NOTE: You might want to move the lazy-lock.json file
 local function getlockfilepath()
 	if require("nixCatsUtils").isNixCats and type(nixCats.settings.unwrappedCfgPath) == "string" then
 		return nixCats.settings.unwrappedCfgPath .. "/lazy-lock.json"
@@ -51,3 +50,5 @@ require("nixCatsUtils.lazyCat").setup(nixCats.pawsible({ "allPlugins", "start", 
 	-- import/override with your plugins
 	{ import = "plugins" },
 }, lazyOptions)
+
+vim.cmd("colorscheme base16-uwunicorn")

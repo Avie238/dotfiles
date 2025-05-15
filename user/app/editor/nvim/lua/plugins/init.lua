@@ -1,6 +1,10 @@
 return {
 	{
+		"RRethy/base16-nvim",
+	},
+	{
 		"echasnovski/mini.base16",
+		enabled = false,
 		config = function()
 			require("mini.base16").setup({
 				palette = {
@@ -33,20 +37,19 @@ return {
 		"neovim/nvim-lspconfig",
 		opts = {
 			servers = {
-				nil_ls = {},
-				-- nixd = {
-				-- 	nixpkgs = {
-				-- 		expr = "import <nixpkgs> { }",
-				-- 	},
-				-- 	options = {
-				-- 		nixos = {
-				-- 			expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
-				-- 		},
-				-- 		home_manager = {
-				-- 			expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
-				-- 		},
-				-- 	},
-				-- },
+				nixd = {
+					nixpkgs = {
+						expr = "import <nixpkgs> { }",
+					},
+					options = {
+						nixos = {
+							expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
+						},
+						home_manager = {
+							expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
+						},
+					},
+				},
 			},
 		},
 	},

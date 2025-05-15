@@ -89,6 +89,7 @@ in {
                 plugin = mini-base16;
                 name = "mini.base16";
               }
+              base16-nvim
             ];
           };
         }
