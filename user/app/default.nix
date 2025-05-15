@@ -9,7 +9,6 @@
 
   home.packages = with pkgs; [
     qbittorrent
-    nixd
     ns-usbloader
   ];
 }

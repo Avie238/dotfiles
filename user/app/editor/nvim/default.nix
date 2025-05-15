@@ -33,7 +33,7 @@ in {
               lua-language-server
               stylua
               wl-clipboard
-              nil
+              nixd
               alejandra
             ];
           };
@@ -73,6 +73,7 @@ in {
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
               precognition-nvim
+              base16-nvim
               {
                 plugin = mini-ai;
                 name = "mini.ai";
@@ -85,11 +86,6 @@ in {
                 plugin = mini-pairs;
                 name = "mini.pairs";
               }
-              {
-                plugin = mini-base16;
-                name = "mini.base16";
-              }
-              base16-nvim
             ];
           };
         }

@@ -20,7 +20,8 @@ local lazyOptions = {
 -- NOTE: this the lazy wrapper. Use it like require('lazy').setup() but with an extra
 -- argument, the path to lazy.nvim as downloaded by nix, or nil, before the normal arguments.
 require("nixCatsUtils.lazyCat").setup(nixCats.pawsible({ "allPlugins", "start", "lazy.nvim" }), {
-	{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+	{ "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = function() end } },
+
 	-- disable mason.nvim while using nix
 	-- precompiled binaries do not agree with nixos, and we can just make nix install this stuff for us.
 	{ "williamboman/mason-lspconfig.nvim", enabled = require("nixCatsUtils").lazyAdd(true, false) },
@@ -50,5 +51,3 @@ require("nixCatsUtils.lazyCat").setup(nixCats.pawsible({ "allPlugins", "start", 
 	-- import/override with your plugins
 	{ import = "plugins" },
 }, lazyOptions)
-
-vim.cmd("colorscheme base16-uwunicorn")
