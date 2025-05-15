@@ -14,6 +14,6 @@
         package = pkgs.meslo-lgs-nf;
       }
     ];
-    extraConfig = "font-size=20";
+    extraConfig = "font-size=22";
   };
 }

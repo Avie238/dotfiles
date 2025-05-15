@@ -8,13 +8,16 @@
   #FIXME: Cross compilation not working for some reason
   localization.enable = false;
 
-  system.activationScripts.copySecrets.text = ''
-    cp -p ${/run/secrets/wifi.env} /wifi.env
-    cp -p ${/home/avie/.config/sops/age/keys.txt} /keys.txt
-  '';
+  system.activationScripts.copySecrets.text =
+    #bash
+    ''
+      cp -p ${/run/secrets/wifi.env} /wifi.env
+      cp -p ${/run/secrets/id_ed25519} /id_ed25519
+      cp -p ${/home/avie/.config/sops/age/keys.txt} /keys.txt
+    '';
 
   environment.shellAliases = {
-    clone = "git clone https://github.com/Avie238/dotfiles && cd dotfiles";
+    clone = "git clone git@github.com:Avie238/dotfiles && cd dotfiles";
   };
 
   #Users
