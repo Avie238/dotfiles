@@ -4,8 +4,7 @@
   lib,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./hypridle.nix
     ./hyprlock.nix
@@ -36,6 +35,7 @@
       volumeControl
       brightnessControl
       (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
+      unar
     ];
 
     wayland.windowManager.hyprland = {
@@ -100,15 +100,14 @@
           ]
           ++ (builtins.concatLists (
             builtins.genList (
-              i:
-              let
+              i: let
                 ws = i + 1;
-              in
-              [
+              in [
                 "$mainMod, code:1${toString i}, workspace, ${toString ws}"
                 "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
               ]
-            ) 9
+            )
+            9
           ));
 
         "$scratchpadsize" = "size 80% 85%";

@@ -1,8 +1,11 @@
-{pkgs}: let
-  brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-  notify-send = "${pkgs.libnotify}/bin/notify-send";
-in
-  pkgs.writeShellScriptBin "brightnessControl" ''
+{pkgs}:
+pkgs.writeShellApplication {
+  name = "brightnessControl";
+  excludeShellChecks = ["SC2086"];
+
+  runtimeInputs = with pkgs; [brightnessctl libnotify];
+  text = ''
+    device=""
     icon="󰃟 "
     while getopts "idk" flag; do
 
@@ -23,7 +26,8 @@ in
         ;;
       esac
     done
-    ${brightnessctl} $device s $value
-    ${notify-send} -t 1500 $icon -h int:value:$(${brightnessctl} -m $device | cut -d',' -f4)
+    brightnessctl $device s $value
+    notify-send -t 1500 $icon -h int:value:"$(brightnessctl -m $device | cut -d',' -f4)"
 
-  ''
+  '';
+}
