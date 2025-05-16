@@ -24,8 +24,8 @@
 
     #Users
     sops.secrets."user_passwords/avie".neededForUsers = true;
-    users.users.avie.passwordFile = config.sops.secrets."user_passwords/avie".path;
-    users.users.root.passwordFile = config.sops.secrets."user_passwords/avie".path;
+    users.users.avie.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
+    users.users.root.hashedPasswordFile = config.sops.secrets."user_passwords/avie".path;
 
     #Network
     sops.secrets."wifi.env" = {
