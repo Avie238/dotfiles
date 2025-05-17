@@ -36,8 +36,8 @@
       brightnessControl
       (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
       unar
-
-      openmw
+      openmw-dev
+      delta-plugin
       # umo
       # momw-configurator
     ];

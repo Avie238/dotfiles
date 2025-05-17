@@ -91,7 +91,7 @@
   });
 in
   stdenv.mkDerivation rec {
-    pname = "openmw";
+    pname = "openmw-dev";
 
     version = "49-rc7";
 
