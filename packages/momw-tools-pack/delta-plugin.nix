@@ -14,9 +14,4 @@ rustPlatform.buildRustPackage (finalAttrs: {
   };
 
   cargoHash = "sha256-dOZJsgtJYSr2QjQLBLao0JF7mniir9QRAxl3E5p6P6E=";
-
-  installPhase = ''
-    mkdir -p $out/bin
-    cp target/aarch64-unknown-linux-gnu/release/delta_plugin $out/bin
-  '';
 })

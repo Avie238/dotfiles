@@ -38,8 +38,10 @@
       unar
       openmw-dev
       delta-plugin
-      # umo
-      # momw-configurator
+      s3lightfixes
+      momw-configurator
+      openmw-validator
+      tes3cmd
     ];
 
     wayland.windowManager.hyprland = {
