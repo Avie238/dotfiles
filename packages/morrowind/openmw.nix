@@ -9,7 +9,6 @@
   SDL2,
   boost,
   bullet,
-  # Please unpin this on the next OpenMW release.
   ffmpeg,
   libXt,
   luajit,
@@ -21,9 +20,6 @@
   unshield,
   yaml-cpp,
   fetchFromGitHub,
-  sqlite,
-  xorg,
-  collada-dom,
 }: let
   GL = "GLVND"; # or "LEGACY";
 
@@ -97,12 +93,12 @@ in
   stdenv.mkDerivation rec {
     pname = "openmw";
 
-    version = "0.49-rc7";
+    version = "49-rc7";
 
     src = fetchFromGitLab {
       owner = "OpenMW";
       repo = "openmw";
-      rev = "${pname}-49-rc7";
+      rev = "${pname}-${version}";
       hash = "sha256-ob1mkwEwEnceAEDMb/pEwpJmO9RNxeH/RmQsHRvpiZc=";
     };
 
@@ -117,7 +113,6 @@ in
     dontWrapQtApps = stdenv.hostPlatform.isDarwin;
 
     buildInputs = [
-      collada-dom
       SDL2
       boost
       bullet'
@@ -130,9 +125,7 @@ in
       recastnavigation
       unshield
       yaml-cpp
-      sqlite
       ffmpeg
-      xorg.libXt
     ];
 
     cmakeFlags =
