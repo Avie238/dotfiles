@@ -9,4 +9,5 @@ final: prev: {
   delta-plugin = final.callPackage ./momw-tools-pack/delta-plugin.nix {};
   s3lightfixes = final.callPackage ./momw-tools-pack/s3lightfixes.nix {};
   openmw-validator = final.callPackage ./momw-tools-pack/openmw-validator.nix {};
+  # curldl = import ./momw-tools-pack/curldl.nix;
 }

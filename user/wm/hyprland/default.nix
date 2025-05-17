@@ -42,6 +42,7 @@
       momw-configurator
       openmw-validator
       tes3cmd
+      # umo
     ];
 
     wayland.windowManager.hyprland = {
