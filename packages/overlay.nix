@@ -4,4 +4,6 @@ final: prev: {
   umo = final.callPackage ./umo.nix {};
   momw-configurator = final.callPackage ./momw-configurator.nix {};
   openmw = final.callPackage ./openmw.nix {};
+  collada-dom = final.callPackage ./collada-dom.nix {};
+  openscenegraph = final.callPackage ./openscenegraph.nix {};
 }

@@ -10,7 +10,7 @@
   boost,
   bullet,
   # Please unpin this on the next OpenMW release.
-  ffmpeg_6,
+  ffmpeg,
   libXt,
   luajit,
   lz4,
@@ -21,17 +21,28 @@
   unshield,
   yaml-cpp,
   fetchFromGitHub,
+  sqlite,
+  xorg,
   collada-dom,
 }: let
   GL = "GLVND"; # or "LEGACY";
 
   osg' = (openscenegraph.override {colladaSupport = true;}).overrideDerivation (old: {
+    version = "openmw-unstable-01-07-2024";
+    # A dev recommended using the latest 3.6 branch. Seems to work well and fix a bug related to collada
+    # randomly not loading compared to the one referenced in the flatpak build script.
+    src = fetchFromGitHub {
+      owner = "openmw";
+      repo = "osg";
+      rev = "43faf6fa88bd236e0911a5340bfbcbc25b3a98d9";
+      sha256 = "sha256-P/959OYW9F3hjgo3QdjVfNuCzS8e7y7oxpVj4Kcl1X4=";
+    };
     patches = [
       (fetchpatch {
         # Darwin: Without this patch, OSG won't build osgdb_png.so, which is required by OpenMW.
         name = "darwin-osg-plugins-fix.patch";
-        url = "https://gitlab.com/OpenMW/openmw-dep/-/raw/0abe3c9c3858211028d881d7706813d606335f72/macos/osg.patch";
-        sha256 = "sha256-/CLRZofZHot8juH78VG1/qhTHPhy5DoPMN+oH8hC58U=";
+        url = "https://gitlab.com/OpenMW/openmw-dep/-/raw/1305497c009dc0e7a6a70fe14f0a2f92b96cbcb4/macos/osg.patch";
+        sha256 = "sha256-G8Y+fnR6FRGxECWrei/Ixch3A3PkRfH6b5q9iawsSCY=";
       })
     ];
     cmakeFlags =
@@ -85,38 +96,19 @@
 in
   stdenv.mkDerivation rec {
     pname = "openmw";
-    # version = "0.48.0";
-    #
-    # src = fetchFromGitLab {
-    #   owner = "OpenMW";
-    #   repo = "openmw";
-    #   rev = "${pname}-${version}";
-    #   hash = "sha256-zkjVt3GfQZsFXl2Ht3lCuQtDMYQWxhdFO4aGSb3rsyo=";
-    # };
-
-    # patches = [./0001-function-inclusion-fixes-for-gcc14.patch];
 
     version = "0.49-rc7";
 
     src = fetchFromGitLab {
       owner = "OpenMW";
       repo = "openmw";
-      rev = "openmw-49-rc7";
+      rev = "${pname}-49-rc7";
       hash = "sha256-ob1mkwEwEnceAEDMb/pEwpJmO9RNxeH/RmQsHRvpiZc=";
     };
-
-    postPatch =
-      ''
-      ''
-      + lib.optionalString stdenv.hostPlatform.isDarwin ''
-        # Don't fix Darwin app bundle
-        sed -i '/fixup_bundle/d' CMakeLists.txt
-      '';
 
     nativeBuildInputs = [
       cmake
       pkg-config
-
       libsForQt5.qt5.wrapQtAppsHook
       libsForQt5.qt5.qttools
     ];
@@ -129,7 +121,6 @@ in
       SDL2
       boost
       bullet'
-      ffmpeg_6
       libXt
       luajit
       lz4
@@ -139,6 +130,9 @@ in
       recastnavigation
       unshield
       yaml-cpp
+      sqlite
+      ffmpeg
+      xorg.libXt
     ];
 
     cmakeFlags =
