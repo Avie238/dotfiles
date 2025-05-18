@@ -5,6 +5,7 @@
 buildGoModule rec {
   name = "openmw-validator";
   version = "1.14";
+
   src = fetchFromGitLab {
     owner = "modding-openmw";
     repo = "openmw-validator";
