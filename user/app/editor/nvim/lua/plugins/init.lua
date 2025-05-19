@@ -31,6 +31,7 @@ return {
 		"neovim/nvim-lspconfig",
 		opts = {
 			servers = {
+				basedpyright = {},
 				nixd = {
 					nixpkgs = {
 						expr = "import <nixpkgs> { }",
@@ -52,6 +53,7 @@ return {
 		opts = {
 			formatters_by_ft = {
 				nix = { "alejandra" },
+				python = { "isort", "black" },
 			},
 		},
 	},

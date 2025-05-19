@@ -20,8 +20,8 @@ in {
 
       categoryDefinitions.replace = (
         {pkgs, ...}: {
-          lspsAndRuntimeDeps = {
-            general = with pkgs; [
+          lspsAndRuntimeDeps = with pkgs; {
+            general = [
               universal-ctags
               curl
               (pkgs.writeShellScriptBin "lazygit" ''
@@ -33,9 +33,19 @@ in {
               lua-language-server
               stylua
               wl-clipboard
+
+              pokemon-colorscripts
+            ];
+
+            nix = [
               nixd
               alejandra
-              pokemon-colorscripts
+            ];
+
+            python = [
+              basedpyright
+              isort
+              black
             ];
           };
 
@@ -131,6 +141,8 @@ in {
           categories = {
             general = true;
             test = false;
+            python = true;
+            nix = true;
           };
           extra = {};
         };

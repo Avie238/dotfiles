@@ -1,0 +1,35 @@
+
+From f3414eb0d33accd21005007bb500306366850805 Mon Sep 17 00:00:00 2001
+From: PopeRigby <poperigby@mailbox.org>
+Date: Fri, 16 May 2025 20:21:21 -0700
+Subject: [PATCH] Read file from current directory instead of location of
+ script
+
+---
+ groundcoverify.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/groundcoverify.py b/groundcoverify.py
+index e52d77c..24c913e 100755
+--- a/groundcoverify.py
++++ b/groundcoverify.py
+@@ -30,6 +30,7 @@ import subprocess
+ import sys
+ from argparse import ArgumentParser
+ from logging import debug, info
++from pathlib import Path
+ 
+ if __name__ == "__main__":
+     parser = ArgumentParser(
+@@ -43,7 +44,7 @@ if __name__ == "__main__":
+         "--config",
+         help="groundcoverify config file path",
+         nargs="?",
+-        default=os.path.join(os.path.dirname(__file__), "groundcoverify.toml"),
++        default=Path("groundcoverify.toml").resolve(),
+     )
+     parser.add_argument("--openmw-config", help="OpenMW config file path")
+     parser.add_argument(
+-- 
+GitLab
+
