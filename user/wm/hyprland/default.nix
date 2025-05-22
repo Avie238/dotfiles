@@ -36,14 +36,6 @@
       brightnessControl
       (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
       unar
-      openmw-dev
-      delta-plugin
-      s3lightfixes
-      momw-configurator
-      openmw-validator
-      tes3cmd
-      umo
-      groundcoverify
     ];
 
     wayland.windowManager.hyprland = {

@@ -31,6 +31,8 @@ return {
 		"neovim/nvim-lspconfig",
 		opts = {
 			servers = {
+				texlab = {},
+				jdtls = {},
 				basedpyright = {},
 				nixd = {
 					nixpkgs = {
@@ -54,6 +56,9 @@ return {
 			formatters_by_ft = {
 				nix = { "alejandra" },
 				python = { "isort", "black" },
+				xml = { "xmlstarlet" },
+				java = { "google-java-format" },
+				tex = { "latexindent" },
 			},
 		},
 	},
@@ -97,5 +102,50 @@ return {
 				},
 			},
 		},
+	},
+	{
+		"mfussenegger/nvim-dap",
+    -- stylua: ignore
+    keys = {
+      { "<leader>dt", function() require('dap').toggle_breakpoint() end, desc = "Toggle breakpoint" },
+      { "<leader>dc", function() require('dap').continue() end, desc = "Continue" },
+    },
+		dependencies = {
+			{
+				"mfussenegger/nvim-dap-python",
+				config = function()
+					require("dap-python").setup("python")
+				end,
+			},
+			{
+				"rcarriga/nvim-dap-ui",
+				config = function()
+					require("dapui").setup()
+					local dap, dapui = require("dap"), require("dapui")
+					dap.listeners.before.attach.dapui_config = function()
+						dapui.open()
+					end
+					dap.listeners.before.launch.dapui_config = function()
+						dapui.open()
+					end
+					dap.listeners.before.event_terminated.dapui_config = function()
+						dapui.close()
+					end
+					dap.listeners.before.event_exited.dapui_config = function()
+						dapui.close()
+					end
+				end,
+			},
+		},
+	},
+
+	{ "nvim-neotest/nvim-nio" },
+
+	{
+		"lervag/vimtex",
+		init = function()
+			-- VimTeX configuration goes here, e.g.
+			vim.g.vimtex_view_method = "zathura"
+		end,
 	},
 }

@@ -66,17 +66,18 @@
         package = (pkgsFor system).nerd-fonts.jetbrains-mono;
       };
       theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
+      systemModule = (
+        if !isIso
+        then ./hosts/${host}
+        else ./hosts/${host}/iso
+      );
     };
 
     nixosSystemFor = userSettings:
       nixpkgs.lib.nixosSystem {
         pkgs = pkgsFor userSettings.system;
         modules = [
-          (
-            if !userSettings.isIso
-            then ./hosts/${userSettings.host}
-            else ./hosts/${userSettings.host}/iso
-          )
+          (userSettings.systemModule)
           inputs.home-manager.nixosModules.home-manager
           self.nixosModules.my-user
         ];
@@ -203,8 +204,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     apple-silicon = {
-      url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
-      # url = "github:tpwrules/nixos-apple-silicon";
+      # url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
+      url = "github:tpwrules/nixos-apple-silicon";
+
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -227,9 +230,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence = {
+      url = "github:nix-community/impermanence";
 
-    flake-compat.url = "github:nix-community/flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-compat = {
+      url = "github:nix-community/flake-compat";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -256,8 +267,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-muvm-fex.url = "github:nrabulinski/nixos-muvm-fex";
+    nixos-muvm-fex = {
+      url = "github:nrabulinski/nixos-muvm-fex";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats = {
+      url = "github:BirdeeHub/nixCats-nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

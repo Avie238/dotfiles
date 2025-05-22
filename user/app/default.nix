@@ -5,6 +5,7 @@
     ./terminal
     ../shell
     ./misc
+    ./openmw.nix
   ];
 
   home.packages = with pkgs; [

@@ -35,6 +35,7 @@ in {
               wl-clipboard
 
               pokemon-colorscripts
+              xmlstarlet
             ];
 
             nix = [
@@ -46,6 +47,24 @@ in {
               basedpyright
               isort
               black
+
+              python313
+              (python313.withPackages (
+                python-pkgs:
+                  with python-pkgs; [
+                    debugpy
+                  ]
+              ))
+            ];
+
+            java = [
+              jdt-language-server
+              google-java-format
+            ];
+
+            latex = [
+              zathura
+              texliveFull
             ];
           };
 
@@ -85,6 +104,13 @@ in {
               nvim-treesitter.withAllGrammars
               precognition-nvim
               base16-nvim
+              nvim-jdtls
+              nvim-dap
+              nvim-dap-ui
+              nvim-dap-python
+              nvim-nio
+              vimtex
+
               {
                 plugin = mini-ai;
                 name = "mini.ai";
@@ -143,6 +169,8 @@ in {
             test = false;
             python = true;
             nix = true;
+            java = true;
+            latex = true;
           };
           extra = {};
         };
