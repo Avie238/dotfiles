@@ -134,17 +134,11 @@
         ];
 
         windowrule = [
-          # "workspace empty,class:^(vesktop|firefox)$"
           "float, title:^(Volume Control|Bluetooth Devices|Network Connections)$"
           "size 50% 50%, title:^(Volume Control|Bluetooth Devices|Network Connections)$"
           "suppressevent maximize, class:.*"
           "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
         ];
-
-        # workspace = [
-        #   #Auto open firefox on new workspace
-        #   "r[3-9], on-created-empty:[] firefox"
-        # ];
 
         ecosystem = {
           no_update_news = true;

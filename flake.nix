@@ -230,17 +230,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
+    impermanence.url = "github:nix-community/impermanence";
 
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake-compat = {
-      url = "github:nix-community/flake-compat";
-
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-compat.url = "github:nix-community/flake-compat";
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -272,9 +264,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixCats = {
-      url = "github:BirdeeHub/nixCats-nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
   };
 }
