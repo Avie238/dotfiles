@@ -9,7 +9,7 @@
     (modulesPath + "/profiles/minimal.nix")
     (modulesPath + "/profiles/installation-device.nix")
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
-    ./../../../system/iso
+    (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
   ];
 
   environment.shellAliases = {

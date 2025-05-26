@@ -220,6 +220,20 @@
         };
       };
 
+      # extraConfig = ''
+      #   bind = , XF86Fn, submap, fnswitch
+      #
+      #   # will start a submap called "resize"
+      #   submap = fnswitch
+      #
+      #   bind = , XF86AudioMicMute, exec, kitty
+      #
+      #   # use reset to go back to the global submap
+      #   bind = , XF86Fn, submap, reset
+      #
+      #   # will reset the submap, which will return to the global submap
+      #   submap = reset
+      # '';
       xwayland.enable = true;
       systemd.enable = false;
     };

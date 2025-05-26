@@ -69,7 +69,7 @@
       systemModule = (
         if !isIso
         then ./hosts/${host}
-        else ./hosts/${host}/iso
+        else ./hosts/${host}/iso.nix
       );
     };
 
@@ -99,6 +99,7 @@
         systemArg = "x86_64-linux";
         hostArg = "msi";
         isIsoArg = true;
+        profileArg = "installer";
       });
     };
 
@@ -179,7 +180,7 @@
             };
 
             modules = [
-              ./hosts/asahi/iso
+              ./hosts/asahi/iso.nix
               (inputs.apple-silicon + "/iso-configuration")
               {hardware.asahi.pkgsSystem = system;}
               inputs.home-manager.nixosModules.home-manager
@@ -198,13 +199,22 @@
         }));
       }
     );
+
+    devShells = forAllSystems (system: let
+      pkgs = pkgsFor system;
+    in {
+      baigiel = pkgs.mkShell {
+        packages = with pkgs; [
+          nodejs_22
+        ];
+      };
+    });
   };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     apple-silicon = {
-      # url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches";
       url = "github:tpwrules/nixos-apple-silicon";
 
       inputs.nixpkgs.follows = "nixpkgs";

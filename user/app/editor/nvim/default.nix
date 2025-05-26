@@ -33,7 +33,6 @@ in {
               lua-language-server
               stylua
               wl-clipboard
-
               pokemon-colorscripts
               xmlstarlet
             ];
@@ -47,14 +46,6 @@ in {
               basedpyright
               isort
               black
-
-              python313
-              (python313.withPackages (
-                python-pkgs:
-                  with python-pkgs; [
-                    debugpy
-                  ]
-              ))
             ];
 
             java = [

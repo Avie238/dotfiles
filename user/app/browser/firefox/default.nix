@@ -77,7 +77,8 @@
 
     stylix.targets.firefox.profileNames = ["default"];
 
-    home.sessionVariables = {
+    home.sessionVariables = lib.mkIf (userSettings.system
+      == "aarch64-linux") {
       MOZ_GMP_PATH = "${pkgs.widevine-firefox}/gmp-widevinecdm/system-installed";
     };
   };

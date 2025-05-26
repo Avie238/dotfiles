@@ -10,4 +10,5 @@ final: prev: {
   s3lightfixes = final.callPackage ./momw-tools-pack/s3lightfixes.nix {};
   openmw-validator = final.callPackage ./momw-tools-pack/openmw-validator.nix {};
   groundcoverify = final.callPackage ./momw-tools-pack/groundcoverify.nix {};
+  tor-browser = final.callPackage ./tor-browser.nix {};
 }
