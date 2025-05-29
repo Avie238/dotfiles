@@ -34,8 +34,10 @@
       nix-cleanup
       volumeControl
       brightnessControl
-      (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
+      # (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
       unar
+      xfce.thunar
+      vlc
     ];
 
     wayland.windowManager.hyprland = {
@@ -69,6 +71,7 @@
           touchpad = {
             natural_scroll = true;
             clickfinger_behavior = true;
+            disable_while_typing = false;
           };
         };
 
@@ -217,6 +220,9 @@
             "fadeLayersOut, 1, 1.39, almostLinear"
             "specialWorkspace, 1, 4, default, slidefadevert -50%"
           ];
+        };
+        xwayland = {
+          force_zero_scaling = true;
         };
       };
 

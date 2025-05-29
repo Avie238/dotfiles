@@ -19,8 +19,6 @@
     custom-install = "clone; partition; copy; install";
   };
 
-  # An installation media cannot tolerate a host config defined file
-  # system layout on a fresh machine, before it has been formatted.
   swapDevices = lib.mkImageMediaOverride [];
   fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
 
@@ -28,6 +26,6 @@
   system.stateVersion = "25.05";
 
   #Debug
-  isoImage.compressImage = false;
-  isoImage.squashfsCompression = null;
+  # isoImage.compressImage = false;
+  # isoImage.squashfsCompression = null;
 }

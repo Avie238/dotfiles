@@ -216,6 +216,7 @@
 
     apple-silicon = {
       url = "github:tpwrules/nixos-apple-silicon";
+      # url = "github:yuyuyureka/nixos-apple-silicon/minimize-patches"
 
       inputs.nixpkgs.follows = "nixpkgs";
     };

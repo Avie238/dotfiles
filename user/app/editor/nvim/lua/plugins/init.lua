@@ -32,7 +32,7 @@ return {
 		opts = {
 			servers = {
 				texlab = {},
-				jdtls = {},
+				-- jdtls = {},
 				basedpyright = {},
 				nixd = {
 					nixpkgs = {
@@ -49,6 +49,70 @@ return {
 				},
 			},
 		},
+	},
+	{
+		"mfussenegger/nvim-jdtls",
+
+    -- stylua: ignore
+    keys = {
+      { "<leader>dj", function() require("jdtls").test_class() end, desc = "Debug class" },
+    },
+
+		opts = function()
+			local cmd = { "jdtls" }
+			return {
+				root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+
+				project_name = function(root_dir)
+					return root_dir
+				end,
+
+				jdtls_config_dir = function(project_name)
+					return "~/cache/nvim/jdtls/" .. project_name .. "/config"
+				end,
+				jdtls_workspace_dir = function(project_name)
+					return "~/cache/nvim/jdtls/" .. project_name .. "/workspace"
+				end,
+
+				cmd = cmd,
+
+				full_cmd = function(opts)
+					local root_dir = opts.root_dir
+					local project_name = opts.project_name(root_dir)
+					-- local cmd = vim.deepcopy(opts.cmd)
+					-- if project_name then
+					-- 	vim.list_extend(cmd, {
+					-- 		"-configuration",
+					-- 		opts.jdtls_config_dir(project_name),
+					-- 		"-data",
+					-- 		opts.jdtls_workspace_dir(project_name),
+					-- 	})
+					-- end
+					return {
+						"jdtls",
+						-- "-configuration",
+						-- opts.jdtls_config_dir(project_name),
+						"-data",
+						opts.jdtls_workspace_dir(project_name),
+					}
+				end,
+			}
+		end,
+		config = function(_, _)
+			local function attach_jdtls()
+				local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+				local data_dir = "~/cache/nvim/jdtls/" .. project_name .. "/workspace"
+
+				local config = {
+					cmd = { "jdtls", "-data", data_dir },
+					root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew" }),
+				}
+				-- Existing server will be reused if the root_dir matches.
+				require("jdtls").start_or_attach(config)
+			end
+
+			attach_jdtls()
+		end,
 	},
 	{
 		"stevearc/conform.nvim",
@@ -110,6 +174,22 @@ return {
       { "<leader>dt", function() require('dap').toggle_breakpoint() end, desc = "Toggle breakpoint" },
       { "<leader>dc", function() require('dap').continue() end, desc = "Continue" },
     },
+		opts = function()
+			local dap = require("dap")
+			dap.configurations.java = {
+				{
+
+					javaExec = "java",
+					mainClass = "dragonfly.Main",
+
+					-- If using the JDK9+ module system, this needs to be extended
+					-- `nvim-jdtls` would automatically populate this property
+					name = "Launch YourClassName",
+					request = "launch",
+					type = "java",
+				},
+			}
+		end,
 		dependencies = {
 			{
 				"mfussenegger/nvim-dap-python",

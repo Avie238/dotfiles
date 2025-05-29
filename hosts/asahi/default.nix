@@ -1,6 +1,8 @@
 {
   inputs,
   userSettings,
+  lib,
+  pkgs,
   ...
 }: {
   imports = [
@@ -21,12 +23,12 @@
   #Asahi
   hardware.asahi = {
     enable = true;
-    # withRust = true;
     useExperimentalGPUDriver = true;
-    # experimentalGPUInstallMode = "replace";
     setupAsahiSound = true;
     peripheralFirmwareDirectory = ./firmware;
   };
+
+  hardware.graphics.package = lib.mkForce pkgs.mesa;
 
   #General
   networking.hostName = "avie-nixos";
