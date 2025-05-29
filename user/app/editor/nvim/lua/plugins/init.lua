@@ -98,7 +98,7 @@ return {
 				end,
 			}
 		end,
-		config = function(_, _)
+		config = function(_, opts)
 			local function attach_jdtls()
 				local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 				local data_dir = "~/cache/nvim/jdtls/" .. project_name .. "/workspace"
@@ -106,10 +106,23 @@ return {
 				local config = {
 					cmd = { "jdtls", "-data", data_dir },
 					root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew" }),
+					init_options = {
+						bundles = {
+							vim.fn.glob(
+								"/home/avie/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.53.2.jar",
+								1
+							),
+						},
+					},
 				}
 				-- Existing server will be reused if the root_dir matches.
 				require("jdtls").start_or_attach(config)
 			end
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "java" },
+				callback = attach_jdtls,
+			})
 
 			attach_jdtls()
 		end,

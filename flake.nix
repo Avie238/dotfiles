@@ -90,6 +90,12 @@
         hostArg = "asahi";
       });
 
+      msi-nixos-server = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "msi";
+        profileArg = "installer";
+      });
+
       msi-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";

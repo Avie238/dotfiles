@@ -1,6 +1,6 @@
 {userSettings, ...}: {
   imports = [
-    (userSettings.dotfilesDir + "/system/iso")
+    (userSettings.dotfilesDir + "/system/minimal")
     (userSettings.dotfilesDir + "/system/desktop/stylix.nix")
   ];
 }
