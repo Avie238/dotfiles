@@ -7,6 +7,7 @@ return {
 			xml = { "xmlstarlet" },
 			java = { "google-java-format" },
 			tex = { "latexindent" },
+			javascript = { "prettierd" },
 		},
 	},
 }

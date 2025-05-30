@@ -57,6 +57,11 @@ in {
               zathura
               texliveFull
             ];
+
+            typescript = [
+              vtsls
+              prettierd
+            ];
           };
 
           startupPlugins = {
@@ -100,7 +105,6 @@ in {
               nvim-dap-python
               nvim-nio
               vimtex
-
               {
                 plugin = mini-ai;
                 name = "mini.ai";
@@ -128,8 +132,6 @@ in {
               "vim"
               "vi"
             ];
-            hosts.python3.enable = true;
-            hosts.node.enable = true;
             colors = with config.lib.stylix.colors.withHashtag; {
               base00 = base00;
               base01 = base01;
@@ -157,6 +159,7 @@ in {
             nix = true;
             java = true;
             latex = false;
+            typescript = true;
           };
           extra = {};
         };
