@@ -120,11 +120,7 @@ in {
       );
 
       packageDefinitions.replace = {
-        nvim = {
-          pkgs,
-          name,
-          ...
-        }: {
+        nvim = {...}: {
           settings = {
             suffix-path = true;
             suffix-LD = true;

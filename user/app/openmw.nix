@@ -19,8 +19,6 @@
       tes3cmd
       umo
       groundcoverify
-
-      jdt-language-server
     ];
   };
 }

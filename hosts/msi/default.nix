@@ -7,7 +7,8 @@
   imports = [
     ./hardware-configuration.nix
     (import ./disko.nix {device = "/dev/nvme0n1";})
-    (userSettings.dotfilesDir + "/profiles/desktop/configuration.nix")
+
+    (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
     inputs.disko.nixosModules.default
     ./impermanence.nix
   ];

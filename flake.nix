@@ -93,7 +93,7 @@
       msi-nixos-server = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";
-        profileArg = "installer";
+        profileArg = "server";
       });
 
       msi-nixos = nixosSystemFor (genUserSettings {
