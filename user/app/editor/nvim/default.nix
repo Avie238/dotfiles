@@ -93,7 +93,6 @@ in {
               snacks-nvim
               nvim-treesitter-textobjects
               nvim-treesitter.withAllGrammars
-              precognition-nvim
               base16-nvim
               nvim-jdtls
               nvim-dap

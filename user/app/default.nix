@@ -12,4 +12,6 @@
     qbittorrent
     ns-usbloader
   ];
+
+  openmw-dev.enable = true;
 }
