@@ -157,7 +157,7 @@ in {
             python = true;
             nix = true;
             java = true;
-            latex = true;
+            latex = false;
           };
           extra = {};
         };

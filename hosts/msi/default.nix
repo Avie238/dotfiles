@@ -18,4 +18,6 @@
   system.stateVersion = "25.05";
 
   sops.age.keyFile = lib.mkForce "/var/lib/sops-nix/keys.txt";
+
+  openmw-dev.enable = lib.mkForce false;
 }
