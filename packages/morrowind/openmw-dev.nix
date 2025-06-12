@@ -98,7 +98,7 @@ in
     src = fetchFromGitLab {
       owner = "OpenMW";
       repo = "openmw";
-      rev = "${pname}-${version}";
+      rev = "openmw-${version}";
       hash = "sha256-ob1mkwEwEnceAEDMb/pEwpJmO9RNxeH/RmQsHRvpiZc=";
     };
 

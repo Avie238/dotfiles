@@ -24,6 +24,7 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin
 
     install -m +x $src/${pname}.py $out/bin/${pname}
+    cp $src/${pname}.toml $out/bin/${pname}.toml
 
     wrapProgram $out/bin/${pname} \
       --prefix PATH : ${

@@ -38,6 +38,8 @@
       unar
       xfce.thunar
       vlc
+      jdk17
+      prismlauncher
     ];
 
     wayland.windowManager.hyprland = {
@@ -100,6 +102,7 @@
             "SUPER, RETURN, togglespecialworkspace,scratch_term"
             "SUPER, L, exec, [workspace special:scratch_files silent] if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager.spawn}; fi"
             "SUPER, L, togglespecialworkspace,scratch_files"
+            ",XF86Fn, exec, ${pkgs.fn-toggle}/bin/fn-toggle"
           ]
           ++ (builtins.concatLists (
             builtins.genList (

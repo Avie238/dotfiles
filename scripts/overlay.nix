@@ -3,4 +3,5 @@ final: prev: {
   volumeControl = final.callPackage ./volumeControl.nix {};
   brightnessControl = final.callPackage ./brightnessControl.nix {};
   nix-cleanup = final.callPackage ./nix-cleanup.nix {};
+  fn-toggle = final.callPackage ./fn-toggle.nix {};
 }

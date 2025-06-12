@@ -28,8 +28,6 @@
     peripheralFirmwareDirectory = ./firmware;
   };
 
-  hardware.graphics.package = lib.mkForce pkgs.mesa;
-
   #General
   networking.hostName = "avie-nixos";
   system.stateVersion = "25.05";

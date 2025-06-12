@@ -2,6 +2,7 @@ return {
 	"neovim/nvim-lspconfig",
 	opts = {
 		servers = {
+			jdtls = {},
 			vtsls = {},
 			texlab = {},
 			basedpyright = {},
@@ -18,6 +19,11 @@ return {
 					},
 				},
 			},
+		},
+		setup = {
+			jdtls = function()
+				return true -- avoid duplicate servers
+			end,
 		},
 	},
 }
