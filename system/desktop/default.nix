@@ -1,4 +1,8 @@
-{...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ./../minimal
     ./wm
@@ -11,4 +15,9 @@
   };
 
   virtualisation.docker.enable = true;
+
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
 }
