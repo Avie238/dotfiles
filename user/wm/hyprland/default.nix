@@ -34,12 +34,8 @@
       nix-cleanup
       volumeControl
       brightnessControl
-      # (pkgs.extend inputs.nixos-muvm-fex.overlays.default).muvm
       unar
       xfce.thunar
-      vlc
-      jdk17
-      prismlauncher
     ];
 
     wayland.windowManager.hyprland = {

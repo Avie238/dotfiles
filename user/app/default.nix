@@ -11,6 +11,9 @@
   home.packages = with pkgs; [
     qbittorrent
     ns-usbloader
+    vlc
+    jdk17
+    prismlauncher
   ];
 
   openmw-dev.enable = true;

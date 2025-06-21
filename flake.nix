@@ -23,7 +23,6 @@
           inputs.apple-silicon.overlays.default
           inputs.nix-vscode-extensions.overlays.default
           inputs.firefox-addons.overlays.default
-          inputs.nixos-muvm-fex.overlays.default
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
         ];
@@ -51,9 +50,9 @@
         spawn = term + " -e " + editor.name;
       };
       fileManager = {
-        name = "ranger";
-        package = (pkgsFor system).ranger;
-        spawn = term + " -e " + fileManager.name;
+        name = "thunar";
+        package = (pkgsFor system).xfce.thunar;
+        spawn = fileManager.name;
       };
       menu = {
         name = "rofi";
@@ -65,12 +64,13 @@
         name = "Jetbrains Mono NF";
         package = (pkgsFor system).nerd-fonts.jetbrains-mono;
       };
-      theme = "uwunicorn"; # "tokyo-night-terminal-dark"; # "stella"; # "selenized-black"; # "pasque"; # "eris"; # "mellow-purple"; # "darkviolet";
+      theme = "uwunicorn";
       systemModule = (
         if !isIso
         then ./hosts/${host}
         else ./hosts/${host}/iso.nix
       );
+      userModule = ./profiles/${profile}/home.nix;
     };
 
     nixosSystemFor = userSettings:
@@ -115,9 +115,7 @@
           backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
-          users.${userSettings.username} = {
-            imports = [./profiles/${userSettings.profile}/home.nix];
-          };
+          users.${userSettings.username} = userSettings.userModule;
           extraSpecialArgs = {inherit userSettings inputs;};
           sharedModules = [
             inputs.nix-index-database.hmModules.nix-index
