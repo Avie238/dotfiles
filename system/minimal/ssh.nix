@@ -4,7 +4,7 @@
   ...
 }: {
   programs.ssh = {
-    startAgent = true;
+    # startAgent = true;
     extraConfig = ''
       Host *
         AddKeysToAgent yes
