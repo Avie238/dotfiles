@@ -14,7 +14,8 @@
     vlc
     jdk17
     prismlauncher
+    dolphin-emu
+    virtualhere
   ];
-
   openmw-dev.enable = true;
 }

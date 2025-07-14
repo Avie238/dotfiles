@@ -92,13 +92,14 @@
             "SUPER_SHIFT, Left, exec, hyprnome --previous --move"
             "SUPER_SHIFT, Right, exec, hyprnome --move"
             #Disable MMB
-            ", mouse:274, exec,"
             #Scratch pads
             "SUPER, RETURN, exec, [workspace special:scratch_term silent] if hyprctl clients | grep scratch_term; then echo \"scratch_term respawn not needed\"; else uwsm app -- kitty; fi"
             "SUPER, RETURN, togglespecialworkspace,scratch_term"
             "SUPER, L, exec, [workspace special:scratch_files silent] if hyprctl clients | grep scratch_files; then echo \"scratch_files respawn not needed\"; else uwsm app -- ${userSettings.fileManager.spawn}; fi"
             "SUPER, L, togglespecialworkspace,scratch_files"
             ",XF86Fn, exec, ${pkgs.fn-toggle}/bin/fn-toggle"
+
+            "SUPER,F,fullscreen"
           ]
           ++ (builtins.concatLists (
             builtins.genList (
