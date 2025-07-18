@@ -20,5 +20,14 @@
       umo
       groundcoverify
     ];
+
+    xdg.desktopEntries = {
+      Morrowind = {
+        name = "Morrowind";
+        genericName = "Game";
+        exec = "momw-configurator run /home/avie/Games/portable";
+        terminal = false;
+      };
+    };
   };
 }
