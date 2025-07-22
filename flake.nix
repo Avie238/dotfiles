@@ -107,6 +107,11 @@
         isIsoArg = true;
         profileArg = "installer";
       });
+      vps = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "vps";
+        profileArg = "server";
+      });
     };
 
     nixosModules = {
@@ -279,5 +284,9 @@
     };
 
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    glaumar_repo = {
+      url = "github:glaumar/QRookie";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

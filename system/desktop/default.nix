@@ -17,11 +17,6 @@
 
   virtualisation.docker.enable = true;
 
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-  };
-
   services.samba = {
     enable = true;
     securityType = "user";
