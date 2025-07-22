@@ -13,6 +13,21 @@
 
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
+    pkgs_stableFor = system:
+      import nixpkgs {
+        system = system;
+        config = {
+          allowUnfree = true;
+        };
+        overlays = [
+          inputs.apple-silicon.overlays.default
+          inputs.nix-vscode-extensions.overlays.default
+          inputs.firefox-addons.overlays.default
+          (import ./packages/overlay.nix)
+          (import ./scripts/overlay.nix)
+        ];
+      };
+
     pkgsFor = system:
       import nixpkgs {
         system = system;
@@ -85,7 +100,9 @@
             then [inputs.home-manager.nixosModules.home-manager self.nixosModules.my-user]
             else []
           );
-        specialArgs = {inherit inputs userSettings self;};
+        specialArgs = {
+          inherit inputs userSettings self;
+        };
       };
   in {
     nixosConfigurations = {
@@ -125,7 +142,10 @@
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = userSettings.userModule;
-          extraSpecialArgs = {inherit userSettings inputs;};
+          extraSpecialArgs = {
+            inherit userSettings inputs;
+            pkgs_stable = pkgs_stableFor userSettings.system;
+          };
           sharedModules = [
             inputs.nix-index-database.hmModules.nix-index
           ];
@@ -226,6 +246,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs_stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     apple-silicon = {
       url = "github:nix-community/nixos-apple-silicon";

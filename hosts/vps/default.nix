@@ -11,7 +11,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
 
-    (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
+    # (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
     ./disko.nix
     ./hardware-configuration.nix
   ];
@@ -31,6 +31,10 @@
   ];
 
   networking.hostName = "avie-vps";
+  fileSystems."/nix/store" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "btrfs";
+  };
 
   system.stateVersion = "24.05";
 }
