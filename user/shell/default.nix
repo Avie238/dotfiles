@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./zsh
     ./fastfetch.nix
@@ -6,7 +10,7 @@
   ];
 
   home.username = "avie";
-  home.homeDirectory = "/home/avie";
+  home.homeDirectory = lib.mkForce "/home/avie";
 
   home.packages = with pkgs; [
     meslo-lgs-nf

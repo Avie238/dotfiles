@@ -76,11 +76,15 @@
     nixosSystemFor = userSettings:
       nixpkgs.lib.nixosSystem {
         pkgs = pkgsFor userSettings.system;
-        modules = [
-          (userSettings.systemModule)
-          inputs.home-manager.nixosModules.home-manager
-          self.nixosModules.my-user
-        ];
+        modules =
+          [
+            (userSettings.systemModule)
+          ]
+          ++ (
+            if userSettings.profile != "server"
+            then [inputs.home-manager.nixosModules.home-manager self.nixosModules.my-user]
+            else []
+          );
         specialArgs = {inherit inputs userSettings self;};
       };
   in {

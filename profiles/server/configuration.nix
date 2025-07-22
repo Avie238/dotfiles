@@ -1,6 +1,7 @@
 {userSettings, ...}: {
   imports = [
-    (userSettings.dotfilesDir + "/system/minimal")
-    # (userSettings.dotfilesDir + "/system/desktop/stylix.nix")
+    (userSettings.dotfilesDir + "/system/minimal/ssh.nix")
+    (userSettings.dotfilesDir + "/system/minimal/users.nix")
+    (userSettings.dotfilesDir + "/system/server")
   ];
 }

@@ -2,9 +2,11 @@
   modulesPath,
   lib,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
+    inputs.disko.nixosModules.disko
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
