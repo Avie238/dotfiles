@@ -3,12 +3,15 @@
   lib,
   pkgs,
   inputs,
+  userSettings,
   ...
 }: {
   imports = [
     inputs.disko.nixosModules.disko
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
+
+    (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
     ./disko.nix
     ./hardware-configuration.nix
   ];
