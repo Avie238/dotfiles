@@ -11,10 +11,9 @@
   home.packages = with pkgs; [
     qbittorrent
     ns-usbloader
-    vlc
     jdk17
     prismlauncher
-    dolphin-emu
+    calibre
   ];
   openmw-dev.enable = true;
 

@@ -26,15 +26,13 @@
     pkgs.gitMinimal
   ];
 
+  virtualisation.docker.enable = true;
+
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEpr1NL5tOxml1z9ZlW0TW6o5d46SG+8lk+z6i4QS1G9 ania.dymowska238@gmail.com"
   ];
 
   networking.hostName = "avie-vps";
-  fileSystems."/nix/store" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "btrfs";
-  };
 
   system.stateVersion = "24.05";
 }
