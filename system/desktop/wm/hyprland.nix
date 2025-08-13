@@ -16,6 +16,7 @@
       enable = true;
       xwayland.enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
       withUWSM = true;
     };
 
@@ -28,7 +29,10 @@
     #Wifi
     programs.nm-applet.enable = !userSettings.isIso;
 
-    xdg.portal.enable = true;
+    xdg.portal = {
+      enable = true;
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    };
 
     security.pam.services.hyprlock = {};
 

@@ -242,6 +242,8 @@
       # '';
       xwayland.enable = true;
       systemd.enable = false;
+      package = null;
+      portalPackage = null;
     };
 
     programs.rofi = lib.mkIf (userSettings.menu.name == "rofi") {

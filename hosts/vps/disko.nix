@@ -2,7 +2,7 @@
 {lib, ...}: {
   disko.devices = {
     disk.disk1 = {
-      device = lib.mkDefault "/dev/sdb";
+      device = lib.mkDefault "/dev/vda";
       type = "disk";
       content = {
         type = "gpt";
