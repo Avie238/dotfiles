@@ -14,6 +14,8 @@
     jdk17
     prismlauncher
     calibre
+    cbz_to_webp
+    zip
   ];
   openmw-dev.enable = true;
 

@@ -14,9 +14,9 @@
           isDefault = true;
           search = {
             force = true;
-            default = "google";
+            default = "startpage";
             order = [
-              "google"
+              "startpage"
             ];
             engines = {
               "Nix Packages" = {
