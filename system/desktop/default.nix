@@ -16,6 +16,7 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.waydroid.enable = true;
 
   services.samba = {
     enable = true;
@@ -71,4 +72,9 @@
     nssmdns4 = true;
     openFirewall = true;
   };
+
+  # services.logind.extraConfig = ''
+  # don’t shutdown when power button is short-pressed
+  #HandlePowerKey=suspend
+  #'';
 }

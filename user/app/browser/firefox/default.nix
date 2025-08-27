@@ -43,6 +43,10 @@
                 icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = ["@mn"];
               };
+
+              "Startpage" = {
+                urls = [{template = "https://www.startpage.com/sp/search?q={searchTerms}";}];
+              };
             };
           };
           extensions = {

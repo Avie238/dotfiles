@@ -303,15 +303,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-muvm-fex = {
-      url = "github:nrabulinski/nixos-muvm-fex";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     glaumar_repo = {
       url = "github:glaumar/QRookie";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-mmuvm-fex = {
+      url = "github:nrabulinski/nixos-muvm-fex/native-build";
     };
   };
 }

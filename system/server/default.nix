@@ -6,4 +6,5 @@
   imports = [
     ./jellyfin.nix
   ];
+  services.logind.lidSwitchExternalPower = "ignore";
 }

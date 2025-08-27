@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ./editor
     ./browser
@@ -16,6 +20,10 @@
     calibre
     cbz_to_webp
     zip
+    (pkgs.extend inputs.nixos-mmuvm-fex.overlays.default).muvm
+    kdePackages.gwenview
+    xfce.thunar-archive-plugin
+    xarchiver
   ];
   openmw-dev.enable = true;
 
@@ -24,11 +32,16 @@
     defaultApplications = {
       "x-scheme-handler/terminal" = "kitty.desktop";
       "text/html" = "firefox.desktop";
+      "application/pdf" = "firefox.desktop";
       "x-scheme-handler/http" = "firefox.desktop";
       "x-scheme-handler/https" = "firefox.desktop";
       "x-scheme-handler/about" = "firefox.desktop";
       "x-scheme-handler/unknown" = "firefox.desktop";
       "inode/directory" = "thunar.desktop";
+      "text/plain" = "nvim.desktop";
+      "text/markdown" = "nvim.desktop";
+      "application/json" = "nvim.desktop";
+      "image/*" = "gwenview.desktop";
     };
   };
 }
