@@ -183,7 +183,6 @@
           uboot-asahi
           linux-asahi
           asahi-fwextract
-          mesa-asahi-edge
           ;
         inherit (pkgs) asahi-audio;
 
