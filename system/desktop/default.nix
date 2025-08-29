@@ -5,6 +5,7 @@
     ./zswap.nix
     ./stylix.nix
     ./vm.nix
+    ./vpn.nix
   ];
 
   hardware.graphics = {
