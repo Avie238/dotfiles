@@ -12,9 +12,8 @@
     ports = [22];
     settings = {
       PasswordAuthentication = true;
-      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+      AllowUsers = null;
       UseDns = true;
-      X11Forwarding = false;
     };
   };
 }
