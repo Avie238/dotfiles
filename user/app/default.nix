@@ -24,6 +24,7 @@
     kdePackages.gwenview
     xfce.thunar-archive-plugin
     xarchiver
+    protonvpn-gui
   ];
   openmw-dev.enable = true;
 
