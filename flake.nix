@@ -95,11 +95,7 @@
           [
             (userSettings.systemModule)
           ]
-          ++ (
-            if userSettings.profile != "server"
-            then [inputs.home-manager.nixosModules.home-manager self.nixosModules.my-user]
-            else []
-          );
+          ++ [inputs.home-manager.nixosModules.home-manager self.nixosModules.my-user];
         specialArgs = {
           inherit inputs userSettings self;
         };
