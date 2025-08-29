@@ -21,7 +21,8 @@
       listenPort = 51820;
 
       # Path to the private key file.
-      privateKey = "yOCupHqqcIFFUZ1k/VlJuFlm0ZKqmlhXchD7CwbhuUY=";
+      privateKeyFile =
+        config.sops.secrets."proton_vpn.key".path;
 
       peers = [
         {

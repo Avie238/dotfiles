@@ -37,5 +37,10 @@
     sops.secrets."id_ed25519" = {
       owner = config.users.users.avie.name;
     };
+
+    #vpn
+    sops.secrets."proton_vpn.key" = {
+      owner = config.users.users.avie.name;
+    };
   };
 }
