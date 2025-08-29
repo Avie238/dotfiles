@@ -14,7 +14,6 @@
     spice-protocol
     qemu
   ];
-  services.flatpak.enable = true;
 
   virtualisation = {
     libvirtd = {

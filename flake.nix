@@ -147,7 +147,7 @@
             pkgs_stable = pkgs_stableFor userSettings.system;
           };
           sharedModules = [
-            inputs.nix-index-database.hmModules.nix-index
+            inputs.nix-index-database.homeModules.nix-index
           ];
         };
       };

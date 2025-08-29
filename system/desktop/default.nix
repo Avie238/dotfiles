@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{...}: {
   imports = [
     ./../minimal
     ./wm
@@ -19,7 +15,7 @@
 
   services.samba = {
     enable = true;
-    securityType = "user";
+    settings.global.security = "user";
     openFirewall = true;
   };
 
@@ -37,5 +33,7 @@
     openFirewall = true;
   };
 
-  services.logind.powerKey = "suspend";
+  services.logind.settings.Login.HandlePowerKey = "suspend";
+
+  services.flatpak.enable = true;
 }

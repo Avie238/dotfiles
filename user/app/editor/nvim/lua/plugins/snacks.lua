@@ -33,5 +33,8 @@ return {
 				{ section = "startup" },
 			},
 		},
+		picker = {
+			hidden = true,
+		},
 	},
 }

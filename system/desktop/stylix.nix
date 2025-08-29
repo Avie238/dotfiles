@@ -30,6 +30,5 @@
       name = "Bibata-Modern-Classic";
       size = 20;
     };
-    targets.nvf.transparentBackground.main = true;
   };
 }

@@ -1,7 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
-
+  pkgs,
+  lib,
+  ...
+}: {
   programs.kitty = {
     enable = true;
   };
@@ -9,4 +10,7 @@
     "${pkgs.kitty}/share/applications/kitty.desktop"
   ];
 
+  home.shellAliases = {
+    ssh = "kitten ssh";
+  };
 }
