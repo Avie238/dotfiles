@@ -125,6 +125,11 @@
         hostArg = "msi";
       });
 
+      wsl-nixos = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "wsl";
+      });
+
       msi-nixos-live = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";
@@ -249,6 +254,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs_stable.url = "github:nixos/nixpkgs/nixos-25.05";
+
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     apple-silicon = {
       url = "github:nix-community/nixos-apple-silicon";
