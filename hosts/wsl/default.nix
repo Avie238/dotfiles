@@ -16,23 +16,18 @@
     pkgs.git
   ];
   wsl.enable = true;
-  wsl.defaultUser = "nixos";
+  wsl.defaultUser = "avie";
   nix.settings.ssl-cert-file = "/etc/ssl/certs/ca-bundle.crt";
   security.pki.certificates = [
     (builtins.readFile ./Cummins-Prisma-Root-CA.crt)
   ];
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    download-buffer-size = 524288000;
-  };
   boot.loader = {
     systemd-boot.enable = lib.mkForce false;
   };
-  networking.hostName = "msi-nixos";
+  sops.enable = lib.mkForce false;
+
+  networking.hostName = "wsl-nixos";
 
   system.stateVersion = "25.05"; # Did you read the comment?
 }
