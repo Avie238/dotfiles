@@ -1,0 +1,29 @@
+services:
+  flask:
+    build: ./Flask
+    ports:
+      - 5020:5020
+    depends_on:
+      local_restore_postgres:
+        condition: service_healthy
+
+  local_restore_postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      PGUSER: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
+
+
