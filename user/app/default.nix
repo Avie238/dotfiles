@@ -26,6 +26,7 @@
     xarchiver
     protonvpn-gui
   ];
+
   openmw-dev.enable = true;
 
   xdg.mimeApps = {

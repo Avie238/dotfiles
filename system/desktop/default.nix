@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./../minimal
     ./wm
@@ -36,4 +36,15 @@
   services.logind.settings.Login.HandlePowerKey = "suspend";
 
   services.flatpak.enable = true;
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
+  services.netbird.enable = true;
 }

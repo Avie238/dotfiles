@@ -113,6 +113,13 @@
         profileArg = "server";
       });
 
+      msi-nixos-server-live = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "msi";
+        profileArg = "server";
+        isIsoArg = true;
+      });
+
       msi-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";

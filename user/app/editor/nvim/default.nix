@@ -62,6 +62,10 @@ in {
               vtsls
               prettierd
             ];
+
+            jinja = [
+              jinja-lsp
+            ];
           };
 
           startupPlugins = {
