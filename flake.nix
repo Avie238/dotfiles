@@ -49,6 +49,7 @@
       profileArg ? "desktop",
       isIsoArg ? false,
       wmArg ? "hyprland",
+      browserArg ? "firefox",
     }: rec {
       system = systemArg;
       host = hostArg;
@@ -58,7 +59,7 @@
       name = "Avie";
       dotfilesDir = ./.;
       wm = wmArg;
-      browser = "firefox";
+      browser = browserArg;
       term = "kitty";
       editor = {
         name = "nvim";
@@ -128,6 +129,10 @@
       wsl-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "wsl";
+
+        profileArg = "wsl";
+        wmArg = "none";
+        browserArg = "none";
       });
 
       msi-nixos-live = nixosSystemFor (genUserSettings {
@@ -136,6 +141,7 @@
         isIsoArg = true;
         profileArg = "installer";
       });
+
       vps = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "vps";

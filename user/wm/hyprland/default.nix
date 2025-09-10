@@ -37,6 +37,14 @@
       unar
       xfce.thunar
     ];
+    xdg.desktopEntries = {
+      swayimg = {
+        name = "swayimg";
+        genericName = "Image viewer";
+        exec = "${userSettings.term} -e swayimg";
+        terminal = false;
+      };
+    };
 
     wayland.windowManager.hyprland = {
       enable = true;

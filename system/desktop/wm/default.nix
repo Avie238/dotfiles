@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  userSettings,
+  ...
+}: {
   imports = [
     ./gnome.nix
     ./hyprland.nix
@@ -10,11 +14,20 @@
   };
 
   services.displayManager.autoLogin = {
-    enable = true;
+    enable =
+      if userSettings.wm == "none"
+      then false
+      else true;
     user = "avie";
   };
 
   #Fix autologin
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+  systemd.services."getty@tty1".enable =
+    if userSettings.wm == "none"
+    then true
+    else false;
+  systemd.services."autovt@tty1".enable =
+    if userSettings.wm == "none"
+    then true
+    else false;
 }

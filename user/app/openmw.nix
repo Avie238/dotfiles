@@ -29,20 +29,6 @@
         exec = "momw-configurator run /home/avie/Games/portable";
         terminal = false;
       };
-
-      nvim = {
-        name = "nvim";
-        genericName = "Text editor";
-        exec = "${userSettings.term} -e nvim";
-        terminal = false;
-      };
-
-      swayimg = {
-        name = "swayimg";
-        genericName = "Image viewer";
-        exec = "${userSettings.term} -e swayimg";
-        terminal = false;
-      };
     };
   };
 }

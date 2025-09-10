@@ -1,10 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  userSettings,
+  ...
+}: {
   imports = [
     ./../minimal
     ./wm
     ./zswap.nix
     ./stylix.nix
     ./vm.nix
+    ./vpn.nix
   ];
 
   hardware.graphics = {
@@ -35,16 +40,15 @@
 
   services.logind.settings.Login.HandlePowerKey = "suspend";
 
-  services.flatpak.enable = true;
+  services.flatpak.enable =
+    if userSettings.wm == "none"
+    then false
+    else true;
 
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
   };
 
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-  };
   services.netbird.enable = true;
 }
