@@ -28,6 +28,5 @@
   };
 
   #General
-  networking.hostName = "avie-nixos";
   system.stateVersion = "25.05";
 }

@@ -57,6 +57,7 @@
       isIsoArg ? false,
       wmArg ? "hyprland",
       browserArg ? "firefox",
+      hostnameArg,
     }: rec {
       system = systemArg;
       host = hostArg;
@@ -67,6 +68,7 @@
       dotfilesDir = ./.;
       wm = wmArg;
       browser = browserArg;
+      hostname = hostnameArg;
       term = "kitty";
       editor = {
         name = "nvim";
@@ -113,12 +115,21 @@
       avie-nixos = nixosSystemFor (genUserSettings {
         systemArg = "aarch64-linux";
         hostArg = "asahi";
+        hostnameArg = "avie-nixos";
       });
 
       msi-nixos-server = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";
         profileArg = "server";
+        hostnameArg = "msi-nixos-server";
+      });
+
+      homelab-nixos = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "homelab";
+        profileArg = "server";
+        hostnameArg = "homelab-nixos";
       });
 
       msi-nixos-server-live = nixosSystemFor (genUserSettings {
@@ -131,6 +142,7 @@
       msi-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";
+        hostnameArg = "msi-nixos";
       });
 
       wsl-nixos = nixosSystemFor (genUserSettings {
@@ -147,6 +159,7 @@
         hostArg = "msi";
         isIsoArg = true;
         profileArg = "installer";
+        hostnameArg = "msi-nixos-live";
       });
 
       vps = nixosSystemFor (genUserSettings {

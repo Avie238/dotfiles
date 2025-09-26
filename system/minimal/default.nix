@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  userSettings,
   ...
 }: {
   imports = [
@@ -27,4 +28,6 @@
     download-buffer-size = 524288000;
   };
   nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
+  networking.hostName = userSettings.hostname;
 }

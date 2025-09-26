@@ -1,6 +1,6 @@
 {
-  lib,
-  inputs,
+  config,
+  pkgs,
   ...
 }: {
   imports = [
@@ -11,9 +11,48 @@
     enable = true;
     ports = [22];
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
       AllowUsers = null;
       UseDns = true;
     };
   };
+
+  users.users."avie".openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEpr1NL5tOxml1z9ZlW0TW6o5d46SG+8lk+z6i4QS1G9 ania.dymowska238@gmail.com"
+  ];
+  virtualisation.docker = {
+    enable = true;
+    # enableNvidia = true;
+  };
+  users.users.avie.extraGroups = ["docker"];
+  # networking.networkmanager.wifi.powersave = false;
+  # hardware.nvidia.open = true;
+  virtualisation.docker.daemon.settings.features.cdi = true;
+  # virtualisation.docker.rootless.daemon.settings.features.cdi = true;
+  hardware.graphics.enable32Bit = true;
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
+  # hardware.nvidia = {
+  #   modesetting.enable = true;
+  #   open = false;
+  #   nvidiaSettings = true;
+  #   package = config.boot.kernelPackages.nvidiaPackages.production;
+  # };
+  hardware.nvidia.open = false;
+  hardware.nvidia-container-toolkit.enable = true;
+  services.xserver.enable = true;
+  services.cockpit = {
+    enable = true;
+    port = 9090;
+    openFirewall = true;
+    settings = {
+      WebService = {
+        AllowUnencrypted = true;
+      };
+    };
+  };
+  environment.systemPackages = with pkgs; [
+    cockpit
+  ];
 }
