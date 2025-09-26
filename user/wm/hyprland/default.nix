@@ -35,7 +35,7 @@
       volumeControl
       brightnessControl
       unar
-      xfce.thunar
+      # xfce.thunar
     ];
     xdg.desktopEntries = {
       swayimg = {
@@ -62,6 +62,7 @@
           "XDG_SESSION_DESKTOP,Hyprland"
           "XDG_SESSION_TYPE,wayland"
           "GDK_BACKEND,wayland,x11,*"
+          "GDK_SCALE,2"
           "QT_QPA_PLATFORM,wayland;xcb"
           "QT_QPA_PLATFORMTHEME,qt5ct"
           "QT_AUTO_SCREEN_SCALE_FACTOR,1"
@@ -156,10 +157,9 @@
           no_update_news = true;
         };
 
-        gestures = {
-          workspace_swipe = true;
-          workspace_swipe_distance = 150;
-        };
+        gesture = [
+          "3, horizontal, scale: 1.5, workspace"
+        ];
 
         general = {
           gaps_in = 3;
@@ -257,7 +257,7 @@
 
     programs.rofi = lib.mkIf (userSettings.menu.name == "rofi") {
       enable = true;
-      package = pkgs.rofi-wayland;
+      package = pkgs.rofi;
     };
 
     services.hyprpaper.enable = true;

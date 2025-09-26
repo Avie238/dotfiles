@@ -10,6 +10,7 @@
     ./stylix.nix
     ./vm.nix
     ./vpn.nix
+    ./thunar.nix
   ];
 
   hardware.graphics = {
@@ -17,17 +18,24 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.incus = {
+    enable = true;
+    ui.enable = true;
+  };
 
   services.samba = {
     enable = true;
     settings.global.security = "user";
     openFirewall = true;
   };
+  networking.nftables.enable = true;
 
   services.samba-wsdd = {
     enable = true;
     openFirewall = true;
   };
+
+  environment.systemPackages = with pkgs.x86; [steam wine lutris protonup-qt];
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

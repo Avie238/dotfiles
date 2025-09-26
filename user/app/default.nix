@@ -20,11 +20,14 @@
     calibre
     cbz_to_webp
     zip
-    (pkgs.extend inputs.nixos-mmuvm-fex.overlays.default).muvm
+    # (pkgs.extend inputs.nixos-mmuvm-fex.overlays.default).muvm
     kdePackages.gwenview
     xfce.thunar-archive-plugin
     xarchiver
     protonvpn-gui
+    remmina
+    muvm
+    btop
   ];
 
   openmw-dev.enable = true;

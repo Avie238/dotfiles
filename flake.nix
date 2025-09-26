@@ -40,6 +40,13 @@
           inputs.firefox-addons.overlays.default
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
+          (final: prev: {
+            x86 = import inputs.nixpkgs {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+              config.allowUnsupportedSystem = true;
+            };
+          })
         ];
       };
 
@@ -162,6 +169,7 @@
           };
           sharedModules = [
             inputs.nix-index-database.homeModules.nix-index
+            # inputs.stylix.homeModules.stylix
           ];
         };
       };
@@ -323,8 +331,8 @@
       url = "github:glaumar/QRookie";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-mmuvm-fex = {
-      url = "github:nrabulinski/nixos-muvm-fex/native-build";
-    };
+    # nixos-mmuvm-fex = {
+    #   url = "github:nrabulinski/nixos-muvm-fex/native-build";
+    # };
   };
 }
