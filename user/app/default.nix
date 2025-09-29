@@ -17,7 +17,7 @@
     ns-usbloader
     jdk17
     prismlauncher
-    calibre
+    # calibre
     cbz_to_webp
     zip
     # (pkgs.extend inputs.nixos-mmuvm-fex.overlays.default).muvm

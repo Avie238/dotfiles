@@ -35,8 +35,19 @@
     openFirewall = true;
   };
 
-  environment.systemPackages = with pkgs.x86; [steam wine lutris protonup-qt];
-
+  environment.systemPackages = with pkgs.x86; [
+    steam
+    wine
+    lutris
+    protonup-qt
+    mesa-demos
+  ];
+  environment.etc = {
+    "resolv.conf".text = ''
+      search netbird.cloud
+      nameserver 1.1.1.1
+      options edns0'';
+  };
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   services.printing.enable = true;
