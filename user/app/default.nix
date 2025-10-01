@@ -20,7 +20,6 @@
     # calibre
     cbz_to_webp
     zip
-    # (pkgs.extend inputs.nixos-mmuvm-fex.overlays.default).muvm
     kdePackages.gwenview
     xfce.thunar-archive-plugin
     xarchiver
@@ -28,6 +27,7 @@
     remmina
     muvm
     btop
+    gparted
   ];
 
   openmw-dev.enable = true;

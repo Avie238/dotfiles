@@ -321,7 +321,6 @@
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {
@@ -340,12 +339,16 @@
     };
 
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    glaumar_repo = {
-      url = "github:glaumar/QRookie";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # nixos-mmuvm-fex = {
-    #   url = "github:nrabulinski/nixos-muvm-fex/native-build";
-    # };
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://nixos-apple-silicon.cachix.org"
+      "https://hyprland.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
   };
 }
