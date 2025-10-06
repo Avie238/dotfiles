@@ -6,11 +6,11 @@
   ...
 }: {
   config = lib.mkIf (userSettings.wm == "hyprland") {
-    services.displayManager.sddm = {
-      enable = true;
-      autoLogin.relogin = true;
-      wayland.enable = true;
-    };
+    # services.displayManager.sddm = {
+    #   enable = true;
+    #   # autoLogin.relogin = true;
+    #   wayland.enable = true;
+    # };
 
     programs.hyprland = {
       enable = true;

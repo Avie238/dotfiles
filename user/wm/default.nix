@@ -6,6 +6,7 @@
   imports = [
     ./gnome.nix
     ./hyprland
+    ./niri
   ];
 
   systemd.user.sessionVariables = config.home.sessionVariables;

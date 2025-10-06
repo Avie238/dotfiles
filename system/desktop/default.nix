@@ -41,6 +41,7 @@
     lutris
     protonup-qt
     mesa-demos
+    # rustdesk
   ];
 
   environment.etc = {

@@ -28,6 +28,7 @@
     muvm
     btop
     gparted
+    localsend
   ];
 
   openmw-dev.enable = true;
