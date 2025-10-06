@@ -1,0 +1,187 @@
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+// Check the wiki for a full description of the configuration:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+
+// Input device configuration.
+// Find the full list of options on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+    focus-follows-mouse
+}
+
+// Settings that influence how windows are positioned and sized.
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+layout {
+    gaps 14
+    center-focused-column "never"
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+    default-column-width { proportion 0.5; }
+    focus-ring {
+        width 2
+        active-color "#d8dadd"
+        inactive-color "#0b0b0c"
+    }
+    border {
+        off
+    }
+    struts {
+        left 0
+        right 0
+        top 0
+        bottom 0
+    }
+    background-color "transparent"
+
+}
+
+// startup processes
+spawn-sh-at-startup "udiskie"
+spawn-sh-at-startup "niriswitcher"
+spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-sh-at-startup "wl-paste --watch cliphist store"
+spawn-sh-at-startup "waybar -c $NIRICONF/waybar/config -s $NIRICONF/waybar/style.css"
+spawn-sh-at-startup "dunst -conf $NIRICONF/dunst/dunstrc"
+spawn-sh-at-startup "pkill swayidle; echo '10 minutes' > /tmp/idle-time; $NIRICONF/scripts/swayidle.sh"
+
+// workspace background and backdrop
+spawn-sh-at-startup "swww-daemon & swww img $NIRICONF/wallpapers/backdrop.png"
+spawn-sh-at-startup "swaybg -i $NIRICONF/wallpapers/workspace.png -m fill -c '#30404E'"
+layer-rule {
+    match namespace="^swww-daemon$"
+    place-within-backdrop true
+}
+
+// Animation settings.
+// The wiki explains how to configure individual animations:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
+animations {}
+
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+}
+window-rule {
+    match app-id="firefox"
+    match app-id="code"
+    match app-id="dev.zed.Zed"
+    default-column-width { proportion 1.0; }
+}
+window-rule {
+    match app-id="org.gnome.Calculator"
+    match app-id="com.saivert.pwvucontrol"
+    match app-id="Alacritty" title="Updater"
+    match app-id="Alacritty" title="nmtui"
+    match app-id="Alacritty" title="Wallpaper Selector"
+    open-floating true
+    shadow {
+        on
+    }
+}
+
+binds {
+    // Applications
+    Mod+Return      { spawn-sh "kitty"; }
+    Mod+{ spawn-sh "fuzzel --config $NIRICONF/fuzzel/fuzzel.ini"; }
+    Mod+B           { spawn-sh "firefox"; }
+    Mod+E           { spawn-sh "nautilus"; }
+    Mod+L           { spawn-sh "$NIRICONF/scripts/swaylock.sh"; }
+    Mod+C           { spawn-sh "cliphist list | fuzzel --dmenu --config $NIRICONF/fuzzel/clipboard.ini | cliphist decode | wl-copy"; }
+    Mod+I           { spawn-sh "$NIRICONF/scripts/change-idle-time.sh"; }
+    Mod+P           { spawn-sh "$NIRICONF/scripts/change-power-profile.sh"; }
+    Mod+U           { spawn-sh "alacritty --title 'Updater' --config-file $NIRICONF/alacritty/float.toml -e $NIRICONF/waybar/modules/install-updates.sh"; }
+    Mod+W           { spawn-sh "$NIRICONF/scripts/toggle-waybar.sh"; }
+    Mod+Ctrl+W      { spawn-sh "alacritty --title 'Wallpaper Selector' --config-file $NIRICONF/alacritty/float.toml -e $NIRICONF/scripts/change-wallpaper.sh"; }
+    Mod+Backspace   { spawn-sh "$NIRICONF/scripts/wlogout.sh"; }
+
+    // Backlight and Audio
+    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "brightnessctl set +5%" ; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "brightnessctl set 5%-" ; }
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
+    XF86AudioMute         allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioPlay         allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioPause        allow-when-locked=true { spawn-sh "playerctl pause"; }
+    XF86AudioNext         allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPrev         allow-when-locked=true { spawn-sh "playerctl previous"; }
+
+    // Windows and Columns
+    Mod+Q                { close-window; }
+    Mod+T                { toggle-window-floating; }
+    Mod+M                { maximize-column; }
+    Mod+F                { fullscreen-window; }
+    Mod+Left             { focus-column-left; }
+    Mod+Right            { focus-column-right; }
+    Mod+Down             { focus-window-down; }
+    Mod+Up               { focus-window-up; }
+    Mod+Ctrl+Left        { move-column-left; }
+    Mod+Ctrl+Right       { move-column-right; }
+    Mod+Ctrl+Down        { move-window-down; }
+    Mod+Ctrl+Up          { move-window-up; }
+    Mod+Home             { focus-column-first; }
+    Mod+End              { focus-column-last; }
+    Mod+Ctrl+Home        { move-column-to-first; }
+    Mod+Ctrl+End         { move-column-to-last; }
+    Mod+Shift+Left       { set-column-width "-10%"; }
+    Mod+Shift+Right      { set-column-width "+10%"; }
+    Mod+Shift+Up         { set-window-height "-10%"; }
+    Mod+Shift+Down       { set-window-height "+10%"; }
+    Mod+BracketLeft      { consume-or-expel-window-left; }
+    Mod+BracketRight     { consume-or-expel-window-right; }
+    Mod+Comma            { consume-window-into-column; }
+    Mod+Period           { expel-window-from-column; }
+    Alt+Tab repeat=false { spawn-sh "pkill -USR1 niriswitcher"; }
+
+    // Workspaces
+    Mod+Page_Down      { focus-workspace-down; }
+    Mod+Page_Up        { focus-workspace-up; }
+    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+1         { move-column-to-workspace 1; }
+    Mod+Ctrl+2         { move-column-to-workspace 2; }
+    Mod+Ctrl+3         { move-column-to-workspace 3; }
+    Mod+Ctrl+4         { move-column-to-workspace 4; }
+    Mod+Ctrl+5         { move-column-to-workspace 5; }
+    Mod+Ctrl+6         { move-column-to-workspace 6; }
+    Mod+Ctrl+7         { move-column-to-workspace 7; }
+    Mod+Ctrl+8         { move-column-to-workspace 8; }
+    Mod+Ctrl+9         { move-column-to-workspace 9; }
+    Mod+Ctrl+0         { move-column-to-workspace 10; }
+    Mod+A              { toggle-overview; }
+
+    // Screenshots
+    Print       { screenshot; }
+    Ctrl+Print  { screenshot-window; }
+    Shift+Print { screenshot-screen; }
+}
+
+// misc configuration
+screenshot-path "~/Pictures/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png"
+prefer-no-csd
+hotkey-overlay {
+    skip-at-startup
+}

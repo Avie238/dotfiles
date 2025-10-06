@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   userSettings,
   ...
 }: {
@@ -10,7 +11,7 @@
       type = lib.types.bool;
     };
   };
-  config = {
+  config = lib.mkIf config.openmw-dev.enable {
     home.packages = with pkgs; [
       openmw-dev
       delta-plugin

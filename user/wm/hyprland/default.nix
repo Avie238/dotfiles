@@ -37,6 +37,7 @@
       unar
       # xfce.thunar
     ];
+
     xdg.desktopEntries = {
       swayimg = {
         name = "swayimg";

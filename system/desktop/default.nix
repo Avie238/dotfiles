@@ -18,17 +18,17 @@
   };
 
   virtualisation.docker.enable = true;
-  virtualisation.incus = {
-    enable = true;
-    ui.enable = true;
-  };
+  # virtualisation.incus = {
+  #   enable = true;
+  #   ui.enable = true;
+  # };
 
   services.samba = {
     enable = true;
     settings.global.security = "user";
     openFirewall = true;
   };
-  networking.nftables.enable = true;
+  # networking.nftables.enable = true;
 
   services.samba-wsdd = {
     enable = true;
@@ -36,12 +36,11 @@
   };
 
   environment.systemPackages = with pkgs.x86; [
-    steam
-    wine
-    lutris
-    protonup-qt
-    mesa-demos
-    # rustdesk
+    # steam
+    # wine
+    # lutris
+    # protonup-qt
+    # mesa-demos
   ];
 
   environment.etc = {

@@ -26,7 +26,7 @@
   vm.enable = false;
   vpn.enable = false;
 
-  networking.hostName = "wsl-nixos";
+  networking.hostName = userSettings.hostname;
 
   system.stateVersion = "25.05";
 }

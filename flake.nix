@@ -13,21 +13,6 @@
 
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
-    pkgs_stableFor = system:
-      import nixpkgs {
-        system = system;
-        config = {
-          allowUnfree = true;
-        };
-        overlays = [
-          inputs.apple-silicon.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
-          inputs.firefox-addons.overlays.default
-          (import ./packages/overlay.nix)
-          (import ./scripts/overlay.nix)
-        ];
-      };
-
     pkgsFor = system:
       import nixpkgs {
         system = system;
@@ -135,13 +120,6 @@
         hostnameArg = "homelab-nixos";
       });
 
-      msi-nixos-server-live = nixosSystemFor (genUserSettings {
-        systemArg = "x86_64-linux";
-        hostArg = "msi";
-        profileArg = "server";
-        isIsoArg = true;
-      });
-
       msi-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";
@@ -151,18 +129,10 @@
       wsl-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "wsl";
-
+        hostnameArg = "wsl-nixos";
         profileArg = "wsl";
         wmArg = "none";
         browserArg = "none";
-      });
-
-      msi-nixos-live = nixosSystemFor (genUserSettings {
-        systemArg = "x86_64-linux";
-        hostArg = "msi";
-        isIsoArg = true;
-        profileArg = "installer";
-        hostnameArg = "msi-nixos-live";
       });
 
       vps = nixosSystemFor (genUserSettings {
@@ -181,7 +151,6 @@
           users.${userSettings.username} = userSettings.userModule;
           extraSpecialArgs = {
             inherit userSettings inputs;
-            pkgs_stable = pkgs_stableFor userSettings.system;
           };
           sharedModules = [
             inputs.nix-index-database.homeModules.nix-index
@@ -283,7 +252,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs_stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
