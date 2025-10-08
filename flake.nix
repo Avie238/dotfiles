@@ -103,7 +103,7 @@
         systemArg = "aarch64-linux";
         hostArg = "asahi";
         hostnameArg = "avie-nixos";
-        wmArg = "hyprland";
+        wmArg = "niri";
       });
 
       msi-nixos-server = nixosSystemFor (genUserSettings {

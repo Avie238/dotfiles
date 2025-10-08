@@ -12,6 +12,7 @@
   ];
   config = lib.mkIf (userSettings.wm == "hyprland") {
     xdg.autostart.enable = false;
+    waybar.enable = true;
 
     gtk.iconTheme = {
       package = pkgs.papirus-icon-theme;

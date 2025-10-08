@@ -4,15 +4,14 @@
   userSettings,
   lib,
   ...
-}:
-{
+}: {
   options = {
-    hyprland.waybar = lib.mkOption {
-      default = userSettings.wm == "hyprland";
+    waybar.enable = lib.mkOption {
+      default = false;
       type = lib.types.bool;
     };
   };
-  config = lib.mkIf config.hyprland.waybar {
+  config = lib.mkIf config.waybar.enable {
     home.packages = with pkgs; [
       lxqt.pavucontrol-qt
       hyprsysteminfo
@@ -47,9 +46,9 @@
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
           "cpu"
-          "custom/left-arrow-light"
-          "custom/left-arrow-dark"
-          "temperature"
+          # "custom/left-arrow-light"
+          # "custom/left-arrow-dark"
+          # "temperature"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
           "group/backlight"
@@ -207,9 +206,8 @@
           format = "{temperatureC}°C  ";
         };
       };
-      style =
-        with config.lib.stylix.colors.withHashtag;
-        #css
+      style = with config.lib.stylix.colors.withHashtag;
+      #css
         ''
           * {
             font-size: 15px;
