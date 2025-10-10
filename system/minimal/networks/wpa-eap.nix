@@ -3,9 +3,7 @@
   USERNAME,
   PASSWORD,
   ...
-}:
-
-{
+}: {
   networking.networkmanager = {
     ensureProfiles = {
       profiles = {
@@ -30,7 +28,9 @@
             password = PASSWORD;
             phase2-auth = "mschapv2";
           };
-          ipv4.method = "auto";
+          ipv4 = {
+            method = "auto";
+          };
           ipv6 = {
             addr-gen-mode = "default";
             method = "auto";
@@ -39,5 +39,4 @@
       };
     };
   };
-
 }
