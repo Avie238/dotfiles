@@ -66,8 +66,8 @@
         spawn = fileManager.name;
       };
       menu = {
-        name = "rofi";
-        spawn = "${menu.name} -show drun -show-icons -run-command \"uwsm app -- {cmd}\"";
+        name = "fuzzel";
+        spawn = menu.name;
       };
       timeZone = "Europe/Amsterdam";
       kb_layout = "pl";
