@@ -31,7 +31,7 @@
     localsend
   ];
 
-  openmw-dev.enable = true;
+  # openmw-dev.enable = true;
 
   xdg.mimeApps = {
     enable = true;

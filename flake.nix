@@ -6,6 +6,21 @@
     nixpkgs,
     ...
   } @ inputs: let
+    # nixpkgs' =
+    #   ((import nixpkgs {
+    #       system = "x86_64-linux";
+    #     }).applyPatches
+    #     {
+    #       name = "nixpkgs-patched";
+    #       src = inputs.nixpkgs;
+    #       patches = [
+    #         (builtins.fetchurl {
+    #           url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/450537.patch";
+    #           sha256 = "";
+    #         })
+    #       ];
+    #     }).src;
+    # patched-lib = nixpkgs'.lib;
     systems = [
       "aarch64-linux"
       "x86_64-linux"

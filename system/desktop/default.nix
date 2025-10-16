@@ -37,11 +37,13 @@
 
   environment.systemPackages = with pkgs.x86; [
     # steam
-    # wine
-    # lutris
-    # protonup-qt
-    # mesa-demos
+    wine
+    lutris
+    protonup-qt
+    mesa-demos
+    # pkgs.sommelier
   ];
+  hardware.opengl.extraPackages = [pkgs.mesa];
 
   # environment.etc = {
   #   "resolv.conf".text = ''

@@ -11,6 +11,10 @@
       # package = pkgs.niri-unstable;
     };
 
+    gtk.iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
+    };
     home.packages = with pkgs; [
       brightnessctl
       networkmanagerapplet
@@ -33,6 +37,7 @@
     waybar.enable = true;
 
     services.hyprpaper.enable = true;
+    hyprland.hyprlock = true;
 
     services.dunst.enable = true;
 
@@ -57,6 +62,7 @@
       prefer-no-csd = true;
 
       binds = with config.lib.niri.actions; {
+        #Volume and brightness
         "XF86AudioRaiseVolume".action = spawn "volumeControl" "-i";
         "XF86AudioLowerVolume".action = spawn "volumeControl" "-d";
         "XF86AudioMute".action = spawn "volumeControl" "-m";
@@ -68,22 +74,23 @@
         "Mod+Q".action = close-window;
         "Mod+T".action = spawn "${userSettings.term}";
         "Mod+E".action = spawn-sh "${userSettings.editor.spawn}";
-        "Mod+Return".action = spawn-sh "pkill fuzzel || fuzzel";
+        "Mod+Space".action = spawn-sh "pkill ${userSettings.menu.name} || ${userSettings.menu.spawn}";
         "Mod+D".action = toggle-overview;
         "Super+Super_L".action = close-overview;
         "Mod+Period".action = show-hotkey-overlay;
         "Mod+F".action = maximize-column;
 
+        # "Escape" = {action = spawn-sh "pkill ${userSettings.menu.name}";
+
         "Mod+Shift+E".action = quit;
         "Mod+Ctrl+Shift+E".action = quit {skip-confirmation = true;};
-
-        # "Mod+Plus".action = set-column-width "+10%";
 
         "Mod+Left".action = focus-column-left;
         "Mod+Right".action = focus-column-right;
         "Mod+Shift+Left".action = move-column-left;
         "Mod+Shift+Right".action = move-column-right;
 
+        #Workspaces
         "Mod+1".action.focus-workspace = 1;
         "Mod+2".action.focus-workspace = 2;
         "Mod+3".action.focus-workspace = 3;
