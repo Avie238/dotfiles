@@ -132,6 +132,7 @@
           opacity = 0.95;
         }
       ];
+      switch-events = with config.lib.niri.actions; {lid-close.action = spawn "systemctl" "suspend";};
 
       # Asahi specific
       debug = lib.mkIf (userSettings.host == "asahi") {
