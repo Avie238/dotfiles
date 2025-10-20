@@ -68,8 +68,8 @@
         "XF86AudioMute".action = spawn "volumeControl" "-m";
         "XF86MonBrightnessUp".action = spawn "brightnessControl" "-i";
         "XF86MonBrightnessDown".action = spawn "brightnessControl" "-d";
-        "Mod+XF86MonBrightnessUp".action = spawn "brightnessControl" "-i -k";
-        "Mod+XF86MonBrightnessDown".action = spawn "brightnessControl" "-d -k";
+        "Mod+XF86MonBrightnessUp".action = spawn "brightnessControl" "-i" "-k";
+        "Mod+XF86MonBrightnessDown".action = spawn "brightnessControl" "-d" "-k";
 
         "Mod+Q".action = close-window;
         "Mod+T".action = spawn "${userSettings.term}";
