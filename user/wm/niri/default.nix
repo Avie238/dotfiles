@@ -6,11 +6,6 @@
   ...
 }: {
   config = lib.mkIf (userSettings.wm == "niri") {
-    programs.niri = {
-      # enable = true;
-      # package = pkgs.niri-unstable;
-    };
-
     gtk.iconTheme = {
       package = pkgs.papirus-icon-theme;
       name = "Papirus-Dark";
@@ -38,10 +33,12 @@
 
     services.hyprpaper.enable = true;
     hyprland.hyprlock = true;
+    hyprland.hypridle = true;
 
     services.dunst.enable = true;
 
     programs.niri.settings = {
+      input.focus-follows-mouse.enable = false;
       outputs."eDP-1" = {
         scale = 2;
         mode = {
@@ -61,26 +58,96 @@
       };
       prefer-no-csd = true;
 
+      xwayland-satellite.enable = true;
+
       binds = with config.lib.niri.actions; {
         #Volume and brightness
-        "XF86AudioRaiseVolume".action = spawn "volumeControl" "-i";
-        "XF86AudioLowerVolume".action = spawn "volumeControl" "-d";
-        "XF86AudioMute".action = spawn "volumeControl" "-m";
-        "XF86MonBrightnessUp".action = spawn "brightnessControl" "-i";
-        "XF86MonBrightnessDown".action = spawn "brightnessControl" "-d";
-        "Mod+XF86MonBrightnessUp".action = spawn "brightnessControl" "-i" "-k";
-        "Mod+XF86MonBrightnessDown".action = spawn "brightnessControl" "-d" "-k";
+        "XF86AudioRaiseVolume" = {
+          action = spawn "volumeControl" "-i";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "XF86AudioLowerVolume" = {
+          action = spawn "volumeControl" "-d";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "XF86AudioMute" = {
+          action = spawn "volumeControl" "-m";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "XF86MonBrightnessUp" = {
+          action = spawn "brightnessControl" "-i";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "XF86MonBrightnessDown" = {
+          action = spawn "brightnessControl" "-d";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "Mod+XF86MonBrightnessUp" = {
+          action = spawn "brightnessControl" "-i" "-k";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "Mod+XF86MonBrightnessDown" = {
+          action = spawn "brightnessControl" "-d" "-k";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
+        "XF86Fn" = {
+          action = spawn "${pkgs.fn-toggle}/bin/fn-toggle";
+          allow-when-locked = true;
+          hotkey-overlay = {
+            hidden = true;
+          };
+        };
 
         "Mod+Q".action = close-window;
-        "Mod+T".action = spawn "${userSettings.term}";
-        "Mod+E".action = spawn-sh "${userSettings.editor.spawn}";
-        "Mod+Space".action = spawn-sh "pkill ${userSettings.menu.name} || ${userSettings.menu.spawn}";
+        "Mod+T" = {
+          action = spawn "${userSettings.term}";
+          hotkey-overlay = {
+            title = "Spawn terminal";
+          };
+        };
+        "Mod+E" = {
+          action = spawn-sh "${userSettings.editor.spawn}";
+          hotkey-overlay = {
+            title = "Spawn editor";
+          };
+        };
+        "Mod+L" = {
+          action = spawn-sh "${userSettings.fileManager.spawn}";
+          hotkey-overlay = {
+            title = "Spawn file manager";
+          };
+        };
+        "Mod+Space" = {
+          action = spawn-sh "${userSettings.menu.spawn}";
+          hotkey-overlay = {
+            title = "Spawn app menu";
+          };
+        };
         "Mod+D".action = toggle-overview;
         "Super+Super_L".action = close-overview;
         "Mod+Period".action = show-hotkey-overlay;
         "Mod+F".action = maximize-column;
-
-        # "Escape" = {action = spawn-sh "pkill ${userSettings.menu.name}";
 
         "Mod+Shift+E".action = quit;
         "Mod+Ctrl+Shift+E".action = quit {skip-confirmation = true;};
@@ -131,9 +198,17 @@
           ];
           opacity = 0.95;
         }
+        {
+          matches = [
+            {
+              app-id = "fuzzel";
+            }
+          ];
+          open-focused = true;
+        }
       ];
       switch-events = with config.lib.niri.actions; {
-        lid-close.action = spawn "firefox";
+        lid-close.action = spawn "";
       };
 
       # Asahi specific

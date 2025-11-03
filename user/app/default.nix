@@ -25,10 +25,11 @@
     xarchiver
     protonvpn-gui
     remmina
-    muvm
     btop
     gparted
     localsend
+    steam-pkgs.muvm-steam
+    # steam
   ];
 
   # openmw-dev.enable = true;

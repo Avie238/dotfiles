@@ -14,7 +14,7 @@
   config = lib.mkIf config.waybar.enable {
     home.packages = with pkgs; [
       lxqt.pavucontrol-qt
-      hyprsysteminfo
+      # hyprsysteminfo
     ];
 
     programs.waybar = {

@@ -24,6 +24,7 @@
 
     programs.niri = {
       enable = true;
+      # package = pkgs.niri-unstable;
     };
 
     #Bluetooth
@@ -58,6 +59,7 @@
     environment.systemPackages = with pkgs; [
       fuzzel
       alacritty
+      xwayland-satellite
     ];
     services.displayManager.defaultSession = "niri";
   };

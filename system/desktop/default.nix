@@ -28,7 +28,7 @@
     settings.global.security = "user";
     openFirewall = true;
   };
-  # networking.nftables.enable = true;
+  networking.nftables.enable = true;
 
   services.samba-wsdd = {
     enable = true;
@@ -43,7 +43,7 @@
     mesa-demos
     # pkgs.sommelier
   ];
-  hardware.opengl.extraPackages = [pkgs.mesa];
+  # hardware.opengl.extraPackages = [pkgs.mesa];
 
   # environment.etc = {
   #   "resolv.conf".text = ''

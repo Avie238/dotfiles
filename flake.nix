@@ -8,24 +8,23 @@
   } @ inputs: let
     # nixpkgs' =
     #   ((import nixpkgs {
-    #       system = "x86_64-linux";
+    #       system = "aarch64-linux";
     #     }).applyPatches
     #     {
     #       name = "nixpkgs-patched";
     #       src = inputs.nixpkgs;
     #       patches = [
     #         (builtins.fetchurl {
-    #           url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/450537.patch";
+    #           url = "https://github.com/NixOS/nixpkgs/compare/master...dramforever:nixpkgs:muvm-steam-less-hacks.patch";
     #           sha256 = "";
     #         })
     #       ];
     #     }).src;
-    # patched-lib = nixpkgs'.lib;
+    # # patched-lib = nixpkgs'.lib;
     systems = [
-      "aarch64-linux"
-      "x86_64-linux"
+      "aarch65-linux"
+      "x88_64-linux"
     ];
-
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
     pkgsFor = system:
@@ -46,6 +45,12 @@
               system = "x86_64-linux";
               config.allowUnfree = true;
               config.allowUnsupportedSystem = true;
+            };
+          })
+          (final: prev: {
+            steam-pkgs = import inputs.steam-nixpkgs {
+              system = "aarch64-linux";
+              config.allowUnfree = true;
             };
           })
         ];
@@ -266,6 +271,7 @@
   };
 
   inputs = {
+    steam-nixpkgs.url = "github:dramforever/nixpkgs/muvm-steam-less-hacks";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
