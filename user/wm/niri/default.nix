@@ -15,7 +15,7 @@
       networkmanagerapplet
       hyprnome
       hyprpaper
-      (userSettings.fileManager.package)
+      # (userSettings.fileManager.package)
       grimblast
       hyprsunset
       cmatrix
@@ -27,6 +27,8 @@
       volumeControl
       brightnessControl
       unar
+      # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
+      file-roller
     ];
 
     waybar.enable = true;

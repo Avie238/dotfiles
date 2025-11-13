@@ -21,15 +21,14 @@
     cbz_to_webp
     zip
     kdePackages.gwenview
-    xfce.thunar-archive-plugin
-    xarchiver
+    # xfce.thunar-archive-plugin
+    # xarchiver
     protonvpn-gui
     remmina
     btop
     gparted
     localsend
     steam-pkgs.muvm-steam
-    # steam
   ];
 
   # openmw-dev.enable = true;

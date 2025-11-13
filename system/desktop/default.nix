@@ -42,6 +42,7 @@
     protonup-qt
     mesa-demos
     # pkgs.sommelier
+    # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
   ];
   # hardware.opengl.extraPackages = [pkgs.mesa];
 

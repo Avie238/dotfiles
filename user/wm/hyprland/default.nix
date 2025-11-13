@@ -24,7 +24,7 @@
       networkmanagerapplet
       hyprnome
       hyprpaper
-      (userSettings.fileManager.package)
+      # (userSettings.fileManager.package)
       grimblast
       hyprsunset
       cmatrix

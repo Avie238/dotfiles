@@ -82,7 +82,7 @@
       };
       fileManager = {
         name = "thunar";
-        package = (pkgsFor system).xfce.thunar;
+        # package = (pkgsFor system).xfce.thunar;
         spawn = fileManager.name;
       };
       menu = {
