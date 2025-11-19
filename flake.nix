@@ -4,25 +4,11 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-stable,
     ...
   } @ inputs: let
-    # nixpkgs' =
-    #   ((import nixpkgs {
-    #       system = "aarch64-linux";
-    #     }).applyPatches
-    #     {
-    #       name = "nixpkgs-patched";
-    #       src = inputs.nixpkgs;
-    #       patches = [
-    #         (builtins.fetchurl {
-    #           url = "https://github.com/NixOS/nixpkgs/compare/master...dramforever:nixpkgs:muvm-steam-less-hacks.patch";
-    #           sha256 = "";
-    #         })
-    #       ];
-    #     }).src;
-    # # patched-lib = nixpkgs'.lib;
     systems = [
-      "aarch65-linux"
+      "aarch64-linux"
       "x88_64-linux"
     ];
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
@@ -56,6 +42,35 @@
         ];
       };
 
+    pkgsStableFor = system:
+      import nixpkgs-stable {
+        system = system;
+        config = {
+          allowUnfree = true;
+        };
+        overlays = [
+          inputs.apple-silicon.overlays.default
+          inputs.nix-vscode-extensions.overlays.default
+          inputs.firefox-addons.overlays.default
+          inputs.niri.overlays.niri
+          (import ./packages/overlay.nix)
+          (import ./scripts/overlay.nix)
+          (final: prev: {
+            x86 = import nixpkgs-stable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+              config.allowUnsupportedSystem = true;
+            };
+          })
+          (final: prev: {
+            steam-pkgs = import inputs.steam-nixpkgs {
+              system = "aarch64-linux";
+              config.allowUnfree = true;
+            };
+          })
+        ];
+      };
+
     genUserSettings = {
       systemArg,
       hostArg,
@@ -64,11 +79,16 @@
       wmArg ? "hyprland",
       browserArg ? "firefox",
       hostnameArg,
+      stable ? false,
     }: rec {
       system = systemArg;
       host = hostArg;
       profile = profileArg;
       isIso = isIsoArg;
+      pkgs =
+        if stable
+        then pkgsStableFor system
+        else pkgsFor system;
       username = "avie";
       name = "Avie";
       dotfilesDir = ./.;
@@ -93,7 +113,7 @@
       kb_layout = "pl";
       font = {
         name = "Jetbrains Mono NF";
-        package = (pkgsFor system).nerd-fonts.jetbrains-mono;
+        package = pkgs.nerd-fonts.jetbrains-mono;
       };
       theme = "uwunicorn";
       systemModule = (
@@ -106,7 +126,7 @@
 
     nixosSystemFor = userSettings:
       nixpkgs.lib.nixosSystem {
-        pkgs = pkgsFor userSettings.system;
+        pkgs = userSettings.pkgs;
         modules =
           [
             (userSettings.systemModule)
@@ -138,6 +158,7 @@
         hostArg = "homelab";
         profileArg = "server";
         hostnameArg = "homelab-nixos";
+        stable = true;
       });
 
       msi-nixos = nixosSystemFor (genUserSettings {
@@ -199,6 +220,7 @@
         userSettings = genUserSettings {
           systemArg = "aarch64-linux";
           hostArg = "asahi";
+          hostnameArg = "avie-nixos";
           profileArg = "installer";
           isIsoArg = true;
           wmArg = "none";
@@ -273,12 +295,12 @@
   inputs = {
     steam-nixpkgs.url = "github:dramforever/nixpkgs/muvm-steam-less-hacks";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     apple-silicon = {
       url = "github:nix-community/nixos-apple-silicon";
-
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
