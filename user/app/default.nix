@@ -23,7 +23,7 @@
     kdePackages.gwenview
     # xfce.thunar-archive-plugin
     # xarchiver
-    protonvpn-gui
+    # protonvpn-gui
     remmina
     btop
     gparted

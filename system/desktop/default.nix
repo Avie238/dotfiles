@@ -37,10 +37,10 @@
 
   environment.systemPackages = with pkgs.x86; [
     # steam
-    wine
     lutris
     protonup-qt
     mesa-demos
+    wineWowPackages.full
     # pkgs.sommelier
     # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
   ];
