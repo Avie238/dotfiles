@@ -158,7 +158,7 @@
         hostArg = "homelab";
         profileArg = "server";
         hostnameArg = "homelab-nixos";
-        stable = true;
+        # stable = true;
         # wmArg = "none";
       });
 
