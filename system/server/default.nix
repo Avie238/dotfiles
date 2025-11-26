@@ -6,7 +6,7 @@
   imports = [
     # ./samba.nix
   ];
-  services.logind.lidSwitchExternalPower = "ignore";
+  # services.logind.lidSwitchExternalPower = "ignore";
 
   services.openssh = {
     enable = true;
