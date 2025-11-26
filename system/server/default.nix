@@ -49,9 +49,9 @@
       };
     };
   };
-  environment.systemPackages = with pkgs; [
-    cockpit
-  ];
+  # environment.systemPackages = with pkgs; [
+  #   cockpit
+  # ];
 
   services.netbird.enable = true;
 }
