@@ -26,10 +26,7 @@ in {
     (import ./disko.nix {device = "/dev/nvme0n1";})
     (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
     inputs.disko.nixosModules.default
-    # ./impermanence.nix
   ];
-
-  system.stateVersion = "25.05";
 
   sops.age.keyFile = lib.mkForce "/var/lib/sops-nix/keys.txt";
   boot.kernelPackages = latestKernelPackage;
@@ -38,5 +35,5 @@ in {
   networking.hostId = "0a158abe";
   boot.zfs.extraPools = ["data"];
 
-  services.netbird.enable = true;
+  system.stateVersion = "25.05";
 }

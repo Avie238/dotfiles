@@ -159,6 +159,7 @@
         profileArg = "server";
         hostnameArg = "homelab-nixos";
         stable = true;
+        wmArg = "none";
       });
 
       msi-nixos = nixosSystemFor (genUserSettings {
