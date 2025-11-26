@@ -39,16 +39,16 @@
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.enable = true;
 
-  services.cockpit = {
-    enable = true;
-    port = 9090;
-    openFirewall = true;
-    settings = {
-      WebService = {
-        AllowUnencrypted = true;
-      };
-    };
-  };
+  # services.cockpit = {
+  #   enable = true;
+  #   port = 9090;
+  #   openFirewall = true;
+  #   settings = {
+  #     WebService = {
+  #       AllowUnencrypted = true;
+  #     };
+  #   };
+  # };
   # environment.systemPackages = with pkgs; [
   #   cockpit
   # ];
