@@ -1,8 +1,11 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
-}: {
+}: let
+  wrapMuvm = {package}: pkgs.writeShellScriptBin "${package}" "${lib.getExe pkgs.muvm} ${lib.getExe pkgs.x86."${package}"}";
+in {
   imports = [
     ./editor
     ./browser
@@ -12,26 +15,43 @@
     ./openmw.nix
   ];
 
-  home.packages = with pkgs; [
-    qbittorrent
-    ns-usbloader
-    jdk17
-    prismlauncher
-    # calibre
-    cbz_to_webp
-    zip
-    kdePackages.gwenview
-    # xfce.thunar-archive-plugin
-    # xarchiver
-    # protonvpn-gui
-    remmina
-    btop
-    gparted
-    localsend
-    steam-pkgs.muvm-steam
-  ];
+  home.packages =
+    (with pkgs; [
+      qbittorrent
+      ns-usbloader
+      jdk17
+      prismlauncher
+      # calibre
+      cbz_to_webp
+      zip
+      kdePackages.gwenview
+      # xfce.thunar-archive-plugin
+      # xarchiver
+      file-roller
+      # protonvpn-gui
+      remmina
+      btop
+      gparted
+      localsend
+      muvm
+    ])
+    ++ (with pkgs.x86; [
+      steam
+      protonup-qt
+      wineWowPackages.full
+    ])
+    ++ (map (x: wrapMuvm {package = x;}) ["lutris"]);
 
   # openmw-dev.enable = true;
+
+  xdg.desktopEntries = {
+    Lutris = {
+      name = "Lutris";
+      genericName = "Game";
+      exec = "lutris";
+      terminal = false;
+    };
+  };
 
   xdg.mimeApps = {
     enable = true;

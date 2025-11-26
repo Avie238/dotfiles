@@ -11,4 +11,5 @@ final: prev: {
   openmw-validator = final.callPackage ./momw-tools-pack/openmw-validator.nix {};
   groundcoverify = final.callPackage ./momw-tools-pack/groundcoverify.nix {};
   tor-browser = final.callPackage ./tor-browser.nix {};
+  muvm = final.callPackage ./muvm.nix {};
 }

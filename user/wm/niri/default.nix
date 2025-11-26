@@ -27,8 +27,6 @@
       volumeControl
       brightnessControl
       unar
-      # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
-      file-roller
     ];
 
     waybar.enable = true;

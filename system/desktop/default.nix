@@ -1,8 +1,11 @@
 {
   pkgs,
   userSettings,
+  lib,
   ...
-}: {
+}: let
+  wrapMuvm = {package}: pkgs.writeShellScriptBin "${package}" "muvm ${lib.getExe pkgs.x86."${package}"}";
+in {
   imports = [
     ./../minimal
     ./wm
@@ -35,15 +38,17 @@
     openFirewall = true;
   };
 
-  environment.systemPackages = with pkgs.x86; [
-    # steam
-    lutris
-    protonup-qt
-    mesa-demos
-    wineWowPackages.full
-    # pkgs.sommelier
-    # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
-  ];
+  # environment.systemPackages = with pkgs.x86; [
+  #   steam
+  #   (wrapMuvm {package = "lutris";})
+  #   # lutris
+  #   protonup-qt
+  #   mesa-demos
+  #   wineWowPackages.full
+  #   # pkgs.sommelier
+  #   # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
+  # ];
+
   # hardware.opengl.extraPackages = [pkgs.mesa];
 
   # environment.etc = {
