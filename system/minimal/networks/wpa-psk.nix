@@ -3,9 +3,7 @@
   SSID,
   PASSWORD,
   ...
-}:
-
-{
+}: {
   networking.networkmanager = {
     ensureProfiles = {
       profiles = {
@@ -15,7 +13,10 @@
             permissions = "";
             type = "wifi";
           };
-          ipv4.method = "auto";
+          ipv4 = {
+            dns = "1.1.1.1";
+            method = "auto";
+          };
           ipv6 = {
             addr-gen-mode = "default";
             method = "auto";
@@ -33,5 +34,4 @@
       };
     };
   };
-
 }

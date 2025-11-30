@@ -34,6 +34,16 @@
             };
           })
           (final: prev: {
+            x86_stable = import inputs.nixpkgs-stable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+              config.allowUnsupportedSystem = true;
+              config.permittedInsecurePackages = [
+                "adobe-reader-9.5.5"
+              ];
+            };
+          })
+          (final: prev: {
             steam-pkgs = import inputs.steam-nixpkgs {
               system = "aarch64-linux";
               config.allowUnfree = true;
@@ -297,6 +307,7 @@
     steam-nixpkgs.url = "github:dramforever/nixpkgs/muvm-steam-less-hacks";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-24.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 

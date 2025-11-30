@@ -45,6 +45,7 @@
       ln -snf ${mesa} /run/opengl-driver
       ln -snf ${mesa32} /run/opengl-driver-32
       echo enable-shm=no > /run/pulse.conf
+      export PULSE_CLIENTCONFIG=/run/pulse.conf
     '';
   };
   binPath =

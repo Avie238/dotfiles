@@ -1,16 +1,6 @@
 {...}: {
   imports = [
     (import ./networks/wpa-psk.nix {
-      name = "sun2";
-      SSID = "$SUN2_SSID";
-      PASSWORD = "$SUN2_PASSWORD";
-    })
-    (import ./networks/wpa-psk.nix {
-      name = "sun";
-      SSID = "$SUN_SSID";
-      PASSWORD = "$SUN_PASSWORD";
-    })
-    (import ./networks/wpa-psk.nix {
       name = "home";
       SSID = "$HOME_SSID";
       PASSWORD = "$HOME_PASSWORD";
@@ -21,9 +11,9 @@
       PASSWORD = "$WILCZAK_PASSWORD";
     })
     (import ./networks/wpa-psk.nix {
-      name = "iphoneHotspot";
-      SSID = "$IPHONE_HOTSPOT_SSID";
-      PASSWORD = "$IPHONE_HOTSPOT_PASSWORD";
+      name = "hotspot";
+      SSID = "HOTSPOT_SSID";
+      PASSWORD = "$HOTSPOT_PASSWORD";
     })
     (import ./networks/wpa-eap.nix {
       SSID = "eduroam";

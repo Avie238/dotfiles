@@ -39,6 +39,8 @@ in {
       steam
       protonup-qt
       wineWowPackages.full
+      winetricks
+      pdfstudioviewer
     ])
     ++ (map (x: wrapMuvm {package = x;}) ["lutris"]);
 
@@ -49,6 +51,12 @@ in {
       name = "Lutris";
       genericName = "Game";
       exec = "lutris";
+      terminal = false;
+    };
+    Adobe = {
+      name = "Adobe Acrobat";
+      genericName = "PDF";
+      exec = "muvm env WINEPREFIX=/home/avie/Prefixes/Adobe/ wine \"/home/avie/Downloads/Adobe Acrobat Pro DC 2025.001.20937 x64 Portable 7997/Acrobat Pro/AcrobatProPortable.exe\"";
       terminal = false;
     };
   };
