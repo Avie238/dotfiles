@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    # ./samba.nix
+    ./samba.nix
   ];
   # services.logind.lidSwitchExternalPower = "ignore";
 

@@ -18,6 +18,7 @@
         system = system;
         config = {
           allowUnfree = true;
+          allowUnsupportedSystem = true;
         };
         overlays = [
           inputs.apple-silicon.overlays.default
@@ -26,6 +27,7 @@
           inputs.niri.overlays.niri
           (import ./packages/overlay.nix)
           (import ./scripts/overlay.nix)
+          (import ./overlay-arm64ec.nix)
           (final: prev: {
             x86 = import inputs.nixpkgs {
               system = "x86_64-linux";
@@ -45,6 +47,12 @@
           })
           (final: prev: {
             steam-pkgs = import inputs.steam-nixpkgs {
+              system = "aarch64-linux";
+              config.allowUnfree = true;
+            };
+          })
+          (final: prev: {
+            avie-pkgs = import inputs.nixpkgs-avie {
               system = "aarch64-linux";
               config.allowUnfree = true;
             };
@@ -237,6 +245,7 @@
           wmArg = "none";
         };
       in {
+        wine-arm64ec = (pkgsFor system).callPackage ./wine-arm64ec.nix {};
         inherit
           (pkgs)
           m1n1
@@ -308,6 +317,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-24.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-avie.url = "github:Avie238/nixpkgs";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 

@@ -38,15 +38,8 @@ in {
     openFirewall = true;
   };
 
-  # environment.systemPackages = with pkgs.x86; [
-  #   steam
-  #   (wrapMuvm {package = "lutris";})
-  #   # lutris
-  #   protonup-qt
-  #   mesa-demos
-  #   wineWowPackages.full
-  #   # pkgs.sommelier
-  #   # (pkgs.xfce.thunar.override {thunarPlugins = [pkgs.xfce.thunar-archive-plugin];})
+  # environment.systemPackages = with pkgs.avie-pkgs; [
+  #   wineWow64Packages.full
   # ];
 
   # hardware.opengl.extraPackages = [pkgs.mesa];
