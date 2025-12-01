@@ -1,4 +1,4 @@
-{}: {
+{...}: {
   services.samba = {
     enable = true;
     securityType = "user";
