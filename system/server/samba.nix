@@ -17,7 +17,7 @@
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
-      "public" = {
+      "data" = {
         "path" = "/data";
         "browseable" = "yes";
         "read only" = "no";
