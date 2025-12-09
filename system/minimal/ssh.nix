@@ -4,6 +4,8 @@
   ...
 }: {
   programs.ssh = {
+    forwardX11 = true;
+    setXAuthLocation = true;
     # startAgent = true;
     extraConfig = ''
       Host *
