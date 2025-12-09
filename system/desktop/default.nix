@@ -79,6 +79,6 @@ in {
     package = pkgs.mariadb;
   };
 
-  services.netbird.enable = true;
+  # services.netbird.enable = true;
   vpn.enable = false;
 }
