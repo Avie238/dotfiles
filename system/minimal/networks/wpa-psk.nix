@@ -2,6 +2,7 @@
   name,
   SSID,
   PASSWORD,
+  dns ? "1.1.1.1",
   ...
 }: {
   networking.networkmanager = {
@@ -14,7 +15,7 @@
             type = "wifi";
           };
           ipv4 = {
-            dns = "1.1.1.1";
+            dns = dns;
             method = "auto";
           };
           ipv6 = {

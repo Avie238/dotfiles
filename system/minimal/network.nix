@@ -4,6 +4,7 @@
       name = "home";
       SSID = "$HOME_SSID";
       PASSWORD = "$HOME_PASSWORD";
+      dns = "192.168.178.247";
     })
     (import ./networks/wpa-psk.nix {
       name = "wilczak";

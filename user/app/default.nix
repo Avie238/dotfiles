@@ -34,6 +34,8 @@ in {
       gparted
       localsend
       muvm
+      libreoffice
+      grsync
     ])
     ++ (with pkgs.x86; [
       steam
