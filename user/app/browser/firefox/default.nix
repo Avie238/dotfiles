@@ -13,6 +13,7 @@
           name = "default";
           isDefault = true;
           search = {
+            default = "Startpage";
             force = true;
             engines = {
               "Nix Packages" = {
@@ -41,7 +42,13 @@
               };
 
               "Startpage" = {
-                urls = [{template = "https://www.startpage.com/sp/search?q={searchTerms}";}];
+                urls = [
+                  {template = "https://www.startpage.com/sp/search?q={searchTerms}";}
+                  # {
+                  #   template = "https://www.startpage.com/osuggestions?q=%s";
+                  #   type = "suggestion";
+                  # }
+                ];
               };
             };
           };

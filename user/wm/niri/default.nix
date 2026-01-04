@@ -177,6 +177,8 @@
         "Mod+Shift+7".action.move-column-to-workspace = 7;
         "Mod+Shift+8".action.move-column-to-workspace = 8;
         "Mod+Shift+9".action.move-column-to-workspace = 9;
+
+        "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
       };
 
       window-rules = [
