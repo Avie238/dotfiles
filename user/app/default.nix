@@ -44,7 +44,7 @@ in {
       winetricks
       pdfstudioviewer
     ])
-    ++ (map (x: wrapMuvm {package = x;}) ["lutris"]);
+    ++ (map (x: wrapMuvm {package = x;}) ["lutris" "umu-launcher"]);
 
   # openmw-dev.enable = true;
 
