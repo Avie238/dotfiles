@@ -12,4 +12,5 @@ final: prev: {
   groundcoverify = final.callPackage ./momw-tools-pack/groundcoverify.nix {};
   tor-browser = final.callPackage ./tor-browser.nix {};
   muvm = final.callPackage ./muvm.nix {};
+  hakuneko = final.callPackage ./hakuneko.nix {};
 }
