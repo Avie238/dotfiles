@@ -36,6 +36,7 @@ in {
       muvm
       libreoffice
       grsync
+      hakuneko
     ])
     ++ (with pkgs.x86; [
       steam
@@ -44,7 +45,7 @@ in {
       winetricks
       pdfstudioviewer
     ])
-    ++ (map (x: wrapMuvm {package = x;}) ["lutris" "umu-launcher"]);
+    ++ (map (x: wrapMuvm {package = x;}) ["lutris"]);
 
   # openmw-dev.enable = true;
 

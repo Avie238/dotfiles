@@ -42,7 +42,7 @@ in
         };
         "aarch64-linux" = fetchurl {
           url = "https://github.com/manga-download/hakuneko/releases/download/nightly-20200705.1/hakuneko-desktop_8.3.4_linux_arm64.deb";
-          sha256 = "";
+          sha256 = "sha256-XkuZK1imfdrJZBCXXhBXe+/mdHnBwrPRKyvLr29sADo=";
         };
       }
     ."${stdenv.hostPlatform.system}" or (throw "unsupported system ${stdenv.hostPlatform.system}");
