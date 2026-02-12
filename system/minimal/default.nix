@@ -14,7 +14,7 @@
   ];
 
   boot.loader = {
-    grub.enable = true;
+    # grub.enable = true;
     timeout = lib.mkForce 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
