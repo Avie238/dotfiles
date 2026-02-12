@@ -164,6 +164,13 @@
         wmArg = "niri";
       });
 
+      artemis-nixos = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "artemis";
+        hostnameArg = "artemis-nixos";
+        wmArg = "niri";
+      });
+
       msi-nixos-server = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "msi";

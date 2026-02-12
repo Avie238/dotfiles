@@ -38,7 +38,7 @@ in {
       grsync
       hakuneko
       dig
-      qrookie
+      # qrookie
     ])
     ++ (with pkgs.x86; [
       steam
