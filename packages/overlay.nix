@@ -13,4 +13,5 @@ final: prev: {
   tor-browser = final.callPackage ./tor-browser.nix {};
   muvm = final.callPackage ./muvm.nix {};
   hakuneko = final.callPackage ./hakuneko.nix {};
+  qrookie = final.callPackage ./qrookie.nix {};
 }

@@ -15,7 +15,7 @@
             type = "wifi";
           };
           ipv4 = {
-            # dns = dns;
+            dns = dns;
             method = "auto";
           };
           ipv6 = {

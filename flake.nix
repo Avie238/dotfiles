@@ -227,6 +227,8 @@
           localSystem.system = system;
           config = {
             allowUnfree = true;
+
+            android_sdk.accept_license = true;
           };
           overlays = [
             inputs.apple-silicon.overlays.default

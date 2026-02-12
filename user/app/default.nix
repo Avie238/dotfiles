@@ -37,6 +37,8 @@ in {
       libreoffice
       grsync
       hakuneko
+      dig
+      qrookie
     ])
     ++ (with pkgs.x86; [
       steam
