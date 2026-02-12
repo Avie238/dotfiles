@@ -2,6 +2,7 @@
   inputs,
   userSettings,
   config,
+  lib,
   ...
 }: {
   imports = [
