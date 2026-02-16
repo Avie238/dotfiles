@@ -109,6 +109,13 @@ in {
               nvim-dap-python
               nvim-nio
               vimtex
+              hardtime-nvim
+              nui-nvim
+              {
+                plugin = mini-surround;
+                name = "mini.surround";
+              }
+
               {
                 plugin = mini-ai;
                 name = "mini.ai";
