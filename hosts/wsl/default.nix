@@ -20,6 +20,7 @@
 
   boot.loader = {
     systemd-boot.enable = lib.mkForce false;
+    grub.enable = lib.mkForce false;
   };
 
   sops.enable = false;
