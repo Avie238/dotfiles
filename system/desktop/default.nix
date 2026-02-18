@@ -38,6 +38,7 @@ in {
     openFirewall = true;
   };
 
+  services.tumbler.enable = true;
   # environment.systemPackages = with pkgs.avie-pkgs; [
   #   wineWow64Packages.full
   # ];

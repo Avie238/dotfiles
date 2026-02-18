@@ -6,12 +6,12 @@
   ...
 }: {
   options = {
-    waybar.enable = lib.mkOption {
+    wm.utils.waybar.enable = lib.mkOption {
       default = false;
       type = lib.types.bool;
     };
   };
-  config = lib.mkIf config.waybar.enable {
+  config = lib.mkIf config.wm.utils.waybar.enable {
     home.packages = with pkgs; [
       lxqt.pavucontrol-qt
       # hyprsysteminfo

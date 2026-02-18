@@ -5,14 +5,9 @@
   inputs,
   ...
 }: {
-  imports = [
-    ./hypridle.nix
-    ./hyprlock.nix
-    ./waybar.nix
-  ];
   config = lib.mkIf (userSettings.wm == "hyprland") {
     xdg.autostart.enable = false;
-    waybar.enable = true;
+    wm.utils.waybar.enable = true;
 
     gtk.iconTheme = {
       package = pkgs.papirus-icon-theme;

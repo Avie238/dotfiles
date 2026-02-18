@@ -7,6 +7,7 @@
     ./gnome.nix
     ./hyprland
     ./niri
+    ./utils
   ];
 
   systemd.user.sessionVariables = config.home.sessionVariables;

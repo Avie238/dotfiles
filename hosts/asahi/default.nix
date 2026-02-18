@@ -38,6 +38,24 @@
     ];
   };
 
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = ["*"];
+        settings = {
+          main = {
+            leftalt = "leftmeta";
+            leftmeta = "leftalt";
+            fn = "leftcontrol";
+            leftcontrol = "fn";
+          };
+        };
+      };
+    };
+  };
+  programs.gamescope.enable = true;
+
   # nix.settings = {
   #   substituters = [
   #     "https://hyprland.cachix.org"

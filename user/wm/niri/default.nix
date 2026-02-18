@@ -27,17 +27,28 @@
       volumeControl
       brightnessControl
       unar
+      niriswitcher
     ];
 
-    waybar.enable = true;
+    wm.utils.waybar.enable = true;
 
-    services.hyprpaper.enable = true;
-    hyprland.hyprlock = true;
-    hyprland.hypridle = true;
+    services.hyprpaper = {
+      enable = true;
+
+      settings.wallpaper = [
+        {
+          path = "~/dotfiles/wallpaper.jpg";
+        }
+      ];
+    };
+    wm.utils.hyprlock.enable = true;
+    wm.utils.hypridle.enable = true;
 
     services.dunst.enable = true;
+    programs.niriswitcher.enable = true;
 
     programs.niri.settings = {
+      screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
       input.focus-follows-mouse.enable = false;
       outputs."eDP-1" = {
         scale = 2;
@@ -55,6 +66,13 @@
           enable = true;
           width = 3;
         };
+        preset-column-widths = [
+          {proportion = 1. / 1.;}
+          {proportion = 1. / 3.;}
+          {proportion = 1. / 2.;}
+          {proportion = 2. / 3.;}
+        ];
+        default-column-width = {proportion = 1. / 1.;};
       };
       prefer-no-csd = true;
 
@@ -145,7 +163,7 @@
           };
         };
         "Mod+D".action = toggle-overview;
-        "Super+Super_L".action = close-overview;
+        # "Super+Super_L".action = close-overview;
         "Mod+Period".action = show-hotkey-overlay;
         "Mod+F".action = maximize-column;
 
@@ -156,6 +174,9 @@
         "Mod+Right".action = focus-column-right;
         "Mod+Shift+Left".action = move-column-left;
         "Mod+Shift+Right".action = move-column-right;
+
+        "Mod+Up".action = focus-workspace-up;
+        "Mod+Down".action = focus-workspace-down;
 
         #Workspaces
         "Mod+1".action.focus-workspace = 1;
@@ -179,6 +200,11 @@
         "Mod+Shift+9".action.move-column-to-workspace = 9;
 
         "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
+
+        "Alt+Tab" = {
+          repeat = false;
+          action.spawn = ["niriswitcherctl" "show" "--window"];
+        };
       };
 
       window-rules = [
