@@ -331,7 +331,7 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     apple-silicon = {
-      url = "github:nix-community/nixos-apple-silicon";
+      url = "github:Avie238/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
