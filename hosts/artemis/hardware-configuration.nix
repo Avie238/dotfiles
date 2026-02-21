@@ -2,7 +2,9 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }: {
@@ -10,33 +12,31 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["usb_storage"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = [];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
+    device = "/dev/disk/by-uuid/a1579894-59ba-4e3e-9dc0-33eb56c88a60";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/EFI\\x20-\\x20NIXOS";
+    device = "/dev/disk/by-uuid/8B50-CECE";
     fsType = "vfat";
-    options = [
-      "fmask=0022"
-      "dmask=0022"
-    ];
+    options = ["fmask=0077" "dmask=0077"];
+  };
+
+  fileSystems."/home/avie/HDD" = {
+    device = "/dev/disk/by-uuid/3e731123-5ae2-4afb-9a19-0dbc54988177";
+    fsType = "ext4";
   };
 
   swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 8 * 1024;
-    }
+    {device = "/dev/disk/by-uuid/59580328-e711-4910-94cf-dd95f6b97e8c";}
   ];
 
-  networking.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -38,13 +38,27 @@
     services.dunst.enable = true;
 
     programs.niri.settings = {
-      input.focus-follows-mouse.enable = false;
+      input = {
+        focus-follows-mouse = {
+          enable = true;
+          max-scroll-amount = "5%";
+        };
+        warp-mouse-to-focus.enable = true;
+      };
       outputs."eDP-1" = {
         scale = 2;
         mode = {
           height = 1664;
           width = 2560;
           refresh = 60.0;
+        };
+      };
+      outputs."HDMI-A-1" = {
+        scale = 1.5;
+        mode = {
+          height = 1440;
+          width = 2560;
+          refresh = 143.995;
         };
       };
 
@@ -145,7 +159,7 @@
           };
         };
         "Mod+D".action = toggle-overview;
-        "Super+Super_L".action = close-overview;
+        # "Super+Super_L".action = close-overview;
         "Mod+Period".action = show-hotkey-overlay;
         "Mod+F".action = maximize-column;
 
@@ -199,14 +213,6 @@
             }
           ];
           opacity = 0.95;
-        }
-        {
-          matches = [
-            {
-              app-id = "fuzzel";
-            }
-          ];
-          open-focused = true;
         }
       ];
       switch-events = with config.lib.niri.actions; {
