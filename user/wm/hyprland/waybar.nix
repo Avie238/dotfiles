@@ -68,7 +68,7 @@
           };
           modules = [
             "custom/os"
-            "custom/logout"
+            "custom/sleep"
             "custom/lock"
             "custom/power"
             "custom/reboot"
@@ -85,7 +85,7 @@
           on-click = "uwsm stop";
         };
         "custom/lock" = {
-          format = " ";
+          format = "  ";
           tooltip = false;
           on-click = "hyprlock";
         };
@@ -99,6 +99,12 @@
           tooltip = false;
           on-click = "shutdown now";
         };
+        "custom/sleep" = {
+          format = "󰤄";
+          tooltip = false;
+          on-click = "systemctl suspend";
+        };
+
         "custom/left-arrow-dark" = {
           format = "";
           tooltip = false;
@@ -306,7 +312,7 @@
           #custom-os,
           #custom-quit,
           #custom-lock,
-          #custom-reboot,
+          #custom-sleep,
           #custom-logout,
           #custom-power {
             font-size: 18px;

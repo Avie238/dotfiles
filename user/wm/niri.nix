@@ -36,12 +36,27 @@
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
       input.focus-follows-mouse.enable = false;
       spawn-at-startup = [{argv = ["swaybg" "-i" "/home/avie/dotfiles/wallpaper.jpg" "-m" "fill"];}];
+      input = {
+        focus-follows-mouse = {
+          enable = true;
+          max-scroll-amount = "5%";
+        };
+        warp-mouse-to-focus.enable = true;
+      };
       outputs."eDP-1" = {
         scale = 2;
         mode = {
           height = 1664;
           width = 2560;
           refresh = 60.0;
+        };
+      };
+      outputs."HDMI-A-1" = {
+        scale = 1.5;
+        mode = {
+          height = 1440;
+          width = 2560;
+          refresh = 143.995;
         };
       };
 

@@ -15,4 +15,6 @@ final: prev: {
   hakuneko = final.callPackage ./hakuneko.nix {};
   qrookie = final.callPackage ./qrookie.nix {};
   wayle_unstable = final.callPackage ./wayle.nix {};
+  # alvr = final.callPackage ./alvr.nix {};
+  jackify = final.callPackage ./jackify.nix {};
 }

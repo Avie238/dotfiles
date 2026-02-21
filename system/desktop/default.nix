@@ -14,6 +14,8 @@ in {
     ./vm.nix
     ./vpn.nix
     ./file_manager
+    ./thunar.nix
+    ./gaming
   ];
 
   hardware.graphics = {
