@@ -389,7 +389,7 @@
   };
 
   nixConfig = {
-    extra-substituters = [
+    extra-trusted-substituters = [
       "https://nixos-apple-silicon.cachix.org"
       "https://hyprland.cachix.org"
       "https://niri.cachix.org"

@@ -54,7 +54,6 @@
       };
     };
   };
-  programs.gamescope.enable = true;
 
   # nix.settings = {
   #   substituters = [

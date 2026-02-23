@@ -166,6 +166,7 @@
         # "Super+Super_L".action = close-overview;
         "Mod+Period".action = show-hotkey-overlay;
         "Mod+F".action = maximize-column;
+        "Mod+Shift+F".action = fullscreen-window;
 
         "Mod+Shift+E".action = quit;
         "Mod+Ctrl+Shift+E".action = quit {skip-confirmation = true;};
