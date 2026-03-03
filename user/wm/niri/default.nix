@@ -27,6 +27,7 @@
       volumeControl
       brightnessControl
       unar
+      niriswitcher
     ];
 
     waybar.enable = true;
@@ -34,6 +35,7 @@
     services.hyprpaper.enable = true;
     hyprland.hyprlock = true;
     hyprland.hypridle = true;
+    programs.niriswitcher.enable = true;
 
     services.dunst.enable = true;
 
@@ -192,6 +194,10 @@
         "Mod+Shift+8".action.move-column-to-workspace = 8;
         "Mod+Shift+9".action.move-column-to-workspace = 9;
 
+        "Alt+Tab" = {
+          repeat = false;
+          action.spawn = ["niriswitcherctl" "show" "--window"];
+        };
         "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
       };
 
