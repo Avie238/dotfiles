@@ -195,6 +195,10 @@
         "Mod+Shift+8".action.move-column-to-workspace = 8;
         "Mod+Shift+9".action.move-column-to-workspace = 9;
 
+        "Alt+Tab" = {
+          repeat = false;
+          action.spawn = ["niriswitcherctl" "show" "--window"];
+        };
         "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
         "Ctrl+Shift+4".action.screenshot-window = {};
 
