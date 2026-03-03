@@ -36,6 +36,33 @@
   #     "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
   #   ];
   # };
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+    applications = {
+      apps = [
+        {
+          name = "Faugus";
+          cmd = "io.github.Faugus.faugus-launcher";
+        }
+      ];
+    };
+  };
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = ["*"];
+        settings = {
+          main = {
+            home = "insert";
+          };
+        };
+      };
+    };
+  };
 
   #General
   boot.loader = {
