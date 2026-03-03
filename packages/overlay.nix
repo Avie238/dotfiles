@@ -16,4 +16,5 @@ final: prev: {
   qrookie = final.callPackage ./qrookie.nix {};
   # alvr = final.callPackage ./alvr.nix {};
   jackify = final.callPackage ./jackify.nix {};
+  drop-app = final.callPackage ./drop.nix {};
 }

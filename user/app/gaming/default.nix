@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    faugus-launcher
+    # faugus-launcher
     protonplus
     lutris
     mangohud
