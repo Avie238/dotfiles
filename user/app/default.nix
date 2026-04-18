@@ -38,6 +38,11 @@ in {
       grsync
       hakuneko
       dig
+      ludusavi
+      rclone
+      manga-tui
+      filezilla
+      retroarch-free
       # qrookie
     ])
     ++ (with pkgs.x86; [

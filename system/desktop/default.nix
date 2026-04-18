@@ -45,12 +45,12 @@ in {
 
   # hardware.opengl.extraPackages = [pkgs.mesa];
 
-  # environment.etc = {
-  #   "resolv.conf".text = ''
-  #     search netbird.cloud
-  #     nameserver 1.1.1.1
-  #     options edns0'';
-  # };
+  environment.etc = {
+    "resolv.conf".text = ''
+      search netbird.cloud
+      nameserver 1.1.1.1
+      options edns0'';
+  };
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
