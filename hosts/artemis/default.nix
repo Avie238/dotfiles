@@ -36,16 +36,47 @@
   #     "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
   #   ];
   # };
+  programs.ns-usbloader.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        AutoEnable = true;
+        ControllerMode = "bredr";
+        Experimental = true;
+      };
+    };
+  };
+  services.blueman.enable = true;
+  hardware.enableAllFirmware = true;
   services.sunshine = {
     enable = true;
     autoStart = true;
-    capSysAdmin = true;
+    # capSysAdmin = true;
     openFirewall = true;
     applications = {
       apps = [
         {
-          name = "Faugus";
-          cmd = "io.github.Faugus.faugus-launcher";
+          name = "faugus";
+          cmd = "io.github.faugus.faugus-launcher";
+        }
+        {
+          name = "Clair Obscur Expedition 33";
+          cmd = "flatpak run --command=/app/bin/faugus-launcher io.github.Faugus.faugus-launcher --game clair-obscur-expedition-33";
+        }
+        {
+          name = "Steam Big Picture";
+          detached = [
+            "setsid steam steam://open/bigpicture"
+          ];
+          prep-cmd = [
+            {
+              do = "";
+              undo = "setsid steam steam://close/bigpicture";
+            }
+          ];
+          # "image-path": "steam.png"
         }
       ];
     };
@@ -68,5 +99,12 @@
   boot.loader = {
     systemd-boot.enable = lib.mkForce true;
   };
+
+  # environment.etc = {
+  #   "resolv.conf".text = ''
+  #     search netbird.cloud
+  #     nameserver 1.1.1.1
+  #     options edns0'';
+  # };
   system.stateVersion = "25.11";
 }

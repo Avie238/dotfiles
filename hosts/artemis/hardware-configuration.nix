@@ -31,6 +31,18 @@
   fileSystems."/home/avie/HDD" = {
     device = "/dev/disk/by-uuid/3e731123-5ae2-4afb-9a19-0dbc54988177";
     fsType = "ext4";
+    options = [
+      "users" # Allows any user to mount and unmount
+      "nofail" # Prevent system from failing if this drive doesn't mount
+    ];
+  };
+  fileSystems."/home/avie/SSD" = {
+    device = "/dev/disk/by-uuid/5c743f27-189e-4920-8265-73064d2fe93e";
+    fsType = "ext4";
+    options = [
+      "users" # Allows any user to mount and unmount
+      "nofail" # Prevent system from failing if this drive doesn't mount
+    ];
   };
 
   swapDevices = [

@@ -38,7 +38,16 @@ in {
     grsync
     hakuneko
     dig
+    wl-clipboard
     # qrookie
+    manga-tui
+    # retroarch-full
+    filezilla
+    cemu
+    azahar
+    jellyfin-desktop
+    appimage-run
+    android-tools
   ];
   # ++ (with pkgs.x86; [
   #   # steam

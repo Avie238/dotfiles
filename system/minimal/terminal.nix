@@ -7,7 +7,7 @@
 
   services.kmscon = {
     enable = true;
-    autologinUser = "avie";
+    # autologinUser = "avie";
     fonts = [
       {
         name = "Jetbrains Mono NF";
