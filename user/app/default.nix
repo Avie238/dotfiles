@@ -50,6 +50,16 @@
     texliveFull
     proton-vpn
     nix-cleanup
+    wl-clipboard
+    # qrookie
+    manga-tui
+    # retroarch-full
+    filezilla
+    cemu
+    azahar
+    jellyfin-desktop
+    appimage-run
+    android-tools
   ];
 
   xdg.enable = true;

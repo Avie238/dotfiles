@@ -43,6 +43,7 @@
         };
         warp-mouse-to-focus.enable = true;
       };
+      spawn-at-startup = [{argv = ["niriswitcher"];}];
       outputs."eDP-1" = {
         scale = 2;
         mode = {
@@ -165,6 +166,8 @@
 
         "Mod+Shift+E".action = quit;
         "Mod+Ctrl+Shift+E".action = quit {skip-confirmation = true;};
+
+        "Mod+Shift+F".action = fullscreen-window;
 
         "Mod+Left".action = focus-column-left;
         "Mod+Right".action = focus-column-right;

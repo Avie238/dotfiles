@@ -102,7 +102,7 @@
         "custom/sleep" = {
           format = "󰤄";
           tooltip = false;
-          on-click = "systemctl suspend";
+          on-click = "loginctl lock-session & systemctl suspend";
         };
 
         "custom/left-arrow-dark" = {
