@@ -212,7 +212,7 @@
     nixosModules = {
       my-user = {userSettings, ...}: {
         home-manager = {
-          backupFileExtension = "backup2";
+          backupFileExtension = "backup3";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = userSettings.userModule;

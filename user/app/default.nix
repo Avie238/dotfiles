@@ -48,6 +48,7 @@ in {
     jellyfin-desktop
     appimage-run
     android-tools
+    ungoogled-chromium
   ];
   # ++ (with pkgs.x86; [
   #   # steam

@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     # faugus-launcher
     protonplus
-    lutris
+    # lutris
     mangohud
     # gamescope
     heroic
@@ -11,11 +11,13 @@
     jackify
     protontricks
     # eden
-    # rpcs3
+    cemu
+    rpcs3
     (retroarch.withCores (
       cores:
         with cores; [
           mgba
+          beetle-psx-hw
         ]
     ))
   ];
