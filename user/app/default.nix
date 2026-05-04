@@ -60,6 +60,7 @@
     jellyfin-desktop
     appimage-run
     android-tools
+    ungoogled-chromium
   ];
 
   xdg.enable = true;

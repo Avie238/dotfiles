@@ -48,32 +48,41 @@
       };
     };
   };
+  services.fwupd.enable = true;
   services.blueman.enable = true;
   hardware.enableAllFirmware = true;
   services.sunshine = {
     enable = true;
     autoStart = true;
-    # capSysAdmin = true;
+    capSysAdmin = true;
     openFirewall = true;
     applications = {
       apps = [
         {
-          name = "faugus";
-          cmd = "io.github.faugus.faugus-launcher";
+          name = "Desktop";
+          cmd = "";
         }
         {
-          name = "Clair Obscur Expedition 33";
-          cmd = "flatpak run --command=/app/bin/faugus-launcher io.github.Faugus.faugus-launcher --game clair-obscur-expedition-33";
+          name = "faugus";
+          cmd = "sudo -u avie io.github.Faugus.faugus-launcher";
         }
+        {
+          name = "RPCS3";
+          cmd = "sudo -u avie rpcs3";
+        }
+        # {
+        #   name = "Clair Obscur Expedition 33";
+        #   cmd = "flatpak run --command=/app/bin/faugus-launcher io.github.Faugus.faugus-launcher --game clair-obscur-expedition-33";
+        # }
         {
           name = "Steam Big Picture";
           detached = [
-            "setsid steam steam://open/bigpicture"
+            "sudo -u avie setsid steam steam://open/bigpicture"
           ];
           prep-cmd = [
             {
               do = "";
-              undo = "setsid steam steam://close/bigpicture";
+              undo = "sudo -u avie setsid steam steam://close/bigpicture";
             }
           ];
           # "image-path": "steam.png"
