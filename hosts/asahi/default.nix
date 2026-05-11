@@ -16,7 +16,7 @@
   boot = {
     loader.efi.canTouchEfiVariables = false;
     kernelParams = [
-      "apple_dcp.show_notch=1"
+      "appledrm.show_notch=1"
     ];
   };
 

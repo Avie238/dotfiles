@@ -45,7 +45,7 @@
     wm.utils.hypridle.enable = true;
 
     services.dunst.enable = true;
-    programs.niriswitcher.enable = true;
+    # programs.niriswitcher.enable = true;
 
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
