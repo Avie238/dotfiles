@@ -18,4 +18,5 @@ final: prev: {
   # alvr = final.callPackage ./alvr.nix {};
   jackify = final.callPackage ./jackify.nix {};
   drop-app = final.callPackage ./drop.nix {};
+  emulationstation-de = final.callPackage ./emulationstation-de.nix {};
 }
