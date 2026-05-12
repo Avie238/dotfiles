@@ -13,6 +13,7 @@
     enable = true;
     gamescopeSession.enable = true;
   };
+  programs.gamescope.enable = true;
   services.wivrn = {
     # enable = true;
     openFirewall = true;

@@ -5,6 +5,7 @@
     # lutris
     mangohud
     # gamescope
+    gamescope-wsi
     heroic
     # alvr
     umu-launcher
@@ -13,13 +14,16 @@
     # eden
     cemu
     rpcs3
-    (retroarch.withCores (
-      cores:
-        with cores; [
-          mgba
-          beetle-psx-hw
-        ]
-    ))
+    emulationstation-de
+    # dolphin-emu
+    # retroarch-full
+    # (retroarch.withCores (
+    #   cores:
+    #     with cores; [
+    #       mgba
+    #       beetle-psx-hw
+    #     ]
+    # ))
   ];
 
   programs.distrobox.enable = true;

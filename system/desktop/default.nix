@@ -51,6 +51,10 @@ in {
   #     nameserver 1.1.1.1
   #     options edns0'';
   # };
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

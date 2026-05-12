@@ -216,6 +216,14 @@
         }
         {
           matches = [
+            {app-id = ".*RetroArch";}
+          ];
+          open-focused = true;
+          open-fullscreen = true;
+        }
+
+        {
+          matches = [
             {
               title = "vim*";
               app-id = userSettings.term;
