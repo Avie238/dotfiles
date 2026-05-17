@@ -61,6 +61,8 @@
     appimage-run
     android-tools
     ungoogled-chromium
+    p7zip
+    android-studio
   ];
 
   xdg.enable = true;
