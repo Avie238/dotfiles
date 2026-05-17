@@ -18,6 +18,8 @@
         system = system;
         config = {
           allowUnfree = true;
+
+          android_sdk.accept_license = true;
           allowUnsupportedSystem = true;
         };
         overlays = [
@@ -38,6 +40,7 @@
           (final: prev: {
             x86_stable = import inputs.nixpkgs-stable {
               system = "x86_64-linux";
+
               config.allowUnfree = true;
               config.allowUnsupportedSystem = true;
               config.permittedInsecurePackages = [

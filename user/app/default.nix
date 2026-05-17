@@ -49,7 +49,10 @@ in {
     appimage-run
     android-tools
     ungoogled-chromium
+    p7zip
+    android-studio
   ];
+  nixpkgs.config.android_sdk.accept_license = true;
   # ++ (with pkgs.x86; [
   #   # steam
   #   protonup-qt
