@@ -257,10 +257,37 @@
 
     devShells = forAllSystems (system: let
       pkgs = pkgsFor system;
+      pyPkgs = pythonPackages:
+        with pythonPackages; [
+          flask
+          pyyaml
+          sqlalchemy
+          pandas
+          Flask-APScheduler
+          Flask-Login
+          python-dotenv
+          Flask-Bcrypt
+          Flask-Mail
+          Flask-SQLAlchemy
+          Flask-Migrate
+          Flask-WTF
+          joblib
+          PyPDF2
+          torch
+          scipy
+          matplotlib
+          seaborn
+          psycopg2
+        ];
     in {
       baigiel = pkgs.mkShell {
         packages = with pkgs; [
           nodejs_22
+        ];
+      };
+      data_analytics = pkgs.mkShell {
+        buildInputs = [
+          (pkgs.python3.withPackages pyPkgs)
         ];
       };
     });

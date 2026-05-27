@@ -10,7 +10,7 @@ in {
   ];
   config = {
     nixCats = {
-      enable = true;
+      # enable = true;
       addOverlays = [
         (utils.standardPluginOverlay inputs)
       ];

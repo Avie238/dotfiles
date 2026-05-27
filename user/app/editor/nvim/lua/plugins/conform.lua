@@ -3,11 +3,11 @@ return {
 	opts = {
 		formatters_by_ft = {
 			nix = { "alejandra" },
-			python = { "isort", "black" },
+			-- python = { "isort", "black" },
 			xml = { "xmlstarlet" },
 			java = { "google-java-format" },
 			tex = { "latexindent" },
-			javascript = { "prettierd" },
+			-- javascript = { "prettierd" },
 		},
 	},
 }

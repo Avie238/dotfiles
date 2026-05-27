@@ -34,10 +34,20 @@ in {
     openFirewall = true;
   };
 
-  networking.firewall = {
-    enable = true;
-    allowPing = true;
-  };
+  # environment.systemPackages = with pkgs.avie-pkgs; [
+  #   wineWow64Packages.full
+  # ];
+
+  # hardware.opengl.extraPackages = [pkgs.mesa];
+
+  # environment.etc = {
+  #   "resolv.conf".text = ''
+  #     search netbird.cloud
+  #     nameserver 1.1.1.1
+  #     options edns0'';
+  # };
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
   services.printing.enable = true;
   services.avahi = {
     enable = true;

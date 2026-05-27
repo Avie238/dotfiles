@@ -2,6 +2,7 @@
   lib,
   inputs,
   userSettings,
+  pkgs,
   ...
 }: {
   imports = [
@@ -12,7 +13,7 @@
   wsl.enable = true;
   wsl.defaultUser = "avie";
 
-  nix.settings.ssl-cert-file = "/etc/ssl/certs/ca-bundle.crt";
+  nix.settings.ssl-cert-file = "/etc/ssl/certs/ca-certificates.crt";
 
   security.pki.certificates = [
     (builtins.readFile ./Cummins-Prisma-Root-CA.crt)
@@ -23,6 +24,14 @@
     grub.enable = lib.mkForce false;
   };
 
+  environment.systemPackages = with pkgs; [
+    pkgs.wget
+    # cacert
+    pkgs.xfce.thunar
+    # claude-code
+    # uv
+  ];
+  programs.nix-ld.enable = true;
   sops.enable = false;
   vm.enable = false;
   vpn.enable = false;
