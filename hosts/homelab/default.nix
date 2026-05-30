@@ -23,7 +23,7 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    (import ./disko.nix {device = "/dev/nvme0n1";})
+    (import ./disko.nix {device = "/dev/sda";})
     (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
     inputs.disko.nixosModules.default
   ];
@@ -35,5 +35,5 @@ in {
   networking.hostId = "0a158abe";
   boot.zfs.extraPools = ["data"];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
 }
