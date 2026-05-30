@@ -183,8 +183,8 @@
         hostArg = "homelab";
         profileArg = "server";
         hostnameArg = "homelab-nixos";
-        # stable = true;
-        # wmArg = "none";
+        stable = true;
+        wmArg = "none";
       });
 
       msi-nixos = nixosSystemFor (genUserSettings {
@@ -212,7 +212,7 @@
     nixosModules = {
       my-user = {userSettings, ...}: {
         home-manager = {
-          backupFileExtension = "backup";
+          backupFileExtension = "backup2";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = userSettings.userModule;
@@ -324,7 +324,7 @@
   inputs = {
     steam-nixpkgs.url = "github:dramforever/nixpkgs/muvm-steam-less-hacks";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-24.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-avie.url = "github:Avie238/nixpkgs";
 

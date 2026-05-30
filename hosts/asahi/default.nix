@@ -12,7 +12,10 @@
 
   #Boot
   boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux"];
-  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+  nix.settings = {
+    extra-platforms = config.boot.binfmt.emulatedSystems;
+    trusted-users = ["root" "avie"];
+  };
   boot = {
     loader.efi.canTouchEfiVariables = false;
     kernelParams = [

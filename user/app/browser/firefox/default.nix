@@ -7,6 +7,8 @@
   config = lib.mkIf (userSettings.browser == "firefox") {
     programs.firefox = {
       enable = true;
+
+      configPath = "~/.config/mozilla/firefox";
       profiles = {
         default = {
           id = 0;

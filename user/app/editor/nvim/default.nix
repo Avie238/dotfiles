@@ -162,7 +162,7 @@ in {
             python = true;
             nix = true;
             java = true;
-            latex = false;
+            latex = true;
             typescript = true;
           };
           extra = {};

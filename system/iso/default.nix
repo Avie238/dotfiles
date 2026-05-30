@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./../minimal
   ];
@@ -20,7 +24,18 @@
     clone = "git clone git@github.com:Avie238/dotfiles && cd dotfiles";
   };
 
+  services.xserver = {
+    displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = true;
+    desktopManager.gnome.enable = true;
+  };
+
+  environment.systemPackages = with pkgs; [
+    gparted
+  ];
+
   #Users
+
   users.users.avie.initialHashedPassword = "";
   nix.settings.trusted-users = lib.mkForce ["avie"];
   users.users.nixos.enable = false;

@@ -2,6 +2,7 @@
   pkgs,
   userSettings,
   lib,
+  config,
   ...
 }: let
   wrapMuvm = {package}: pkgs.writeShellScriptBin "${package}" "muvm ${lib.getExe pkgs.x86."${package}"}";
@@ -39,18 +40,19 @@ in {
   };
 
   services.tumbler.enable = true;
+
   # environment.systemPackages = with pkgs.avie-pkgs; [
   #   wineWow64Packages.full
   # ];
 
   # hardware.opengl.extraPackages = [pkgs.mesa];
 
-  environment.etc = {
-    "resolv.conf".text = ''
-      search netbird.cloud
-      nameserver 1.1.1.1
-      options edns0'';
-  };
+  # environment.etc = {
+  #   "resolv.conf".text = ''
+  #     search netbird.cloud
+  #     nameserver 1.1.1.1
+  #     options edns0'';
+  # };
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

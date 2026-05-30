@@ -44,23 +44,27 @@ in {
       filezilla
       retroarch-free
       # qrookie
+      claude-code
+
+      texliveFull
     ])
     ++ (with pkgs.x86; [
       steam
       protonup-qt
-      wineWowPackages.full
+      # wineWowPackages.full
       winetricks
       pdfstudioviewer
     ])
-    ++ (map (x: wrapMuvm {package = x;}) ["lutris" "gamescope"]);
+    ++ (map (x: wrapMuvm {package = x;}) ["faugus-launcher" "gamescope"]);
 
   # openmw-dev.enable = true;
 
+  xdg.enable = true;
   xdg.desktopEntries = {
-    Lutris = {
-      name = "Lutris";
+    Faugus = {
+      name = "Faugus launcher";
       genericName = "Game";
-      exec = "lutris";
+      exec = "faugus-launcher";
       terminal = false;
     };
     Adobe = {
