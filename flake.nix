@@ -286,9 +286,11 @@
         ];
       };
       data_analytics = pkgs.mkShell {
-        buildInputs = [
-          (pkgs.python3.withPackages pyPkgs)
-        ];
+        shellHook = ''
+          # ImportError: libstdc++.so.6: cannot open shared object file: No such file or directory
+          # Fix:
+          export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/
+        '';
       };
     });
   };

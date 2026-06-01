@@ -55,6 +55,7 @@
     EDITOR = "${config.home.sessionVariables.VISUAL}";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     NIXPKGS_ALLOW_UNFREE = 1;
+    LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib/";
   };
 
   home.file.".hushlogin" = {
