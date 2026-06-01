@@ -9,84 +9,42 @@
   } @ inputs: let
     systems = [
       "aarch64-linux"
-      "x88_64-linux"
+      "x86_64-linux"
     ];
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
+    overlays = [
+      inputs.apple-silicon.overlays.default
+      inputs.nix-vscode-extensions.overlays.default
+      inputs.firefox-addons.overlays.default
+      inputs.niri.overlays.niri
+      (import ./packages/overlay.nix)
+      (import ./scripts/overlay.nix)
+      (final: prev: {
+        x86 = import inputs.nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+          config.allowUnsupportedSystem = true;
+        };
+      })
+    ];
+
+    nix_config = {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
+      trusted-users = ["avie"];
+    };
+
     pkgsFor = system:
       import nixpkgs {
-        system = system;
-        config = {
-          allowUnfree = true;
-          allowUnsupportedSystem = true;
-        };
-        overlays = [
-          inputs.apple-silicon.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
-          inputs.firefox-addons.overlays.default
-          inputs.niri.overlays.niri
-          (import ./packages/overlay.nix)
-          (import ./scripts/overlay.nix)
-          (import ./overlay-arm64ec.nix)
-          (final: prev: {
-            x86 = import inputs.nixpkgs {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-              config.allowUnsupportedSystem = true;
-            };
-          })
-          (final: prev: {
-            x86_stable = import inputs.nixpkgs-stable {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-              config.allowUnsupportedSystem = true;
-              config.permittedInsecurePackages = [
-                "adobe-reader-9.5.5"
-              ];
-            };
-          })
-          (final: prev: {
-            steam-pkgs = import inputs.steam-nixpkgs {
-              system = "aarch64-linux";
-              config.allowUnfree = true;
-            };
-          })
-          (final: prev: {
-            avie-pkgs = import inputs.nixpkgs-avie {
-              system = "aarch64-linux";
-              config.allowUnfree = true;
-            };
-          })
-        ];
+        config = nix_config;
+        inherit system overlays;
       };
 
     pkgsStableFor = system:
       import nixpkgs-stable {
-        system = system;
-        config = {
-          allowUnfree = true;
-        };
-        overlays = [
-          inputs.apple-silicon.overlays.default
-          inputs.nix-vscode-extensions.overlays.default
-          inputs.firefox-addons.overlays.default
-          inputs.niri.overlays.niri
-          (import ./packages/overlay.nix)
-          (import ./scripts/overlay.nix)
-          (final: prev: {
-            x86 = import nixpkgs-stable {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-              config.allowUnsupportedSystem = true;
-            };
-          })
-          (final: prev: {
-            steam-pkgs = import inputs.steam-nixpkgs {
-              system = "aarch64-linux";
-              config.allowUnfree = true;
-            };
-          })
-        ];
+        config = nix_config;
+        inherit system overlays;
       };
 
     genUserSettings = {
@@ -120,7 +78,6 @@
       };
       fileManager = {
         name = "thunar";
-        # package = (pkgsFor system).xfce.thunar;
         spawn = fileManager.name;
       };
       menu = {
@@ -171,13 +128,6 @@
         wmArg = "niri";
       });
 
-      msi-nixos-server = nixosSystemFor (genUserSettings {
-        systemArg = "x86_64-linux";
-        hostArg = "msi";
-        profileArg = "server";
-        hostnameArg = "msi-nixos-server";
-      });
-
       homelab-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "homelab";
@@ -187,32 +137,21 @@
         wmArg = "none";
       });
 
-      msi-nixos = nixosSystemFor (genUserSettings {
-        systemArg = "x86_64-linux";
-        hostArg = "msi";
-        hostnameArg = "msi-nixos";
-      });
-
       wsl-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "wsl";
         hostnameArg = "wsl-nixos";
         profileArg = "wsl";
+        stable = true;
         wmArg = "none";
-        browserArg = "none";
-      });
-
-      vps = nixosSystemFor (genUserSettings {
-        systemArg = "x86_64-linux";
-        hostArg = "vps";
-        profileArg = "server";
+        # browserArg = "none";
       });
     };
 
     nixosModules = {
       my-user = {userSettings, ...}: {
         home-manager = {
-          backupFileExtension = "backup2";
+          backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = userSettings.userModule;
@@ -221,7 +160,6 @@
           };
           sharedModules = [
             inputs.nix-index-database.homeModules.nix-index
-            # inputs.stylix.homeModules.stylix
           ];
         };
       };
@@ -234,8 +172,6 @@
           localSystem.system = system;
           config = {
             allowUnfree = true;
-
-            android_sdk.accept_license = true;
           };
           overlays = [
             inputs.apple-silicon.overlays.default
@@ -254,7 +190,6 @@
           wmArg = "none";
         };
       in {
-        wine-arm64ec = (pkgsFor system).callPackage ./wine-arm64ec.nix {};
         inherit
           (pkgs)
           m1n1

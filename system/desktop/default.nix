@@ -5,7 +5,6 @@
   config,
   ...
 }: let
-  wrapMuvm = {package}: pkgs.writeShellScriptBin "${package}" "muvm ${lib.getExe pkgs.x86."${package}"}";
 in {
   imports = [
     ./../minimal
@@ -14,7 +13,7 @@ in {
     ./stylix.nix
     ./vm.nix
     ./vpn.nix
-    ./thunar.nix
+    ./file_manager
   ];
 
   hardware.graphics = {
@@ -22,10 +21,6 @@ in {
   };
 
   virtualisation.docker.enable = true;
-  # virtualisation.incus = {
-  #   enable = true;
-  #   ui.enable = true;
-  # };
 
   services.samba = {
     enable = true;
@@ -39,23 +34,10 @@ in {
     openFirewall = true;
   };
 
-  services.tumbler.enable = true;
-
-  # environment.systemPackages = with pkgs.avie-pkgs; [
-  #   wineWow64Packages.full
-  # ];
-
-  # hardware.opengl.extraPackages = [pkgs.mesa];
-
-  # environment.etc = {
-  #   "resolv.conf".text = ''
-  #     search netbird.cloud
-  #     nameserver 1.1.1.1
-  #     options edns0'';
-  # };
-
-  networking.firewall.enable = true;
-  networking.firewall.allowPing = true;
+  networking.firewall = {
+    enable = true;
+    allowPing = true;
+  };
   services.printing.enable = true;
   services.avahi = {
     enable = true;
@@ -69,11 +51,6 @@ in {
     if userSettings.wm == "none"
     then false
     else true;
-
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-  };
 
   services.netbird.enable = true;
   vpn.enable = false;

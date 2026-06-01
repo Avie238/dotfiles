@@ -12,7 +12,8 @@
   nss,
   nspr,
   systemd,
-  xorg,
+  libXScrnSaver,
+  libXtst,
 }: let
   desktopItem = makeDesktopItem {
     desktopName = "HakuNeko Desktop";
@@ -64,8 +65,8 @@ in
       alsa-lib
       nss
       nspr
-      xorg.libXScrnSaver
-      xorg.libXtst
+      libXScrnSaver
+      libXtst
       systemd
     ];
 

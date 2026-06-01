@@ -6,12 +6,6 @@
   ...
 }: {
   config = lib.mkIf (userSettings.wm == "niri") {
-    # services.displayManager.sddm = {
-    #   enable = true;
-    #   # autoLogin.relogin = true;
-    #   wayland.enable = true;
-    # };
-
     services.displayManager.gdm = {
       enable = true;
       settings = {
@@ -24,14 +18,7 @@
 
     programs.niri = {
       enable = true;
-      # package = pkgs.niri-unstable;
     };
-    programs.thunar.enable = true;
-
-    programs.thunar.plugins = with pkgs.xfce; [
-      thunar-archive-plugin # Requires an Archive manager like file-roller, ark, etc
-      thunar-volman
-    ];
 
     #Bluetooth
     hardware.bluetooth = {

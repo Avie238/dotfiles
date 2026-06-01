@@ -29,6 +29,15 @@
     ];
   };
 
+  fileSystems."/home/avie/SSD" = {
+    device = "/dev/disk/by-uuid/7f4c805b-8775-4bc3-9e20-216631de4d92";
+    fsType = "ext4";
+    options = [
+      "users"
+      "nofail"
+    ];
+  };
+
   swapDevices = [
     {
       device = "/var/lib/swapfile";
