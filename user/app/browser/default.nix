@@ -1,8 +1,5 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
-    ./firefox
+    ./firefox.nix
   ];
-
 }

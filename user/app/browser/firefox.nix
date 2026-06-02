@@ -7,8 +7,7 @@
   config = lib.mkIf (userSettings.browser == "firefox") {
     programs.firefox = {
       enable = true;
-
-      configPath = "~/.config/mozilla/firefox";
+      configPath = ".mozilla/firefox";
       profiles = {
         default = {
           id = 0;
@@ -21,17 +20,7 @@
               "Nix Packages" = {
                 urls = [
                   {
-                    template = "https://search.nixos.org/packages?channel=unstable";
-                    params = [
-                      {
-                        name = "type";
-                        value = "packages";
-                      }
-                      {
-                        name = "query";
-                        value = "{searchTerms}";
-                      }
-                    ];
+                    template = "https://search.nixos.org/packages?channel=unstable&type=packages&query={searchTerms}";
                   }
                 ];
                 icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
@@ -46,10 +35,6 @@
               "Startpage" = {
                 urls = [
                   {template = "https://www.startpage.com/sp/search?q={searchTerms}";}
-                  # {
-                  #   template = "https://www.startpage.com/osuggestions?q=%s";
-                  #   type = "suggestion";
-                  # }
                 ];
               };
             };
@@ -58,11 +43,13 @@
             force = true;
             packages = with pkgs.firefox-addons; [
               ublock-origin
-              lastpass-password-manager
               sponsorblock
+              bitwarden
             ];
           };
           settings = {
+            "ui.systemUsesDarkTheme" = 1;
+            "layout.css.prefers-color-scheme.content-override" = 0;
             "media.gmp-widevinecdm.version" = "system-installed";
             "media.gmp-widevinecdm.visible" = true;
             "media.gmp-widevinecdm.enabled" = true;
@@ -78,6 +65,20 @@
         DontCheckDefaultBrowser = true;
         DisablePocket = true;
         SearchBar = "unified";
+        ExtensionSettings = {
+          "uBlock0@raymondhill.net" = {
+            installation_mode = "force_installed";
+            install_url = "file://${pkgs.firefox-addons.ublock-origin}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/uBlock0@raymondhill.net.xpi";
+          };
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+            installation_mode = "force_installed";
+            install_url = "file://${pkgs.firefox-addons.bitwarden}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{446900e4-71c2-419f-a6a7-df9c091e268b}.xpi";
+          };
+          "sponsorBlocker@ajay.app" = {
+            installation_mode = "force_installed";
+            install_url = "file://${pkgs.firefox-addons.sponsorblock}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/sponsorBlocker@ajay.app.xpi";
+          };
+        };
       };
     };
     xdg.autostart.entries = [

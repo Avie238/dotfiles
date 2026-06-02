@@ -137,6 +137,16 @@
         wmArg = "none";
       });
 
+      homelab-iso = nixosSystemFor (genUserSettings {
+        systemArg = "x86_64-linux";
+        hostArg = "homelab";
+        profileArg = "server";
+        hostnameArg = "homelab-nixos";
+        stable = true;
+        wmArg = "none";
+        isIsoArg = true;
+      });
+
       wsl-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "wsl";

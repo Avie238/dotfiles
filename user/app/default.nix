@@ -21,14 +21,10 @@ in {
       ns-usbloader
       jdk17
       prismlauncher
-      # calibre
       cbz_to_webp
       zip
       kdePackages.gwenview
-      # xfce.thunar-archive-plugin
-      # xarchiver
       file-roller
-      # protonvpn-gui
       remmina
       btop
       gparted
@@ -43,21 +39,16 @@ in {
       manga-tui
       filezilla
       retroarch-free
-      # qrookie
       claude-code
-
       texliveFull
+      proton-vpn
     ])
     ++ (with pkgs.x86; [
       steam
-      protonup-qt
-      # wineWowPackages.full
+      protonplus
       winetricks
-      pdfstudioviewer
     ])
     ++ (map (x: wrapMuvm {package = x;}) ["faugus-launcher" "gamescope"]);
-
-  # openmw-dev.enable = true;
 
   xdg.enable = true;
   xdg.desktopEntries = {
@@ -65,12 +56,6 @@ in {
       name = "Faugus launcher";
       genericName = "Game";
       exec = "faugus-launcher";
-      terminal = false;
-    };
-    Adobe = {
-      name = "Adobe Acrobat";
-      genericName = "PDF";
-      exec = "muvm env WINEPREFIX=/home/avie/Prefixes/Adobe/ wine \"/home/avie/Downloads/Adobe Acrobat Pro DC 2025.001.20937 x64 Portable 7997/Acrobat Pro/AcrobatProPortable.exe\"";
       terminal = false;
     };
   };
