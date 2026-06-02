@@ -48,6 +48,8 @@
     nix-update = "nix flake update && nix-rebuild";
     rebuild = "sudo nixos-rebuild switch --flake ./#";
     nix-list = "nixos-rebuild list-generations";
+    cd = "z";
+    cat = "bat";
   };
 
   home.sessionVariables = {

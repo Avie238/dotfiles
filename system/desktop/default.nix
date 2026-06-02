@@ -49,6 +49,7 @@ in {
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   # services.printing.enable = true;
+  #
   services.avahi = {
     enable = true;
     nssmdns4 = true;
