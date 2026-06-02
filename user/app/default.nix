@@ -3,9 +3,7 @@
   inputs,
   lib,
   ...
-}: let
-  wrapMuvm = {package}: pkgs.writeShellScriptBin "${package}" "${lib.getExe pkgs.muvm} ${lib.getExe pkgs.x86."${package}"}";
-in {
+}: {
   imports = [
     ./editor
     ./browser
@@ -13,42 +11,35 @@ in {
     ../shell
     ./misc
     ./openmw.nix
+    ./gaming.nix
   ];
 
-  home.packages =
-    (with pkgs; [
-      qbittorrent
-      ns-usbloader
-      jdk17
-      prismlauncher
-      cbz_to_webp
-      zip
-      kdePackages.gwenview
-      file-roller
-      remmina
-      btop
-      gparted
-      localsend
-      muvm
-      libreoffice
-      grsync
-      hakuneko
-      dig
-      ludusavi
-      rclone
-      manga-tui
-      filezilla
-      retroarch-free
-      claude-code
-      texliveFull
-      proton-vpn
-    ])
-    ++ (with pkgs.x86; [
-      steam
-      protonplus
-      winetricks
-    ])
-    ++ (map (x: wrapMuvm {package = x;}) ["faugus-launcher" "gamescope"]);
+  home.packages = with pkgs; [
+    qbittorrent
+    ns-usbloader
+    jdk17
+    prismlauncher
+    cbz_to_webp
+    zip
+    kdePackages.gwenview
+    file-roller
+    remmina
+    btop
+    gparted
+    localsend
+    libreoffice
+    grsync
+    hakuneko
+    dig
+    ludusavi
+    rclone
+    manga-tui
+    filezilla
+    retroarch-free
+    claude-code
+    texliveFull
+    proton-vpn
+  ];
 
   xdg.enable = true;
   xdg.desktopEntries = {
