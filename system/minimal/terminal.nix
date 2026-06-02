@@ -4,15 +4,15 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
+  fonts.packages = [
+    pkgs.nerd-fonts.jetbrains-mono
+  ];
 
-  services.kmscon = {
-    enable = true;
-    fonts = [
-      {
-        name = "Jetbrains Mono NF";
-        package = pkgs.nerd-fonts.jetbrains-mono;
-      }
-    ];
-    extraConfig = "font-size=22";
-  };
+  # services.kmscon = {
+  #   enable = true;
+  #   config = {
+  #     font-size = 22;
+  #     font-name = "Jetbrains Mono NF";
+  #   };
+  # };
 }

@@ -13,9 +13,7 @@
     home.packages = with pkgs; [
       brightnessctl
       networkmanagerapplet
-      hyprnome
       hyprpaper
-      # (userSettings.fileManager.package)
       grimblast
       hyprsunset
       cmatrix
@@ -23,13 +21,11 @@
       btop
       baobab
       dunst
-      nix-cleanup
       volumeControl
       brightnessControl
       unar
       niriswitcher
     ];
-
     wm.utils.waybar.enable = true;
 
     services.hyprpaper = {
@@ -45,10 +41,12 @@
     wm.utils.hypridle.enable = true;
 
     services.dunst.enable = true;
-    # programs.niriswitcher.enable = true;
 
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
+      spawn-at-startup = [
+        {argv = ["niriswitcher"];}
+      ];
       input.focus-follows-mouse.enable = false;
       outputs."eDP-1" = {
         scale = 2;

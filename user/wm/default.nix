@@ -6,7 +6,7 @@
   imports = [
     ./gnome.nix
     ./hyprland
-    ./niri
+    ./niri.nix
     ./utils
   ];
 

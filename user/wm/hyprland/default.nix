@@ -19,7 +19,6 @@
       networkmanagerapplet
       hyprnome
       hyprpaper
-      # (userSettings.fileManager.package)
       grimblast
       hyprsunset
       cmatrix
@@ -31,7 +30,6 @@
       volumeControl
       brightnessControl
       unar
-      # xfce.thunar
     ];
 
     xdg.desktopEntries = {

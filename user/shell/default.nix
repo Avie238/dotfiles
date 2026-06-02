@@ -17,6 +17,7 @@
     jetbrains-mono
     sops
     any-nix-shell
+    wget
   ];
 
   programs.zoxide = {

@@ -12,6 +12,7 @@
     ./misc
     ./openmw.nix
     ./gaming.nix
+    ./claude.nix
   ];
 
   home.packages = with pkgs; [
@@ -36,9 +37,9 @@
     manga-tui
     filezilla
     retroarch-free
-    claude-code
     texliveFull
     proton-vpn
+    nix-cleanup
   ];
 
   xdg.enable = true;

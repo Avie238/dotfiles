@@ -39,14 +39,9 @@
     systemd-boot.enable = lib.mkForce false;
     grub.enable = lib.mkForce false;
   };
-  # virtualisation.podman = {
-  #   enable = true;
-  #   dockerCompat = true;
-  # };
 
   environment.systemPackages = with pkgs; [
-    pkgs.wget
-    pkgs.xfce.thunar
+    xfce.thunar
     claude-code
     nodejs
     distrobox
