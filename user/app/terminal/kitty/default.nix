@@ -11,6 +11,6 @@
   ];
 
   home.shellAliases = {
-    ssh = "kitten ssh";
+    # ssh = "kitten ssh";
   };
 }

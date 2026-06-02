@@ -9,7 +9,7 @@
   } @ inputs: let
     systems = [
       "aarch64-linux"
-      "x86_64-linux"
+      "x88_64-linux"
     ];
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
@@ -281,7 +281,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

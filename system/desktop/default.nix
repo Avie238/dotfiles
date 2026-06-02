@@ -27,18 +27,29 @@ in {
     settings.global.security = "user";
     openFirewall = true;
   };
-  networking.nftables.enable = true;
+  # networking.nftables.enable = true;
 
   services.samba-wsdd = {
     enable = true;
     openFirewall = true;
   };
 
-  networking.firewall = {
-    enable = true;
-    allowPing = true;
-  };
-  services.printing.enable = true;
+  # environment.systemPackages = with pkgs.avie-pkgs; [
+  #   wineWow64Packages.full
+  # ];
+
+  # hardware.opengl.extraPackages = [pkgs.mesa];
+
+  # environment.etc = {
+  #   "resolv.conf".text = ''
+  #     search netbird.cloud
+  #     nameserver 1.1.1.1
+  #     options edns0'';
+  # };
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
+  # services.printing.enable = true;
+  #
   services.avahi = {
     enable = true;
     nssmdns4 = true;

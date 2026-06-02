@@ -19,6 +19,20 @@
     any-nix-shell
   ];
 
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs = {
+    ripgrep.enable = true;
+    fd.enable = true;
+    tmux = {
+      enable = true;
+    };
+    bat.enable = true;
+  };
+
   programs.lazydocker.enable = true;
 
   home.stateVersion = "24.11";

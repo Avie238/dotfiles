@@ -48,6 +48,8 @@
     nix-update = "nix flake update && nix-rebuild";
     rebuild = "sudo nixos-rebuild switch --flake ./#";
     nix-list = "nixos-rebuild list-generations";
+    cd = "z";
+    cat = "bat";
   };
 
   home.sessionVariables = {
@@ -55,6 +57,7 @@
     EDITOR = "${config.home.sessionVariables.VISUAL}";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     NIXPKGS_ALLOW_UNFREE = 1;
+    LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib/";
   };
 
   home.file.".hushlogin" = {
