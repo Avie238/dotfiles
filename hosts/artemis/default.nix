@@ -36,6 +36,9 @@
   #     "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
   #   ];
   # };
+  boot.kernelModules = ["hid-sony" "hid-playstation"];
+
+  users.extraGroups.input.members = ["avie"];
   programs.ns-usbloader.enable = true;
   hardware.bluetooth = {
     enable = true;

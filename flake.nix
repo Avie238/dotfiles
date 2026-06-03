@@ -327,7 +327,7 @@
   inputs = {
     steam-nixpkgs.url = "github:dramforever/nixpkgs/muvm-steam-less-hacks";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-24.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-avie.url = "github:Avie238/nixpkgs";
 

@@ -1,9 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs; [
     # faugus-launcher
     protonplus
     # lutris
-    mangohud
     # gamescope
     gamescope-wsi
     heroic
@@ -25,6 +28,15 @@
     #     ]
     # ))
   ];
+
+  programs.mangohud = {
+    enable = true;
+    settings = {
+      toggle_hud = "Shift_R+F12";
+
+      # text_color = lib.mkForce "c965bf";
+    };
+  };
 
   programs.distrobox.enable = true;
 }

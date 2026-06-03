@@ -4,6 +4,9 @@
   config,
   ...
 }: {
+  imports = [
+    ./hypervisor.nix
+  ];
   services.xserver.videoDrivers = ["amdgpu"];
   # programs.alvr = {
   #   enable = true;
