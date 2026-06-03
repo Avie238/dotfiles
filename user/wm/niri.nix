@@ -24,19 +24,20 @@
       volumeControl
       brightnessControl
       unar
-      niriswitcher
+      swaybg
     ];
+
     wm.utils.waybar.enable = true;
 
-    services.hyprpaper = {
-      enable = true;
-
-      settings.wallpaper = [
-        {
-          path = "~/dotfiles/wallpaper.jpg";
-        }
-      ];
-    };
+    # services.hyprpaper = {
+    #   enable = true;
+    #
+    #   settings.wallpaper = [
+    #     {
+    #       path = "~/dotfiles/wallpaper.jpg";
+    #     }
+    #   ];
+    # };
     wm.utils.hyprlock.enable = true;
     wm.utils.hypridle.enable = true;
 
@@ -44,10 +45,8 @@
 
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
-      spawn-at-startup = [
-        {argv = ["niriswitcher"];}
-      ];
       input.focus-follows-mouse.enable = false;
+      spawn-at-startup = [{argv = ["swaybg" "-i" "/home/avie/dotfiles/wallpaper.jpg" "-m" "fill"];}];
       outputs."eDP-1" = {
         scale = 2;
         mode = {
@@ -199,6 +198,7 @@
         "Mod+Shift+9".action.move-column-to-workspace = 9;
 
         "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
+        "Ctrl+Shift+4".action.screenshot-window = {};
 
         "Alt+Tab" = {
           repeat = false;
@@ -214,7 +214,7 @@
           excludes = [
             {title = "vim*";}
           ];
-          opacity = 0.85;
+          opacity = 0.95;
         }
         {
           matches = [
@@ -223,7 +223,7 @@
               app-id = userSettings.term;
             }
           ];
-          opacity = 0.95;
+          opacity = 0.98;
         }
         {
           matches = [
@@ -233,12 +233,32 @@
           ];
           open-focused = true;
         }
+        {
+          matches = [{title = ".*(Dialog|Properties|Preferences|Settings|Rename|Bluetooth|Control).*";}];
+          open-floating = true;
+          max-width = 750;
+          min-width = 750;
+          max-height = 500;
+          min-height = 500;
+        }
+        {
+          matches = [{is-window-cast-target = true;}];
+          focus-ring = {
+            active.color = "#f38ba8";
+            inactive.color = "#7d0d2d";
+          };
+          border.inactive.color = "#7d0d2d";
+          shadow.color = "#7d0d2d70";
+          tab-indicator = {
+            active.color = "#f38ba8";
+            inactive.color = "#7d0d2d";
+          };
+        }
       ];
       switch-events = with config.lib.niri.actions; {
         lid-close.action = spawn "";
       };
 
-      # Asahi specific
       debug = lib.mkIf (userSettings.host == "asahi") {
         render-drm-device = "/dev/dri/renderD128";
       };
