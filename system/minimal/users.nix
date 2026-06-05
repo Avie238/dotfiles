@@ -10,4 +10,6 @@
     ];
     createHome = true;
   };
+
+  nix.settings.trusted-users = ["root" "avie"];
 }

@@ -32,7 +32,6 @@
     nix_config = {
       allowUnfree = true;
       allowUnsupportedSystem = true;
-      trusted-users = ["avie"];
     };
 
     pkgsFor = system:
@@ -154,7 +153,6 @@
         profileArg = "wsl";
         stable = true;
         wmArg = "none";
-        # browserArg = "none";
       });
     };
 

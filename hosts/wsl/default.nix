@@ -14,7 +14,6 @@
   wsl.defaultUser = "avie";
 
   nix.settings.ssl-cert-file = "/etc/ssl/certs/ca-bundle.crt";
-  nix.settings.trusted-users = ["root" "avie"];
 
   systemd.services.nix-daemon.environment = {
     NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";

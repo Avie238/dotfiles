@@ -35,9 +35,7 @@
   ];
 
   #Users
-
   users.users.avie.initialHashedPassword = "";
-  nix.settings.trusted-users = lib.mkForce ["avie"];
   users.users.nixos.enable = false;
 
   #Network
