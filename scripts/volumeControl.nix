@@ -18,7 +18,6 @@ pkgs.writeShellApplication {
             ;;
           m)
             wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
-            notify-send -t 1500 " " -h int:value:0
             exit 1
             ;;
           \?)
@@ -28,6 +27,5 @@ pkgs.writeShellApplication {
           esac
         done
       fi
-      notify-send -t 1500 " " -h int:value:"$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) * 100" | bc)"
   '';
 }

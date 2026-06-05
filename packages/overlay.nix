@@ -14,4 +14,5 @@ final: prev: {
   muvm = final.callPackage ./muvm.nix {};
   hakuneko = final.callPackage ./hakuneko.nix {};
   qrookie = final.callPackage ./qrookie.nix {};
+  wayle_unstable = final.callPackage ./wayle.nix {};
 }

@@ -44,7 +44,6 @@
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
-      wireplumber.extraConfig = {"wireplumber.settings" = {"device.routes.default-sink-volume" = 0;};};
     };
 
     #Trash bin

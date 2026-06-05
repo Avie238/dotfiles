@@ -41,7 +41,21 @@
             leftalt = "leftmeta";
             leftmeta = "leftalt";
             fn = "leftcontrol";
-            leftcontrol = "fn";
+            leftcontrol = "toggle(fn_toggle)";
+          };
+          fn_toggle = {
+            brightnessdown = "f1";
+            brightnessup = "f2";
+            scale = "f3";
+            search = "f4";
+            micmute = "f5";
+            sleep = "f6";
+            previoussong = "f7";
+            playpause = "f8";
+            nextsong = "f9";
+            mute = "f10";
+            volumedown = "f11";
+            volumeup = "f12";
           };
         };
       };

@@ -63,6 +63,9 @@ in {
     then false
     else true;
 
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+
   services.netbird.enable = true;
   vpn.enable = false;
 }

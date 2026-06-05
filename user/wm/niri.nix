@@ -25,23 +25,12 @@
       brightnessControl
       unar
       swaybg
+      niriswitcher
     ];
 
-    wm.utils.waybar.enable = true;
-
-    # services.hyprpaper = {
-    #   enable = true;
-    #
-    #   settings.wallpaper = [
-    #     {
-    #       path = "~/dotfiles/wallpaper.jpg";
-    #     }
-    #   ];
-    # };
+    wm.utils.wayle.enable = true;
     wm.utils.hyprlock.enable = true;
     wm.utils.hypridle.enable = true;
-
-    services.dunst.enable = true;
 
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
@@ -72,8 +61,9 @@
         default-column-width = {proportion = 1. / 1.;};
       };
       prefer-no-csd = true;
-
+      hotkey-overlay.skip-at-startup = true;
       xwayland-satellite.enable = true;
+      gestures.hot-corners.enable = false;
 
       binds = with config.lib.niri.actions; {
         #Volume and brightness
@@ -121,13 +111,6 @@
         };
         "Mod+XF86MonBrightnessDown" = {
           action = spawn "brightnessControl" "-d" "-k";
-          allow-when-locked = true;
-          hotkey-overlay = {
-            hidden = true;
-          };
-        };
-        "XF86Fn" = {
-          action = spawn "${pkgs.fn-toggle}/bin/fn-toggle";
           allow-when-locked = true;
           hotkey-overlay = {
             hidden = true;

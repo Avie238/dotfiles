@@ -6,13 +6,11 @@ pkgs.writeShellApplication {
   runtimeInputs = with pkgs; [brightnessctl libnotify];
   text = ''
     device=""
-    icon="󰃟 "
     while getopts "idk" flag; do
 
       case $flag in
       k)
         device="-d kbd_backlight"
-        icon="󰌌 "
         ;;
       i)
         value="10%+"
@@ -27,7 +25,5 @@ pkgs.writeShellApplication {
       esac
     done
     brightnessctl $device s $value
-    notify-send -t 1500 $icon -h int:value:"$(brightnessctl -m $device | cut -d',' -f4)"
-
   '';
 }
