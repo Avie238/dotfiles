@@ -13,6 +13,7 @@
     ./openmw.nix
     ./gaming.nix
     ./claude.nix
+    ./gaming
   ];
 
   home.packages = with pkgs; [
@@ -24,10 +25,19 @@
     zip
     kdePackages.gwenview
     file-roller
+    # calibre
+    cbz_to_webp
+    zip
+    kdePackages.gwenview
+    # xfce.thunar-archive-plugin
+    # xarchiver
+    file-roller
+    protonvpn-gui
     remmina
     btop
     gparted
     localsend
+    # muvm
     libreoffice
     grsync
     hakuneko
@@ -40,6 +50,19 @@
     texliveFull
     proton-vpn
     nix-cleanup
+    wl-clipboard
+    # qrookie
+    manga-tui
+    # retroarch-full
+    filezilla
+    cemu
+    azahar
+    jellyfin-desktop
+    appimage-run
+    android-tools
+    ungoogled-chromium
+    p7zip
+    android-studio
   ];
 
   xdg.enable = true;

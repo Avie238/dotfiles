@@ -99,6 +99,7 @@
           tooltip = false;
           on-click = "shutdown now";
         };
+
         "custom/left-arrow-dark" = {
           format = "";
           tooltip = false;

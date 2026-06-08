@@ -15,4 +15,8 @@ final: prev: {
   hakuneko = final.callPackage ./hakuneko.nix {};
   qrookie = final.callPackage ./qrookie.nix {};
   wayle_unstable = final.callPackage ./wayle.nix {};
+  # alvr = final.callPackage ./alvr.nix {};
+  jackify = final.callPackage ./jackify.nix {};
+  drop-app = final.callPackage ./drop.nix {};
+  emulationstation-de = final.callPackage ./emulationstation-de.nix {};
 }

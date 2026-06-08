@@ -18,7 +18,7 @@
     timeout = lib.mkForce 2;
     efi.canTouchEfiVariables = lib.mkDefault true;
   };
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = ["ntfs" "exfat"];
 
   nix.settings = {
     experimental-features = [

@@ -22,10 +22,11 @@
       PASSWORD = "$EDUORAM_PASSWORD";
     })
   ];
-
   networking = {
     networkmanager = {
+      dns = "none";
       enable = true;
     };
+    nameservers = ["1.1.1.1" "9.9.9.9"];
   };
 }
