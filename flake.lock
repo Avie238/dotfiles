@@ -371,6 +371,27 @@
         "type": "github"
       }
     },
+    "home-manager-stable": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780883961,
+        "narHash": "sha256-WU6SUrESuPiEXEUvX4D51AgWrXRJty+sLJBwBaDBGqE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "4eb4fec41674d5b059aa2eedf0f98453890546fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-26.05",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "home-manager_2": {
       "inputs": {
         "nixpkgs": [
@@ -900,22 +921,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-24": {
-      "locked": {
-        "lastModified": 1735563628,
-        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-avie": {
       "locked": {
         "lastModified": 1764542405,
@@ -1113,6 +1118,7 @@
         "firefox-addons": "firefox-addons",
         "flake-compat": "flake-compat_2",
         "home-manager": "home-manager",
+        "home-manager-stable": "home-manager-stable",
         "hyprland": "hyprland",
         "impermanence": "impermanence",
         "niri": "niri",
@@ -1122,7 +1128,6 @@
         "nixcord": "nixcord",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_5",
-        "nixpkgs-24": "nixpkgs-24",
         "nixpkgs-avie": "nixpkgs-avie",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "sops-nix": "sops-nix",
