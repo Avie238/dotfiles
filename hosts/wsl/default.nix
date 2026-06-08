@@ -49,6 +49,7 @@
   sops.enable = false;
   vm.enable = false;
   vpn.enable = false;
+  networking.networkmanager.enable = lib.mkForce false;
 
   networking.hostName = userSettings.hostname;
 
