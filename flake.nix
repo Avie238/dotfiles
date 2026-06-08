@@ -40,7 +40,6 @@
           (final: prev: {
             x86_stable = import inputs.nixpkgs-stable {
               system = "x86_64-linux";
-
               config.allowUnfree = true;
               config.allowUnsupportedSystem = true;
               config.permittedInsecurePackages = [
@@ -215,7 +214,7 @@
     nixosModules = {
       my-user = {userSettings, ...}: {
         home-manager = {
-          backupFileExtension = "backup3";
+          backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = userSettings.userModule;

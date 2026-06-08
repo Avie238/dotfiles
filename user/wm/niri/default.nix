@@ -27,7 +27,6 @@
       volumeControl
       brightnessControl
       unar
-      # niriswitcher
     ];
 
     waybar.enable = true;
@@ -35,7 +34,6 @@
     services.hyprpaper.enable = true;
     hyprland.hyprlock = true;
     hyprland.hypridle = true;
-    # programs.niriswitcher.enable = true;
 
     services.dunst.enable = true;
 
@@ -47,7 +45,6 @@
         };
         warp-mouse-to-focus.enable = true;
       };
-      spawn-at-startup = [{argv = ["niriswitcher"];}];
       outputs."eDP-1" = {
         scale = 2;
         mode = {
@@ -162,7 +159,7 @@
           };
         };
         "Mod+D".action = toggle-overview;
-        # "Super+Super_L".action = close-overview;
+        "Super+Super_L".action = close-overview;
         "Mod+Period".action = show-hotkey-overlay;
         "Mod+F".action = maximize-column;
 
@@ -197,10 +194,6 @@
         "Mod+Shift+8".action.move-column-to-workspace = 8;
         "Mod+Shift+9".action.move-column-to-workspace = 9;
 
-        "Alt+Tab" = {
-          repeat = false;
-          action.spawn = ["niriswitcherctl" "show" "--window"];
-        };
         "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
       };
 
