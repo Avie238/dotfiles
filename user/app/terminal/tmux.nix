@@ -7,10 +7,9 @@
   programs.tmux = {
     enable = true;
     clock24 = true;
-    prefix = "C-space";
+    prefix = "C-w";
     # escapeTime = 10;
-    # keyMode = "vi";
-    terminal = "screen-256color";
+    keyMode = "vi";
     # historyLimit = 50000;
     extraConfig = ''
       set -g default-terminal "xterm-256color"
