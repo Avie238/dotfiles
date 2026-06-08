@@ -27,7 +27,6 @@
     remmina
     btop
     gparted
-    localsend
     libreoffice
     grsync
     hakuneko
@@ -40,6 +39,7 @@
     texliveFull
     proton-vpn
     nix-cleanup
+    motrix-next
   ];
 
   xdg.enable = true;
@@ -48,6 +48,7 @@
       name = "Faugus launcher";
       genericName = "Game";
       exec = "faugus-launcher";
+      icon = "faugus-launcher";
       terminal = false;
     };
   };

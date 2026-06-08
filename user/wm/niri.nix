@@ -10,6 +10,7 @@
       package = pkgs.papirus-icon-theme;
       name = "Papirus-Dark";
     };
+
     home.packages = with pkgs; [
       brightnessctl
       networkmanagerapplet

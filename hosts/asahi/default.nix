@@ -61,6 +61,7 @@
     };
   };
 
+  gaming.enable = true;
   #General
   system.stateVersion = "25.05";
 }

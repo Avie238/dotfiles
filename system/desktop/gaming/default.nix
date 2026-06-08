@@ -2,6 +2,8 @@
   pkgs,
   lib,
   config,
+  userSettings,
+  ...
 }: {
   options = {
     gaming.enable = lib.mkOption {
@@ -9,11 +11,10 @@
       type = lib.types.bool;
     };
   };
-  config = lib.mkIf (config.gaming.enable == true) {
+  config = lib.mkIf config.gaming.enable {
     hardware.opengl = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      driSupport32Bit = userSettings.system == "x86_64-linux";
     };
 
     services.xserver.videoDrivers = ["amdgpu"];

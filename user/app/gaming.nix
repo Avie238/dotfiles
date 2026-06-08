@@ -5,7 +5,15 @@
   userSettings,
   ...
 }: let
-  wrapMuvm = {package}: pkgs.writeShellScriptBin "${package}" "${lib.getExe pkgs.muvm} ${lib.getExe pkgs.x86."${package}"}";
+  wrapMuvm = {package}: let
+    pkg = pkgs.x86."${package}";
+    inner = pkgs.x86.writeShellScriptBin "${package}-muvm-inner" ''
+      export XDG_DATA_DIRS="${pkgs.x86.hicolor-icon-theme}/share''${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+      exec ${lib.getExe pkg}
+    '';
+  in pkgs.writeShellScriptBin "${package}" ''
+    exec ${lib.getExe pkgs.muvm} ${lib.getExe inner}
+  '';
 in {
   options = {
     gaming.enable = lib.mkOption {

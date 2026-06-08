@@ -14,6 +14,7 @@ in {
     ./vm.nix
     ./vpn.nix
     ./file_manager
+    ./gaming
   ];
 
   hardware.graphics = {
@@ -68,4 +69,8 @@ in {
 
   services.netbird.enable = true;
   vpn.enable = false;
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
 }
