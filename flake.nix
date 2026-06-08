@@ -54,9 +54,10 @@
       wmArg ? "hyprland",
       browserArg ? "firefox",
       hostnameArg,
-      stable ? false,
+      stableArg ? false,
     }: rec {
       system = systemArg;
+      stable = stableArg;
       host = hostArg;
       profile = profileArg;
       isIso = isIsoArg;
@@ -136,7 +137,7 @@
         hostArg = "homelab";
         profileArg = "server";
         hostnameArg = "homelab-nixos";
-        stable = true;
+        stableArg = true;
         wmArg = "none";
       });
 
@@ -145,7 +146,7 @@
         hostArg = "homelab";
         profileArg = "server";
         hostnameArg = "homelab-nixos";
-        stable = true;
+        stableArg = true;
         wmArg = "none";
         isIsoArg = true;
       });
@@ -155,7 +156,7 @@
         hostArg = "wsl";
         hostnameArg = "wsl-nixos";
         profileArg = "wsl";
-        stable = true;
+        stableArg = true;
         wmArg = "none";
       });
     };

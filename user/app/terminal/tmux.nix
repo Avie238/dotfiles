@@ -7,12 +7,15 @@
   programs.tmux = {
     enable = true;
     clock24 = true;
-    prefix = "M-space";
+    prefix = "C-space";
     # escapeTime = 10;
     # keyMode = "vi";
-    terminal = "tmux-256color";
+    terminal = "screen-256color";
     # historyLimit = 50000;
-
+    extraConfig = ''
+      set -g default-terminal "xterm-256color"
+      set-option -ga terminal-overrides ",xterm-256color:Tc"
+    '';
     #   extraConfig = with config.theme;
     #   with pkgs.tmuxPlugins; ''
     #     # Plugins

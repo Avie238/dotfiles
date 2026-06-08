@@ -1,0 +1,49 @@
+[terminal.shell]
+args = ["--cd ~", "-d NixOS2"]
+program = 'C:\Windows\System32\wsl.exe'
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style  = "SemiBold"}
+
+[window]
+
+startup_mode = "Maximized"
+
+[colors.primary]
+background = '0x241b26'
+foreground = '0xeed5d9'
+bright_foreground = '0xe4ccd0'
+
+
+[colors.selection]
+text = '0xeed5d9'
+background = "0x46354a"
+
+
+[colors.cursor]
+text = '0x241b26'
+cursor = '0xeed5d9'
+
+# Normal colors
+[colors.normal]
+black = '0x241b26'
+red = '0x877bb6'
+green = '0xc965bf'
+yellow = '0xa84a73'
+blue = '0x6a9eb5'
+magenta = '0x78a38f'
+cyan = '0x9c5fce'
+white = '0xeed5d9'
+
+# Bright colors
+[colors.bright]
+black = '0x6c3cb2'
+red = '0x877bb6'
+green = '0xc965bf'
+yellow = '0xa84a73'
+
+blue = '0x6a9eb5'
+magenta = '0x78a38f'
+cyan = '0x9c5fce'
+white = '0xe4ccd0'
+
