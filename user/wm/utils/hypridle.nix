@@ -29,20 +29,20 @@
 
         listener = [
           {
-            timeout = 150;
+            timeout = 300;
             on-timeout = "brightnessctl -s set 0";
             on-resume = "brightnessctl -r";
           }
           {
-            timeout = 150;
+            timeout = 300;
             on-timeout = "brightnessctl -sd rgb:kbd_backlight set 0";
             on-resume = "brightnessctl -rd rgb:kbd_backlight";
           }
-          {
-            timeout = 330;
-            on-timeout = "hyprctl dispatch dpms off";
-            on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
-          }
+          # {
+          #   timeout = 330;
+          #   on-timeout = "hyprctl dispatch dpms off";
+          #   on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
+          # }
           {
             timeout = 1000;
             on-timeout = "systemctl suspend";

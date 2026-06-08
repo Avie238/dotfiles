@@ -217,7 +217,7 @@
           open-focused = true;
         }
         {
-          matches = [{title = ".*(Dialog|Properties|Preferences|Settings|Rename|Bluetooth|Control).*";}];
+          matches = [{title = ".*(Dialog|Properties|Preferences|Settings|Rename|Bluetooth|Control|Extension).*";}];
           open-floating = true;
           max-width = 750;
           min-width = 750;
