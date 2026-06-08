@@ -8,12 +8,19 @@
     enable = true;
     clock24 = true;
     prefix = "C-w";
-    # escapeTime = 10;
     keyMode = "vi";
-    # historyLimit = 50000;
+    terminal = "screen-256color";
+    mouse = true;
+
     extraConfig = ''
       set -g default-terminal "xterm-256color"
       set-option -ga terminal-overrides ",xterm-256color:Tc"
+      set -g base-index 1
+
+      # Be faster switching windows
+      #     bind C-n next-window
+      #     bind C-p previous-window
+
     '';
     #   extraConfig = with config.theme;
     #   with pkgs.tmuxPlugins; ''
