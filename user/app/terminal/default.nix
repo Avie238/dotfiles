@@ -1,8 +1,6 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
-    ./kitty
+    ./kitty.nix
+    ./tmux.nix
   ];
-
 }

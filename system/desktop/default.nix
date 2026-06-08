@@ -69,6 +69,7 @@ in {
 
   services.netbird.enable = true;
   vpn.enable = false;
+
   programs.appimage = {
     enable = true;
     binfmt = true;
