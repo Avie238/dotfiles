@@ -30,6 +30,8 @@
     inputs.disko.nixosModules.default
   ];
 
+  boot.initrd.kernelModules = ["dm_mod"];
+
   sops.age.keyFile = lib.mkForce "/var/lib/sops-nix/keys.txt";
   #boot.kernelPackages = latestKernelPackage;
 
