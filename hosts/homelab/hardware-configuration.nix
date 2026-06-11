@@ -31,8 +31,17 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/root-vg/root";
-    fsType = "btrfs";
+    device = "/dev/disk/by-uuid/01efe156-834d-4384-908d-77cb63a50164";
+    fsType = "ext4";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/2C80-3D10";
+    fsType = "vfat";
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   networking.useDHCP = lib.mkDefault true;
