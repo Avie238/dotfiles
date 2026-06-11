@@ -31,14 +31,6 @@
 
   users.users.avie.extraGroups = ["docker"];
 
-  virtualisation.docker.daemon.settings.features.cdi = true;
-  hardware.graphics.enable32Bit = true;
-  hardware.graphics.enable = true;
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware.nvidia.open = false;
-  hardware.nvidia-container-toolkit.enable = true;
-  services.xserver.enable = true;
-
   # services.cockpit = {
   #   enable = true;
   #   port = 9090;
