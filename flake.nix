@@ -18,6 +18,7 @@
       inputs.nix-vscode-extensions.overlays.default
       inputs.firefox-addons.overlays.default
       inputs.niri.overlays.niri
+      inputs.llm-agents.overlays.default
       (import ./packages/overlay.nix)
       (import ./scripts/overlay.nix)
       (final: prev: {
@@ -275,12 +276,12 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-avie.url = "github:Avie238/nixpkgs";
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-
-    apple-silicon = {
-      url = "github:nix-community/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+
+    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -289,7 +290,7 @@
 
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     nix-vscode-extensions = {
@@ -338,6 +339,20 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
     niri.url = "github:sodiboo/niri-flake";
+
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    claude-plugins-official = {
+      url = "github:anthropics/claude-plugins-official";
+      flake = false;
+    };
+    dotclaude = {
+      url = "github:poshan0126/dotclaude";
+      flake = false;
+    };
   };
 
   nixConfig = {

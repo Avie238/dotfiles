@@ -2,6 +2,7 @@
   inputs,
   userSettings,
   config,
+  lib,
   ...
 }: {
   imports = [
@@ -28,6 +29,14 @@
     enable = true;
     setupAsahiSound = true;
     peripheralFirmwareDirectory = ./firmware;
+    # Build kernel/m1n1/uboot from apple-silicon's own locked nixpkgs,
+    # mirroring how upstream CI populates nixos-apple-silicon.cachix.org;
+    # using our nixpkgs would change the derivations and force local builds.
+    pkgs = lib.mkForce (import inputs.apple-silicon.inputs.nixpkgs {
+      crossSystem.system = "aarch64-linux";
+      localSystem.system = "aarch64-linux";
+      overlays = [inputs.apple-silicon.overlays.default];
+    });
   };
 
   services.keyd = {
@@ -60,6 +69,14 @@
       };
     };
   };
+
+  # nixpkgs' source-built aarch64 Flutter engine lacks fontconfig, so Flutter
+  # apps (rustdesk, localsend) only see fonts under the hardcoded fallback
+  # /usr/share/fonts — without this, all their text renders invisible.
+  fonts.fontDir.enable = true;
+  systemd.tmpfiles.rules = [
+    "L+ /usr/share/fonts - - - - /run/current-system/sw/share/X11/fonts"
+  ];
 
   gaming.enable = true;
   #General

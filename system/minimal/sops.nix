@@ -42,5 +42,10 @@
     sops.secrets."proton_vpn.key" = {
       owner = config.users.users.avie.name;
     };
+
+    #context7
+    sops.secrets."context7_api_key" = {
+      owner = config.users.users.avie.name;
+    };
   };
 }

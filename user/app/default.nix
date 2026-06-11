@@ -26,7 +26,8 @@
     file-roller
     remmina
     btop
-    gparted
+    localsend
+    rustdesk-flutter
     libreoffice
     grsync
     hakuneko
@@ -40,6 +41,8 @@
     proton-vpn
     nix-cleanup
     motrix-next
+    jq
+    python3
   ];
 
   xdg.enable = true;

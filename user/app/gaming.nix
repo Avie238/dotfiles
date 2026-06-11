@@ -30,10 +30,10 @@ in {
         with pkgs;
           [
             muvm
+            wine-wow64-fex
             x86.steam
             x86.protonplus
             x86.winetricks
-            x86.wine
           ]
           ++ (map (x: wrapMuvm {package = x;}) ["faugus-launcher" "gamescope"])
       else

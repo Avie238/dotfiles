@@ -15,7 +15,7 @@
   environment.shellAliases = {
     partition = "sudo nix run github:nix-community/disko/latest -- --mode destroy,format,mount /home/avie/dotfiles/hosts/homelab/disko.nix --arg device \'\"/dev/sda\"\' --yes-wipe-all-disks";
     copy = "sudo mkdir -p /mnt/var/lib/sops-nix && sudo cp /keys.txt /mnt/var/lib/sops-nix/keys.txt";
-    install = "sudo nixos-install --flake ./#msi-nixos --no-root-passwd";
+    install = "sudo nixos-install --flake ./#homelab-nixos --no-root-passwd";
     install-server = "sudo nixos-install --flake ./#msi-nixos-server --no-root-passwd";
     custom-install = "clone; partition; copy; install";
   };

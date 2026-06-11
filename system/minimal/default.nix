@@ -26,8 +26,20 @@
       "flakes"
     ];
     download-buffer-size = 524288000;
+    extra-substituters = (import ../../flake.nix).nixConfig.extra-trusted-substituters;
+    extra-trusted-public-keys = (import ../../flake.nix).nixConfig.extra-trusted-public-keys;
   };
   nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/home/avie/dotfiles";
+    flags = [
+      "--print-build-logs"
+    ];
+    dates = "09:00";
+    randomizedDelaySec = "45min";
+  };
 
   networking.hostName = userSettings.hostname;
 }

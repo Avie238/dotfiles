@@ -35,6 +35,10 @@ in {
     openFirewall = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    gparted
+  ];
+
   # environment.systemPackages = with pkgs.avie-pkgs; [
   #   wineWow64Packages.full
   # ];
@@ -59,10 +63,6 @@ in {
 
   services.logind.settings.Login.HandlePowerKey = "suspend";
 
-  services.flatpak.enable =
-    if userSettings.wm == "none"
-    then false
-    else true;
 
   services.upower.enable = true;
   services.power-profiles-daemon.enable = true;
