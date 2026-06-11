@@ -38,6 +38,9 @@
   # boot.supportedFilesystems = ["zfs"];
   # networking.hostId = "0a158abe";
   # boot.zfs.extraPools = ["data"];
+  boot.loader = {
+    systemd-boot.enable = lib.mkForce true;
+  };
 
   system.stateVersion = "26.05";
 }
