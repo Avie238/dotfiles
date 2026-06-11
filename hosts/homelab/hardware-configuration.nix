@@ -6,9 +6,7 @@
   lib,
   modulesPath,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -21,9 +19,9 @@
     "sd_mod"
     "rtsx_usb_sdmmc"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
 
   swapDevices = [
     {
@@ -31,6 +29,11 @@
       size = 16 * 1024;
     }
   ];
+
+  fileSystems."/" = {
+    device = "/dev/root-vg/root";
+    fsType = "btrfs";
+  };
 
   networking.useDHCP = lib.mkDefault true;
 

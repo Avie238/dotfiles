@@ -25,9 +25,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    (import ./disko.nix {device = "/dev/sda";})
+    # (import ./disko.nix {device = "/dev/sda";})
     (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
-    inputs.disko.nixosModules.default
+    # inputs.disko.nixosModules.default
   ];
 
   boot.initrd.kernelModules = ["dm_mod"];
