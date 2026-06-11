@@ -7,7 +7,7 @@
   programs.tmux = {
     enable = true;
     clock24 = true;
-    prefix = "C-w";
+    prefix = "C-r";
     keyMode = "vi";
     terminal = "screen-256color";
     mouse = true;
