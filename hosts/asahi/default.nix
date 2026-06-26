@@ -3,6 +3,7 @@
   userSettings,
   config,
   lib,
+  pkgs,
   ...
 }: {
   imports = [
@@ -21,6 +22,8 @@
     loader.efi.canTouchEfiVariables = false;
     kernelParams = [
       "appledrm.show_notch=1"
+      # Prevent USB ports going dead after device removal
+      "usbcore.autosuspend=-1"
     ];
   };
 
@@ -77,6 +80,8 @@
   systemd.tmpfiles.rules = [
     "L+ /usr/share/fonts - - - - /run/current-system/sw/share/X11/fonts"
   ];
+
+  environment.systemPackages = [pkgs.usb-reset];
 
   gaming.enable = true;
   #General

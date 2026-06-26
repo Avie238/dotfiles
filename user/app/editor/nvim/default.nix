@@ -128,6 +128,10 @@ in {
                 plugin = mini-pairs;
                 name = "mini.pairs";
               }
+              {
+                plugin = render-markdown-nvim;
+                name = "render-markdown.nvim";
+              }
             ];
           };
         }

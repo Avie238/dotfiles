@@ -39,10 +39,6 @@ in {
     gparted
   ];
 
-  # environment.systemPackages = with pkgs.avie-pkgs; [
-  #   wineWow64Packages.full
-  # ];
-
   # hardware.opengl.extraPackages = [pkgs.mesa];
 
   # environment.etc = {
@@ -62,7 +58,6 @@ in {
   };
 
   services.logind.settings.Login.HandlePowerKey = "suspend";
-
 
   services.upower.enable = true;
   services.power-profiles-daemon.enable = true;

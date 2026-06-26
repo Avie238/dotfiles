@@ -14,7 +14,5 @@ final: prev: {
   hakuneko = final.callPackage ./hakuneko.nix {};
   qrookie = final.callPackage ./qrookie.nix {};
   wayle_unstable = final.callPackage ./wayle.nix {};
-  fex-emu-wine = final.callPackage ./fex-emu-wine.nix {};
-  wine-wow64-fex = final.callPackage ./wine-wow64-fex.nix {};
   serena-mcp = final.callPackage ./serena-mcp.nix {};
 }

@@ -43,6 +43,7 @@
     motrix-next
     jq
     python3
+    kdePackages.ghostwriter
   ];
 
   xdg.enable = true;

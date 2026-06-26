@@ -5,4 +5,5 @@ final: prev: {
   nix-cleanup = final.callPackage ./nix-cleanup.nix {};
   fn-toggle = final.callPackage ./fn-toggle.nix {};
   cbz_to_webp = final.callPackage ./cbz_to_webp.nix {};
+  usb-reset = final.callPackage ./usb-reset.nix {};
 }
