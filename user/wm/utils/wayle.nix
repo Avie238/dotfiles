@@ -47,15 +47,18 @@
                 "niri-workspaces"
               ];
               center = [];
-              right = [
-                "ram"
-                "cpu"
-                "battery"
-                "bluetooth"
-                "network"
-                "volume"
-                "notifications"
-              ];
+              right =
+                [
+                  "ram"
+                  "cpu"
+                ]
+                ++ lib.optionals userSettings.battery ["battery"]
+                ++ [
+                  "bluetooth"
+                  "network"
+                  "volume"
+                  "notifications"
+                ];
             }
           ];
           location = "top";

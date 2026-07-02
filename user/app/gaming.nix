@@ -41,6 +41,13 @@ in {
           faugus-launcher
           protonplus
           winetricks
+          cemu
+          azahar
+          eden
+          # rpcs3
+          jackify
+          protontricks
         ];
+
   };
 }

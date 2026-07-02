@@ -1,0 +1,784 @@
+diff --git a/jackify/backend/handlers/config_handler.py b/jackify/backend/handlers/config_handler.py
+index 00c297d..a7e7ad3 100644
+--- a/jackify/backend/handlers/config_handler.py
++++ b/jackify/backend/handlers/config_handler.py
+@@ -69,6 +69,7 @@ class ConfigHandler(ConfigEncryptionMixin, ConfigDirectoriesMixin, ConfigProtonM
+             "steam_restart_strategy": "jackify",  # "jackify" (default) or "simple"
+             "manual_download_concurrent_limit": 2,  # Shared GUI/CLI default for manual download browser tabs
+             "manual_download_watch_directory": None,  # Optional override for manual-download watcher folder
++            "nexus_auto_download": True,  # Attempt automated slow-download for non-premium Nexus files
+             "window_width": None,  # Saved window width (None = use dynamic sizing)
+             "window_height": None,  # Saved window height (None = use dynamic sizing)
+         }
+diff --git a/jackify/backend/services/manual_download_manager.py b/jackify/backend/services/manual_download_manager.py
+index 687e994..40284a6 100644
+--- a/jackify/backend/services/manual_download_manager.py
++++ b/jackify/backend/services/manual_download_manager.py
+@@ -20,7 +20,7 @@ from jackify.backend.services.manual_download_manager_runtime_mixin import Manua
+ 
+ logger = logging.getLogger(__name__)
+ 
+-STATUS = Literal["pending", "browser_opened", "validating", "complete", "deferred", "skipped", "error"]
++STATUS = Literal["pending", "browser_opened", "downloading", "validating", "complete", "deferred", "skipped", "error"]
+ 
+ def _get_state_file() -> Path:
+     from jackify.shared.paths import get_jackify_data_dir
+@@ -43,6 +43,8 @@ class DownloadItem:
+     local_path: Optional[str] = None
+     error_message: Optional[str] = None
+     needs_user_retry: bool = False
++    bytes_downloaded: int = 0
++    download_speed: float = 0.0
+ 
+     @classmethod
+     def from_event(cls, evt: dict, loop_iteration: int = 1) -> 'DownloadItem':
+diff --git a/jackify/backend/services/manual_download_manager_runtime_mixin.py b/jackify/backend/services/manual_download_manager_runtime_mixin.py
+index 2e9cc1a..219324c 100644
+--- a/jackify/backend/services/manual_download_manager_runtime_mixin.py
++++ b/jackify/backend/services/manual_download_manager_runtime_mixin.py
+@@ -91,6 +91,81 @@ class ManualDownloadManagerRuntimeMixin:
+             logger.warning(f"{msg}: {item.file_name}")
+             return False, msg
+ 
++        # For Nexus files, attempt automated slow-download before opening a browser tab.
++        if item.file_id and "nexusmods.com" in url and self._is_auto_download_enabled():
++            if self._try_start_nexus_auto_download(item):
++                return True, None
++
++        return self._open_system_browser(url, item.file_name)
++
++    def _is_auto_download_enabled(self) -> bool:
++        try:
++            from jackify.backend.handlers.config_handler import ConfigHandler
++            return bool(ConfigHandler().get("nexus_auto_download", True))
++        except Exception:
++            return True
++
++    def _try_start_nexus_auto_download(self, item: DownloadItem) -> bool:
++        """
++        Start an automated Nexus slow-download in the background.
++        Returns True if the download thread was launched (not whether it will succeed).
++        Falls back to opening a system browser tab if the download fails.
++        """
++        try:
++            from jackify.backend.services.nexus_auth_service import NexusAuthService
++            from jackify.backend.services.nexus_slow_download_service import start_nexus_auto_download
++
++            auth_service = NexusAuthService()
++            auth_token = auth_service.get_auth_token()
++            if not auth_token:
++                return False
++
++            is_oauth = auth_service.get_auth_method() == "oauth"
++
++            # Immediately switch to "downloading" so the UI shows progress, not "Browser Opened".
++            with self._lock:
++                item.status = "downloading"
++                item.bytes_downloaded = 0
++                item.download_speed = 0.0
++            self._notify(item)
++
++            def _on_failure():
++                with self._lock:
++                    item.status = "pending"
++                    item.bytes_downloaded = 0
++                    item.download_speed = 0.0
++                self._notify(item)
++                self._open_system_browser(item.nexus_url, item.file_name)
++
++            def _on_progress(downloaded: int, total: int, speed: float) -> None:
++                with self._lock:
++                    item.bytes_downloaded = downloaded
++                    item.download_speed = speed
++                self._notify(item)
++
++            start_nexus_auto_download(
++                nexus_url=item.nexus_url,
++                file_id=item.file_id,
++                file_name=item.file_name,
++                dest_dir=self._dl_dir,
++                auth_token=auth_token,
++                is_oauth=is_oauth,
++                on_failure=_on_failure,
++                on_progress=_on_progress,
++            )
++            self._diag(
++                "MDL-1030",
++                "Nexus auto-download thread started",
++                file_name=item.file_name,
++                file_id=item.file_id,
++            )
++            return True
++        except Exception as e:
++            logger.debug("Auto-download setup error for %s: %s", item.file_name, e)
++            return False
++
++    def _open_system_browser(self, url: str, file_name: str) -> tuple[bool, Optional[str]]:
++        """Open url in the system browser. Returns (success, error_message)."""
+         # Linux desktop launch fallbacks. xdg-open should cover most environments,
+         # but keep alternates for distributions where handlers differ.
+         launch_cmds = (
+@@ -116,11 +191,11 @@ class ManualDownloadManagerRuntimeMixin:
+                 rc = proc.wait(timeout=3)
+             except subprocess.TimeoutExpired:
+                 # Launcher still running after handoff window; treat as success.
+-                logger.debug(f"Opened browser for: {item.file_name} via {cmd[0]}")
++                logger.debug(f"Opened browser for: {file_name} via {cmd[0]}")
+                 return True, None
+ 
+             if rc == 0:
+-                logger.debug(f"Opened browser for: {item.file_name} via {cmd[0]}")
++                logger.debug(f"Opened browser for: {file_name} via {cmd[0]}")
+                 return True, None
+ 
+             stderr_tail = ""
+@@ -130,7 +205,7 @@ class ManualDownloadManagerRuntimeMixin:
+                 stderr_tail = ""
+             launch_errors.append(f"{cmd[0]} exited {rc}{(': ' + stderr_tail) if stderr_tail else ''}")
+ 
+-        msg = f"Could not open browser automatically for {item.file_name}"
++        msg = f"Could not open browser automatically for {file_name}"
+         logger.error(f"{msg}. Launch attempts: {' | '.join(launch_errors)}")
+         return False, msg
+ 
+@@ -158,7 +233,7 @@ class ManualDownloadManagerRuntimeMixin:
+                     reason=reject_reason,
+                 )
+                 return False
+-            had_browser_slot = item.status == 'browser_opened'
++            had_browser_slot = item.status in ('browser_opened', 'downloading')
+             item.status = 'validating'
+             item_to_notify = item
+ 
+diff --git a/jackify/frontends/gui/dialogs/manual_download_dialog.py b/jackify/frontends/gui/dialogs/manual_download_dialog.py
+index 397b3d9..d02b29e 100644
+--- a/jackify/frontends/gui/dialogs/manual_download_dialog.py
++++ b/jackify/frontends/gui/dialogs/manual_download_dialog.py
+@@ -25,23 +25,25 @@ from jackify.frontends.gui.shared_theme import JACKIFY_COLOR_BLUE
+ logger = logging.getLogger(__name__)
+ 
+ _STATUS_LABELS = {
+-    'pending':       'Pending',
++    'pending':        'Pending',
+     'browser_opened': 'Browser Opened',
+-    'validating':    'Validating...',
+-    'complete':      'Complete',
+-    'deferred':      'Deferred',
+-    'skipped':       'Skipped',
+-    'error':         'Error',
++    'downloading':    'Downloading...',
++    'validating':     'Validating...',
++    'complete':       'Complete',
++    'deferred':       'Deferred',
++    'skipped':        'Skipped',
++    'error':          'Error',
+ }
+ 
+ _STATUS_COLOURS = {
+-    'pending':       '#808080',
++    'pending':        '#808080',
+     'browser_opened': '#3498db',
+-    'validating':    '#f39c12',
+-    'complete':      '#27ae60',
+-    'deferred':      '#e67e22',
+-    'skipped':       '#e67e22',
+-    'error':         '#e74c3c',
++    'downloading':    '#2ecc71',
++    'validating':     '#f39c12',
++    'complete':       '#27ae60',
++    'deferred':       '#e67e22',
++    'skipped':        '#e67e22',
++    'error':          '#e74c3c',
+ }
+ 
+ # Column indices
+@@ -322,7 +324,20 @@ class ManualDownloadDialog(QDialog):
+         from PySide6.QtGui import QColor
+         status_cell = self._table.item(row, _COL_STATUS)
+         if status_cell:
+-            status_cell.setText(_STATUS_LABELS.get(item.status, item.status))
++            if item.status == 'downloading':
++                size = item.expected_size or 0
++                dl = item.bytes_downloaded or 0
++                spd = item.download_speed or 0.0
++                spd_mb = spd / 1048576
++                if size > 0:
++                    pct = int(dl * 100 / size)
++                    text = f"Downloading {pct}%  {spd_mb:.1f} MB/s"
++                else:
++                    dl_mb = dl / 1048576
++                    text = f"Downloading {dl_mb:.1f} MB  {spd_mb:.1f} MB/s"
++            else:
++                text = _STATUS_LABELS.get(item.status, item.status)
++            status_cell.setText(text)
+             status_cell.setForeground(QColor(_STATUS_COLOURS.get(item.status, '#808080')))
+             status_cell.setToolTip(item.error_message or "")
+ 
+diff --git a/jackify/frontends/gui/screens/install_modlist_workflow_execution.py b/jackify/frontends/gui/screens/install_modlist_workflow_execution.py
+index 63ec828..81a688a 100644
+--- a/jackify/frontends/gui/screens/install_modlist_workflow_execution.py
++++ b/jackify/frontends/gui/screens/install_modlist_workflow_execution.py
+@@ -451,32 +451,49 @@ class InstallWorkflowExecutionMixin:
+         self.install_thread.start()
+ 
+     def on_manual_download_list_received(self, events: list) -> None:
+-        """Show the manual download dialog when the engine emits a batch of missing files."""
++        """Route manual-download events: silent auto-download or dialog."""
+         try:
+-            # Show non-premium info dialog synchronously before the file list.
+-            # The engine is paused waiting for a continue signal at this point,
+-            # so process_finished will not fire during exec() and close it prematurely.
+-            if getattr(self, '_non_premium_gate_enabled', False) and not getattr(self, '_non_premium_info_acknowledged', False):
+-                self._show_non_premium_info_dialog()
+-            logger.info(f"[MDL-1005] Showing manual download dialog for batch | items={len(events)}")
+-            self._show_manual_download_dialog(events)
++            if self._events_all_can_auto_download(events):
++                logger.info(f"[MDL-1005] All {len(events)} item(s) eligible for auto-download; skipping dialog")
++                self._show_manual_download_dialog(events, silent=True)
++            else:
++                # Show non-premium info dialog synchronously before the file list.
++                if getattr(self, '_non_premium_gate_enabled', False) and not getattr(self, '_non_premium_info_acknowledged', False):
++                    self._show_non_premium_info_dialog()
++                logger.info(f"[MDL-1005] Showing manual download dialog for batch | items={len(events)}")
++                self._show_manual_download_dialog(events, silent=False)
+         except Exception as exc:
+             logger.error(f"Manual download dialog setup failed: {exc}", exc_info=True)
+             self._safe_append_text(f"\n[ERROR] Manual download dialog failed to open: {exc}\n")
+ 
++    def _events_all_can_auto_download(self, events: list) -> bool:
++        """Return True when every item is a Nexus file that auto-download can handle."""
++        from jackify.backend.handlers.config_handler import ConfigHandler
++        from jackify.backend.services.nexus_auth_service import NexusAuthService
++        if not ConfigHandler().get("nexus_auto_download", True):
++            return False
++        if not NexusAuthService().get_auth_token():
++            return False
++        return all(
++            evt.get("file_id") and "nexusmods.com" in (
++                evt.get("nexus_url") or evt.get("download_url") or evt.get("url") or ""
++            )
++            for evt in events
++        )
++
+     def _flush_pending_manual_download_events(self) -> None:
+         events = getattr(self, '_pending_manual_download_events', None)
+         if not events:
+             return
+         self._pending_manual_download_events = None
+         logger.info(f"[MDL-1007] Releasing queued manual download batch after acknowledgement | items={len(events)}")
+-        self._show_manual_download_dialog(events)
++        self._show_manual_download_dialog(events, silent=False)
+ 
+-    def _show_manual_download_dialog(self, events: list) -> None:
++    def _show_manual_download_dialog(self, events: list, silent: bool = False) -> None:
+         from pathlib import Path as _Path
++        from PySide6.QtCore import QObject, Signal
+         from jackify.backend.handlers.config_handler import ConfigHandler
+-        from jackify.backend.services.manual_download_manager import ManualDownloadManager
+-        from jackify.frontends.gui.dialogs.manual_download_dialog import ManualDownloadDialog
++        from jackify.backend.services.manual_download_manager import ManualDownloadManager, DownloadItem
+ 
+         cfg_watch = ConfigHandler().get("manual_download_watch_directory", None)
+         watch_dir = None
+@@ -498,31 +515,83 @@ class InstallWorkflowExecutionMixin:
+             concurrent_limit = 2
+         concurrent_limit = max(1, min(5, concurrent_limit))
+ 
+-        self._safe_append_text(
+-            f"\n[Manual Download Required] {count} file(s) need manual download.\n"
+-            f"Opening download dialog - check your taskbar if it does not appear in front.\n"
+-        )
+         logger.info(
+-            f"[MDL-1006] Manual download protocol initialized | count={count} "
++            f"[MDL-1006] Manual download protocol initialized | count={count} silent={silent} "
+             f"loop_iteration={loop_iteration} watch_dir={watch_dir} downloads_dir={dl_dir}"
+         )
+ 
+-        # New install run: start with a fresh manager/dialog to avoid stale statuses from prior runs.
++        # Reset per-run state on the first loop iteration.
+         if loop_iteration == 1:
+-            if getattr(self, '_manual_dl_manager', None) is not None:
+-                try:
+-                    self._manual_dl_manager.stop()
+-                except Exception:
+-                    pass
+-                self._manual_dl_manager = None
+-            if getattr(self, '_manual_dl_dialog', None) is not None:
+-                try:
+-                    self._manual_dl_dialog.close()
+-                except Exception:
+-                    pass
+-                self._manual_dl_dialog = None
+-
+-        if not hasattr(self, '_manual_dl_manager') or self._manual_dl_manager is None:
++            for attr in ('_manual_dl_manager', '_manual_dl_dialog'):
++                obj = getattr(self, attr, None)
++                if obj is not None:
++                    try:
++                        obj.stop() if attr == '_manual_dl_manager' else obj.close()
++                    except Exception:
++                        pass
++                    setattr(self, attr, None)
++
++        if silent:
++            # --- Silent auto-download path: no dialog, inline console progress ---
++            # Bridge so download threads can post text to the main-thread console.
++            class _TextBridge(QObject):
++                text = Signal(str)
++
++            if not getattr(self, '_auto_dl_bridge', None):
++                self._auto_dl_bridge = _TextBridge(parent=self)
++                self._auto_dl_bridge.text.connect(self._safe_append_text)
++
++            bridge = self._auto_dl_bridge
++            completed = [0]
++            total_items = count
++
++            def _on_item_updated(item: DownloadItem) -> None:
++                size = item.expected_size or 0
++                dl = item.bytes_downloaded or 0
++                spd = (item.download_speed or 0.0) / 1048576
++                if item.status == 'downloading':
++                    if size > 0:
++                        pct = int(dl * 100 / size)
++                        bridge.text.emit(
++                            f"\rAuto-downloading ({completed[0]+1}/{total_items}): "
++                            f"{item.file_name[:40]}  {pct}%  {spd:.1f} MB/s"
++                        )
++                    else:
++                        bridge.text.emit(
++                            f"\rAuto-downloading ({completed[0]+1}/{total_items}): "
++                            f"{item.file_name[:40]}  {dl/1048576:.1f} MB  {spd:.1f} MB/s"
++                        )
++                elif item.status == 'complete':
++                    completed[0] += 1
++                    bridge.text.emit(f"\nDownloaded: {item.file_name}\n")
++                elif item.status == 'error':
++                    bridge.text.emit(f"\n[!] Failed: {item.file_name} — {item.error_message}\n")
++
++            if not getattr(self, '_manual_dl_manager', None):
++                self._safe_append_text(
++                    f"\n[Auto-Download] Downloading {count} file(s) automatically...\n"
++                )
++                self._manual_dl_manager = ManualDownloadManager(
++                    modlist_download_dir=dl_dir,
++                    watch_directory=watch_dir,
++                    concurrent_limit=concurrent_limit,
++                    on_item_updated=_on_item_updated,
++                    on_send_continue=self.install_thread.send_continue,
++                )
++
++            self._manual_dl_manager.load_items(events, loop_iteration)
++            self._manual_dl_manager.start()
++            return
++
++        # --- Dialog path ---
++        from jackify.frontends.gui.dialogs.manual_download_dialog import ManualDownloadDialog
++
++        self._safe_append_text(
++            f"\n[Manual Download Required] {count} file(s) need manual download.\n"
++            f"Opening download dialog - check your taskbar if it does not appear in front.\n"
++        )
++
++        if not getattr(self, '_manual_dl_manager', None):
+             self._manual_dl_manager = ManualDownloadManager(
+                 modlist_download_dir=dl_dir,
+                 watch_directory=watch_dir,
+diff --git a/jackify/backend/services/nexus_slow_download_service.py b/jackify/backend/services/nexus_slow_download_service.py
+new file mode 100644
+index 0000000..17c450b
+--- /dev/null
++++ b/jackify/backend/services/nexus_slow_download_service.py
+@@ -0,0 +1,392 @@
++"""
++Nexus slow-download automation service.
++
++Attempts to obtain a direct CDN download URL for a Nexus file without requiring
++a premium account, by calling Nexus's internal GenerateDownloadUrl endpoint.
++This mirrors the approach used by wabbajack-unlocked (WebView2 + AJAX POST).
++
++The website endpoint requires browser session cookies for authentication, not the
++API Bearer token.  We read those from the user's installed browser (Firefox or
++Chrome/Chromium).  If no valid cookies are found, the caller falls back to the
++manual browser-tab flow.
++"""
++
++import re
++import logging
++import shutil
++import sqlite3
++import tempfile
++import threading
++import time
++from pathlib import Path
++from typing import Optional, Callable
++
++import requests
++
++logger = logging.getLogger(__name__)
++
++_GAME_ID_CACHE: dict[str, int] = {}
++_CACHE_LOCK = threading.Lock()
++
++_GENERATE_URL_ENDPOINT = (
++    "https://www.nexusmods.com/Core/Libs/Common/Managers/Downloads?GenerateDownloadUrl"
++)
++
++
++def _extract_game_domain(nexus_url: str) -> Optional[str]:
++    m = re.match(r"https?://(?:www\.)?nexusmods\.com/([a-zA-Z0-9_]+)/", nexus_url)
++    return m.group(1) if m else None
++
++
++def _get_numeric_game_id(game_domain: str, auth_headers: dict) -> Optional[int]:
++    """Look up the numeric Nexus game ID from the domain via the official API."""
++    with _CACHE_LOCK:
++        if game_domain in _GAME_ID_CACHE:
++            return _GAME_ID_CACHE[game_domain]
++    try:
++        resp = requests.get(
++            f"https://api.nexusmods.com/v1/games/{game_domain}.json",
++            headers={**auth_headers, "Accept": "application/json"},
++            timeout=8,
++        )
++        if resp.status_code == 200:
++            gid = resp.json().get("id")
++            if gid:
++                with _CACHE_LOCK:
++                    _GAME_ID_CACHE[game_domain] = int(gid)
++                return int(gid)
++    except Exception as e:
++        logger.debug("game_id lookup failed for %s: %s", game_domain, e)
++    return None
++
++
++def _auth_headers(auth_token: str, is_oauth: bool) -> dict:
++    if is_oauth:
++        return {"Authorization": f"Bearer {auth_token}"}
++    return {"apikey": auth_token}
++
++
++# ---------------------------------------------------------------------------
++# Browser cookie extraction
++# ---------------------------------------------------------------------------
++
++def _copy_sqlite(src: Path, dst: Path) -> None:
++    """Copy an SQLite database (+ WAL if present) so we can open it read-only."""
++    shutil.copy2(src, dst)
++    wal = src.with_suffix(src.suffix + "-wal")
++    shm = src.with_suffix(src.suffix + "-shm")
++    if wal.exists():
++        shutil.copy2(wal, dst.with_suffix(dst.suffix + "-wal"))
++    if shm.exists():
++        shutil.copy2(shm, dst.with_suffix(dst.suffix + "-shm"))
++
++
++def _read_firefox_nexus_cookies() -> dict[str, str]:
++    """Return nexusmods.com cookies from the most-recently-used Firefox profile."""
++    firefox_dir = Path.home() / ".mozilla" / "firefox"
++    if not firefox_dir.exists():
++        return {}
++
++    best: dict[str, str] = {}
++    best_time: int = 0
++
++    for profile_dir in firefox_dir.iterdir():
++        if not profile_dir.is_dir():
++            continue
++        cookie_file = profile_dir / "cookies.sqlite"
++        if not cookie_file.exists():
++            continue
++
++        tmp_db = Path(tempfile.mktemp(suffix=".sqlite"))
++        try:
++            _copy_sqlite(cookie_file, tmp_db)
++            conn = sqlite3.connect(str(tmp_db))
++            try:
++                rows = conn.execute(
++                    "SELECT name, value, lastAccessed FROM moz_cookies "
++                    "WHERE host LIKE '%nexusmods.com' "
++                    "  AND (expiry = 0 OR expiry > strftime('%s', 'now'))",
++                ).fetchall()
++            finally:
++                conn.close()
++            if rows:
++                cookies = {r[0]: r[1] for r in rows}
++                last_used = max((r[2] or 0) for r in rows)
++                if last_used > best_time:
++                    best_time = last_used
++                    best = cookies
++        except Exception as e:
++            logger.debug("Firefox cookie read error (%s): %s", profile_dir.name, e)
++        finally:
++            tmp_db.unlink(missing_ok=True)
++            tmp_db.with_suffix(".sqlite-wal").unlink(missing_ok=True)
++            tmp_db.with_suffix(".sqlite-shm").unlink(missing_ok=True)
++
++    return best
++
++
++def _read_chrome_nexus_cookies() -> dict[str, str]:
++    """
++    Return nexusmods.com cookies from Chrome or Chromium.
++
++    Chrome on Linux encrypts cookie values with AES-128-CBC using a key derived
++    from the hard-coded password 'peanuts' (PBKDF2-SHA1, 1 iteration, 16 bytes).
++    Encrypted values are prefixed with 'v10'.  Unencrypted values (empty string
++    in the encrypted column) are used as-is.  Newer 'v11' values (GNOME Keyring)
++    are skipped — users on those setups will fall back to the browser tab flow.
++    """
++    candidates = [
++        Path.home() / ".config" / "google-chrome" / "Default" / "Cookies",
++        Path.home() / ".config" / "chromium" / "Default" / "Cookies",
++        Path.home() / ".config" / "chrome" / "Default" / "Cookies",
++    ]
++
++    try:
++        from Crypto.Cipher import AES
++        from Crypto.Protocol.KDF import PBKDF2
++        from Crypto.Hash import SHA1 as _SHA1
++
++        key = PBKDF2(
++            b"peanuts", b"saltysalt",
++            dkLen=16, count=1,
++            prf=lambda p, s: _SHA1.new(p + s).digest(),
++        )
++        iv = b" " * 16
++    except Exception as e:
++        logger.debug("pycryptodome unavailable for Chrome cookie decryption: %s", e)
++        key = None  # type: ignore[assignment]
++        iv = None   # type: ignore[assignment]
++
++    for cookie_path in candidates:
++        if not cookie_path.exists():
++            continue
++        tmp_db = Path(tempfile.mktemp(suffix=".sqlite"))
++        try:
++            _copy_sqlite(cookie_path, tmp_db)
++            conn = sqlite3.connect(str(tmp_db))
++            try:
++                rows = conn.execute(
++                    "SELECT name, value, encrypted_value FROM cookies "
++                    "WHERE host_key LIKE '%nexusmods.com'",
++                ).fetchall()
++            finally:
++                conn.close()
++
++            cookies: dict[str, str] = {}
++            for name, plain_value, enc_bytes in rows:
++                if plain_value:
++                    cookies[name] = plain_value
++                elif enc_bytes and key is not None:
++                    prefix = enc_bytes[:3]
++                    if prefix == b"v10":
++                        try:
++                            cipher = AES.new(key, AES.MODE_CBC, iv=iv)
++                            raw = cipher.decrypt(enc_bytes[3:])
++                            padding = raw[-1]
++                            cookies[name] = raw[:-padding].decode("utf-8", errors="replace")
++                        except Exception:
++                            pass
++                    # v11+ uses Gnome Keyring — skip silently
++
++            if cookies:
++                return cookies
++        except Exception as e:
++            logger.debug("Chrome cookie read error (%s): %s", cookie_path, e)
++        finally:
++            tmp_db.unlink(missing_ok=True)
++            tmp_db.with_suffix(".sqlite-wal").unlink(missing_ok=True)
++            tmp_db.with_suffix(".sqlite-shm").unlink(missing_ok=True)
++
++    return {}
++
++
++def _get_nexus_browser_cookies() -> dict[str, str]:
++    """Try Firefox, then Chrome/Chromium for nexusmods.com session cookies."""
++    cookies = _read_firefox_nexus_cookies()
++    if cookies:
++        logger.debug("Using nexusmods.com cookies from Firefox (%d keys)", len(cookies))
++        return cookies
++    cookies = _read_chrome_nexus_cookies()
++    if cookies:
++        logger.debug("Using nexusmods.com cookies from Chrome/Chromium (%d keys)", len(cookies))
++        return cookies
++    logger.debug("No browser cookies found for nexusmods.com")
++    return {}
++
++
++# ---------------------------------------------------------------------------
++# Core download URL generation
++# ---------------------------------------------------------------------------
++
++def generate_nexus_slow_download_url(
++    nexus_url: str,
++    file_id: int,
++    auth_token: str,
++    is_oauth: bool = True,
++) -> Optional[str]:
++    """
++    Try to get a Nexus CDN download URL without user interaction.
++
++    Uses the browser's nexusmods.com session cookies (read from Firefox or
++    Chrome) to POST to the website's GenerateDownloadUrl AJAX endpoint.
++    The API Bearer token is used only for the game-ID lookup.
++
++    Returns:
++        CDN URL string on success, None on any failure.
++    """
++    game_domain = _extract_game_domain(nexus_url)
++    if not game_domain:
++        logger.debug("Could not extract game domain from: %s", nexus_url)
++        return None
++
++    api_headers = _auth_headers(auth_token, is_oauth)
++    game_id = _get_numeric_game_id(game_domain, api_headers)
++    if not game_id:
++        logger.debug("Could not resolve numeric game_id for: %s", game_domain)
++        return None
++
++    browser_cookies = _get_nexus_browser_cookies()
++    if not browser_cookies:
++        logger.debug("No browser session cookies — cannot call GenerateDownloadUrl")
++        return None
++
++    session = requests.Session()
++    session.cookies.update(browser_cookies)
++    session.headers.update({
++        "User-Agent": (
++            "Mozilla/5.0 (X11; Linux x86_64) "
++            "AppleWebKit/537.36 (KHTML, like Gecko) "
++            "Chrome/124.0 Safari/537.36"
++        ),
++        "Accept": "application/json, text/javascript, */*; q=0.01",
++        "X-Requested-With": "XMLHttpRequest",
++        "Referer": nexus_url,
++        "Origin": "https://www.nexusmods.com",
++    })
++
++    try:
++        resp = session.post(
++            _GENERATE_URL_ENDPOINT,
++            data={"fid": str(file_id), "game_id": str(game_id)},
++            timeout=12,
++        )
++        logger.debug(
++            "GenerateDownloadUrl status=%d game=%s fid=%d",
++            resp.status_code, game_domain, file_id,
++        )
++        if resp.status_code == 200:
++            try:
++                data = resp.json()
++                url = data.get("url") or data.get("URI")
++                if url and url.startswith("https://"):
++                    logger.info(
++                        "Auto-download URL obtained (game=%s fid=%d)", game_domain, file_id
++                    )
++                    return url
++            except Exception:
++                pass
++        else:
++            logger.debug(
++                "GenerateDownloadUrl rejected (status=%d) — user may not be logged into "
++                "nexusmods.com in their browser, or cookies have expired",
++                resp.status_code,
++            )
++    except requests.RequestException as e:
++        logger.debug("GenerateDownloadUrl request failed: %s", e)
++
++    return None
++
++
++# ---------------------------------------------------------------------------
++# Background download thread
++# ---------------------------------------------------------------------------
++
++def _download_to_path(
++    url: str,
++    dest: Path,
++    on_progress: Optional[Callable[[int, int, float], None]] = None,
++) -> bool:
++    """Stream-download url to dest via a .part temp file. Returns True on success.
++
++    on_progress(bytes_downloaded, total_bytes, bytes_per_second) is called
++    periodically during the transfer (throttled to ~2 updates/s).
++    """
++    tmp = dest.with_suffix(dest.suffix + ".part")
++    try:
++        dest.parent.mkdir(parents=True, exist_ok=True)
++        resp = requests.get(url, stream=True, timeout=30)
++        resp.raise_for_status()
++        total = int(resp.headers.get("content-length", 0))
++        downloaded = 0
++        t0 = time.monotonic()
++        last_notify = 0.0
++        with open(tmp, "wb") as fh:
++            for chunk in resp.iter_content(chunk_size=65536):
++                if chunk:
++                    fh.write(chunk)
++                    downloaded += len(chunk)
++                    if on_progress:
++                        now = time.monotonic()
++                        elapsed = now - t0 or 1e-6
++                        if now - last_notify >= 0.5:
++                            last_notify = now
++                            on_progress(downloaded, total, downloaded / elapsed)
++        if on_progress:
++            elapsed = (time.monotonic() - t0) or 1e-6
++            on_progress(downloaded, total, downloaded / elapsed)
++        tmp.rename(dest)
++        return True
++    except Exception as e:
++        logger.debug("_download_to_path failed: %s", e)
++        try:
++            tmp.unlink(missing_ok=True)
++        except Exception:
++            pass
++        return False
++
++
++def start_nexus_auto_download(
++    nexus_url: str,
++    file_id: int,
++    file_name: str,
++    dest_dir: Path,
++    auth_token: str,
++    is_oauth: bool = True,
++    on_success: Optional[Callable[[Path], None]] = None,
++    on_failure: Optional[Callable[[], None]] = None,
++    on_progress: Optional[Callable[[int, int, float], None]] = None,
++) -> None:
++    """
++    Start an automated Nexus download in a daemon background thread.
++
++    The thread:
++      1. Requests a CDN URL from GenerateDownloadUrl using browser cookies.
++      2. Streams the file to dest_dir / file_name.
++      3. Calls on_success(path) if everything worked, on_failure() otherwise.
++      4. Calls on_progress(bytes_downloaded, total_bytes, speed) periodically.
++
++    The caller should treat on_failure as a signal to open a manual browser tab.
++    """
++    def _worker():
++        cdn_url = generate_nexus_slow_download_url(nexus_url, file_id, auth_token, is_oauth)
++        if not cdn_url:
++            logger.debug("Auto-download unavailable for %s — falling back", file_name)
++            if on_failure:
++                on_failure()
++            return
++
++        dest = dest_dir / file_name
++        if _download_to_path(cdn_url, dest, on_progress=on_progress):
++            logger.info("Auto-downloaded %s", file_name)
++            if on_success:
++                on_success(dest)
++        else:
++            logger.debug("Auto-download transfer failed for %s — falling back", file_name)
++            if on_failure:
++                on_failure()
++
++    threading.Thread(
++        target=_worker,
++        daemon=True,
++        name=f"nexus-autodl-{file_name[:40]}",
++    ).start()

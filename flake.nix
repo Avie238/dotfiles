@@ -33,6 +33,7 @@
     nix_config = {
       allowUnfree = true;
       allowUnsupportedSystem = true;
+      android_sdk.accept_license = true;
     };
 
     pkgsFor = system:
@@ -56,11 +57,13 @@
       browserArg ? "firefox",
       hostnameArg,
       stableArg ? false,
+      batteryArg ? false,
     }: rec {
       system = systemArg;
       stable = stableArg;
       host = hostArg;
       profile = profileArg;
+      battery = batteryArg;
       isIso = isIsoArg;
       pkgs =
         if stable
@@ -124,6 +127,7 @@
         hostArg = "asahi";
         hostnameArg = "avie-nixos";
         wmArg = "niri";
+        batteryArg = true;
       });
 
       artemis-nixos = nixosSystemFor (genUserSettings {

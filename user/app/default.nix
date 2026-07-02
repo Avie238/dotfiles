@@ -43,6 +43,8 @@
     motrix-next
     jq
     python3
+    android-tools
+    ungoogled-chromium
   ];
 
   xdg.enable = true;

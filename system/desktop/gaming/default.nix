@@ -12,9 +12,9 @@
     };
   };
   config = lib.mkIf config.gaming.enable {
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
-      driSupport32Bit = userSettings.system == "x86_64-linux";
+      enable32Bit = userSettings.system == "x86_64-linux";
     };
 
     services.xserver.videoDrivers = ["amdgpu"];

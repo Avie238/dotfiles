@@ -38,6 +38,11 @@ in {
   environment.systemPackages = with pkgs; [
     gparted
   ];
+  programs.gamescope = {
+    enable = true;
+    enableWsi = true;
+    capSysNice = false;
+  };
 
   # environment.systemPackages = with pkgs.avie-pkgs; [
   #   wineWow64Packages.full
@@ -62,7 +67,6 @@ in {
   };
 
   services.logind.settings.Login.HandlePowerKey = "suspend";
-
 
   services.upower.enable = true;
   services.power-profiles-daemon.enable = true;

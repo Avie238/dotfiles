@@ -20,7 +20,7 @@
       cmatrix
       cava
       btop
-      baobab
+      kdePackages.filelight
       dunst
       volumeControl
       brightnessControl
@@ -35,7 +35,13 @@
 
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
-      input.focus-follows-mouse.enable = false;
+      input = {
+        focus-follows-mouse = {
+          enable = true;
+          max-scroll-amount = "5%";
+        };
+        warp-mouse-to-focus.enable = true;
+      };
       spawn-at-startup = [{argv = ["swaybg" "-i" "/home/avie/dotfiles/wallpaper.jpg" "-m" "fill"];}];
       outputs."eDP-1" = {
         scale = 2;
@@ -43,6 +49,15 @@
           height = 1664;
           width = 2560;
           refresh = 60.0;
+        };
+      };
+
+      outputs."DP-2" = {
+        scale = 1.5;
+        mode = {
+          height = 1440;
+          width = 2560;
+          refresh = 143.995;
         };
       };
 
@@ -209,6 +224,14 @@
           ];
           opacity = 0.98;
         }
+        {
+          matches = [
+            {app-id = ".*RetroArch";}
+          ];
+          open-focused = true;
+          open-fullscreen = true;
+        }
+
         {
           matches = [
             {

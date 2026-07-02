@@ -1,4 +1,5 @@
 final: prev: {
+  jackify = final.callPackage ./jackify.nix {};
   widevine-firefox = final.callPackage ./widevine-firefox.nix {};
   pokemon-colorscripts = final.callPackage ./pokemon-colorscripts.nix {};
   umo = final.callPackage ./momw-tools-pack/umo.nix {};

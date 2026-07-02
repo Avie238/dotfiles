@@ -9,19 +9,8 @@
     ./hardware-configuration.nix
     (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
   ];
-
+  services.flatpak.enable = true;
   #Boot
-  # fileSystems."/home/avie/SSD" = {
-  #   device = "/dev/disk/by-uuid/7f4c805b-8775-4bc3-9e20-216631de4d92";
-  #   fsType = "ext4";
-  #   options = [
-  #     # If you don't have this options attribute, it'll default to "defaults"
-  #     # boot options for fstab. Search up fstab mount options you can use
-  #     "users" # Allows any user to mount and unmount
-  #     "nofail" # Prevent system from failing if this drive doesn't mount
-  #   ];
-  # };
-
   # nix.settings = {
   #   substituters = [
   #     "https://hyprland.cachix.org"
@@ -38,6 +27,9 @@
   # };
   boot.kernelModules = ["hid-sony" "hid-playstation"];
 
+  programs.steam = {
+    enable = true;
+  };
   users.extraGroups.input.members = ["avie"];
   programs.ns-usbloader.enable = true;
   hardware.bluetooth = {
