@@ -240,14 +240,14 @@
           ];
           open-focused = true;
         }
-        {
-          matches = [{title = ".*(Dialog|Properties|Preferences|Settings|Rename|Bluetooth|Control|Extension).*";}];
-          open-floating = true;
-          max-width = 750;
-          min-width = 750;
-          max-height = 500;
-          min-height = 500;
-        }
+        # {
+        #   matches = [{title = ".*(Dialog|Properties|Preferences|Settings|Rename|Bluetooth|Control|Extension).*";}];
+        #   open-floating = true;
+        #   max-width = 750;
+        #   min-width = 750;
+        #   max-height = 500;
+        #   min-height = 500;
+        # }
         {
           matches = [{is-window-cast-target = true;}];
           focus-ring = {
