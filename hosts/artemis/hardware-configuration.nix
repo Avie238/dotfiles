@@ -14,8 +14,8 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = [];
-  boot.extraModulePackages = [];
+  boot.kernelModules = ["88x2bu"];
+  boot.extraModulePackages = [config.boot.kernelPackages.rtl88x2bu];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/a1579894-59ba-4e3e-9dc0-33eb56c88a60";

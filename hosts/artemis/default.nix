@@ -3,8 +3,14 @@
   userSettings,
   config,
   lib,
+  pkgs,
   ...
-}: {
+}: let
+  # ATTENTION: make sure this points to the correct location relative to this file
+  cpuid-fault-emulation = pkgs.callPackage ../../packages/cpuid-fault-emulation {
+    kernel = config.boot.kernelPackages.kernel;
+  };
+in {
   imports = [
     ./hardware-configuration.nix
     (userSettings.dotfilesDir + "/profiles/${userSettings.profile}/configuration.nix")
@@ -26,6 +32,23 @@
   #   ];
   # };
   boot.kernelModules = ["hid-sony" "hid-playstation"];
+  # Disable UMIP
+  boot.kernelParams = ["clearcpuid=umip"];
+
+  # Hypervisor
+  boot.extraModulePackages = [cpuid-fault-emulation];
+
+  # Optional shell scripts to diasble and enable the hypervisor
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "enable-hypervisor" ''
+      sudo modprobe -r kvm_amd kvm
+      sudo modprobe cpuid_fault_emulation
+    '')
+    (pkgs.writeShellScriptBin "disable-hypervisor" ''
+      sudo modprobe -r cpuid_fault_emulation
+      sudo modprobe kvm_amd kvm
+    '')
+  ];
 
   programs.steam = {
     enable = true;
