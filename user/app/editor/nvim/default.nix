@@ -70,6 +70,7 @@ in {
 
           startupPlugins = {
             general = with pkgs.vimPlugins; [
+              cord-nvim
               lazy-nvim
               LazyVim
               bufferline-nvim

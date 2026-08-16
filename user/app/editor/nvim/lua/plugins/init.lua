@@ -2,6 +2,9 @@ return {
 	{ "catppuccin/nvim", enabled = false },
 	{ "nvim-neotest/nvim-nio" },
 	{
+		"vyfor/cord.nvim",
+	},
+	{
 		"nvim-mini/mini.icons",
 		opts = {
 			file = {

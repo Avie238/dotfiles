@@ -122,10 +122,10 @@
       };
   in {
     nixosConfigurations = {
-      avie-nixos = nixosSystemFor (genUserSettings {
+      asahi-nixos = nixosSystemFor (genUserSettings {
         systemArg = "aarch64-linux";
         hostArg = "asahi";
-        hostnameArg = "avie-nixos";
+        hostnameArg = "asahi-nixos";
         wmArg = "niri";
         batteryArg = true;
       });
@@ -137,20 +137,20 @@
         wmArg = "niri";
       });
 
-      homelab-nixos = nixosSystemFor (genUserSettings {
+      angel-nixos = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
         hostArg = "homelab";
         profileArg = "server";
-        hostnameArg = "homelab-nixos";
+        hostnameArg = "angel-nixos";
         stableArg = true;
         wmArg = "none";
       });
 
-      homelab-iso = nixosSystemFor (genUserSettings {
+      angel-iso = nixosSystemFor (genUserSettings {
         systemArg = "x86_64-linux";
-        hostArg = "homelab";
+        hostArg = "angel";
         profileArg = "server";
-        hostnameArg = "homelab-nixos";
+        hostnameArg = "angel-nixos";
         stableArg = true;
         wmArg = "none";
         isIsoArg = true;
@@ -169,7 +169,7 @@
     nixosModules = {
       my-user = {userSettings, ...}: {
         home-manager = {
-          backupFileExtension = "backup1";
+          backupFileExtension = "backup13";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${userSettings.username} = userSettings.userModule;
