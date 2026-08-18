@@ -44,6 +44,15 @@ in {
     capSysNice = false;
   };
 
+  programs.alvr.enable = true;
+  # services.wivrn = {
+  #   enable = true;
+  #   openFirewall = true;
+  #
+  #   # You should use the default configuration (which is no configuration), as that works the best out of the box.
+  #   # However, if you need to configure something see https://github.com/WiVRn/WiVRn/blob/master/docs/configuration.md for configuration options and https://mynixos.com/nixpkgs/option/services.wivrn.config.json for an example configuration.
+  # };
+
   # environment.systemPackages = with pkgs.avie-pkgs; [
   #   wineWow64Packages.full
   # ];
@@ -56,7 +65,7 @@ in {
   #     nameserver 1.1.1.1
   #     options edns0'';
   # };
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
   networking.firewall.allowPing = true;
   # services.printing.enable = true;
   #

@@ -5,8 +5,6 @@ final: prev: {
   umo = final.callPackage ./momw-tools-pack/umo.nix {};
   momw-configurator = final.callPackage ./momw-tools-pack/momw-configurator.nix {};
   openmw-dev = final.callPackage ./morrowind/openmw-dev.nix {};
-  collada-dom = final.callPackage ./morrowind/collada-dom.nix {};
-  openscenegraph = final.callPackage ./morrowind/openscenegraph.nix {};
   delta-plugin = final.callPackage ./momw-tools-pack/delta-plugin.nix {};
   s3lightfixes = final.callPackage ./momw-tools-pack/s3lightfixes.nix {};
   openmw-validator = final.callPackage ./momw-tools-pack/openmw-validator.nix {};
@@ -14,7 +12,7 @@ final: prev: {
   tor-browser = final.callPackage ./tor-browser.nix {};
   hakuneko = final.callPackage ./hakuneko.nix {};
   qrookie = final.callPackage ./qrookie.nix {};
-  wayle_unstable = final.callPackage ./wayle.nix {};
+  # wayle_unstable = final.callPackage ./wayle.nix {};
   fex-emu-wine = final.callPackage ./fex-emu-wine.nix {};
   wine-wow64-fex = final.callPackage ./wine-wow64-fex.nix {};
   serena-mcp = final.callPackage ./serena-mcp.nix {};

@@ -18,7 +18,7 @@
       inputs.nix-vscode-extensions.overlays.default
       inputs.firefox-addons.overlays.default
       inputs.niri.overlays.niri
-      inputs.llm-agents.overlays.default
+      inputs.llm-agents.overlays.shared-nixpkgs
       (import ./packages/overlay.nix)
       (import ./scripts/overlay.nix)
       (final: prev: {
@@ -342,7 +342,7 @@
 
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:epireyn/niri-flake";
 
     llm-agents = {
       url = "github:numtide/llm-agents.nix";

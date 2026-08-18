@@ -5,7 +5,7 @@
   fetchpatch,
   cmake,
   pkg-config,
-  libsForQt5,
+  qt5,
   SDL2,
   boost,
   bullet,
@@ -105,8 +105,8 @@ in
     nativeBuildInputs = [
       cmake
       pkg-config
-      libsForQt5.qt5.wrapQtAppsHook
-      libsForQt5.qt5.qttools
+      qt5.wrapQtAppsHook
+      qt5.qttools
     ];
 
     # If not set, OSG plugin .so files become shell scripts on Darwin.

@@ -15,10 +15,9 @@
   config = lib.mkIf config.wm.utils.hyprlock.enable {
     services.wayle = {
       enable = true;
-      package = pkgs.wayle_unstable;
       settings = {
         styling = {
-          palette = {
+          palette = lib.mkForce {
             bg = "#46354a";
             surface = "#241b26";
             elevated = "#2f2a3f";
@@ -58,6 +57,7 @@
                   "network"
                   "volume"
                   "notifications"
+                  "systray"
                 ];
             }
           ];

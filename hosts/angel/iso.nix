@@ -24,6 +24,9 @@
   fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
 
   nixpkgs.hostPlatform = userSettings.system;
+  boot.loader = {
+    systemd-boot.enable = lib.mkForce true;
+  };
   system.stateVersion = "26.05";
 
   #Debug
