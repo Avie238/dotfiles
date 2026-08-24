@@ -47,6 +47,7 @@ in {
             muvm
             x86.steam
             x86.protonplus
+            x86.protonup-qt
             x86.winetricks
           ]
           ++ (map (x: wrapMuvm {package = x;}) ["faugus-launcher" "gamescope"])

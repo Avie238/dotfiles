@@ -149,6 +149,8 @@
         "Mod+F".action = maximize-column;
         "Mod+Shift+F".action = fullscreen-window;
 
+        "Mod+R".action = switch-preset-column-width;
+
         "Mod+Shift+E".action = quit;
         "Mod+Ctrl+Shift+E".action = quit {skip-confirmation = true;};
 

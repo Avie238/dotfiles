@@ -44,6 +44,7 @@
     jq
     python3
     kdePackages.ghostwriter
+    kdePackages.filelight
   ];
 
   xdg.enable = true;

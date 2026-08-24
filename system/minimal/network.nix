@@ -7,6 +7,12 @@
       # dns = "192.168.178.247";
     })
     (import ./networks/wpa-psk.nix {
+      name = "home2";
+      SSID = "$HOME_NEW_SSID";
+      PASSWORD = "$HOME_NEW_PASSWORD";
+      # dns = "192.168.178.247";
+    })
+    (import ./networks/wpa-psk.nix {
       name = "wilczak";
       SSID = "$WILCZAK_SSID";
       PASSWORD = "$WILCZAK_PASSWORD";
