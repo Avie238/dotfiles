@@ -13,14 +13,15 @@
   };
   config = lib.mkIf config.openmw-dev.enable {
     home.packages = with pkgs; [
-      openmw-dev
       delta-plugin
-      s3lightfixes
       momw-configurator
       openmw-validator
       tes3cmd
       umo
       groundcoverify
+      s3lightfixes
+      # openmw
+      userSettings.pkgs-openmw.openmw
     ];
 
     xdg.desktopEntries = {

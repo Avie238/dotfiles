@@ -47,6 +47,7 @@ in {
           # rpcs3
           protontricks
         ];
+    programs.mangohud.enable = true;
     xdg.configFile."openvr/openvrpaths.vrpath".text = let
       steam = "${config.xdg.dataHome}/Steam";
     in
