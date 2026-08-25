@@ -18,7 +18,7 @@
       package = pkgs.wayle_unstable;
       settings = {
         styling = {
-          palette = {
+          palette = lib.mkForce {
             bg = "#46354a";
             surface = "#241b26";
             elevated = "#2f2a3f";
