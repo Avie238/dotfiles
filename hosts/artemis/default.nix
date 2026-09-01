@@ -38,6 +38,13 @@ in {
   # Hypervisor
   boot.extraModulePackages = [cpuid-fault-emulation];
 
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
+
   # Optional shell scripts to diasble and enable the hypervisor
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "enable-hypervisor" ''
@@ -164,9 +171,9 @@ in {
   };
 
   #General
-  boot.loader = {
-    systemd-boot.enable = lib.mkForce true;
-  };
+  # boot.loader = {
+  #   systemd-boot.enable = lib.mkForce true;
+  # };
 
   # environment.etc = {
   #   "resolv.conf".text = ''

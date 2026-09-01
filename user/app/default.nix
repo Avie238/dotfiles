@@ -45,6 +45,9 @@
     python3
     android-tools
     ungoogled-chromium
+    vlc
+    sbctl
+    p7zip
   ];
 
   xdg.enable = true;

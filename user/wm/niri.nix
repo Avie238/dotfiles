@@ -36,6 +36,12 @@
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
       input = {
+        touchpad = {
+          enable = false;
+        };
+        touch = {
+          enable = false;
+        };
         focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "5%";
@@ -198,11 +204,6 @@
 
         "Ctrl+Shift+3".action.screenshot-screen = {show-pointer = false;};
         "Ctrl+Shift+4".action.screenshot-window = {};
-
-        "Alt+Tab" = {
-          repeat = false;
-          action.spawn = ["niriswitcherctl" "show" "--window"];
-        };
       };
 
       window-rules = [
@@ -265,6 +266,12 @@
       switch-events = with config.lib.niri.actions; {
         lid-close.action = spawn "";
       };
+      # recent-windows = {
+      #   enable = true;
+      #   binds = {
+      #     "Alt+Tab".action.next-window = {};
+      #   };
+      # };
 
       debug = lib.mkIf (userSettings.host == "asahi") {
         render-drm-device = "/dev/dri/renderD128";

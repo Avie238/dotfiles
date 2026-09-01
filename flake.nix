@@ -117,6 +117,7 @@
           (userSettings.systemModule)
           inputs.niri.nixosModules.niri
           self.nixosModules.my-user
+          inputs.lanzaboote.nixosModules.lanzaboote
           (
             if userSettings.stable
             then inputs.home-manager-stable.nixosModules.home-manager
@@ -364,6 +365,10 @@
     dotclaude = {
       url = "github:poshan0126/dotclaude";
       flake = false;
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.1.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
