@@ -4,4 +4,5 @@
   ];
 
   gaming.enable = true;
+  openmw-dev.enable = true;
 }

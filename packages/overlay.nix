@@ -15,4 +15,5 @@ final: prev: {
   qrookie = final.callPackage ./qrookie.nix {};
   wayle_unstable = final.callPackage ./wayle.nix {};
   serena-mcp = final.callPackage ./serena-mcp.nix {};
+  fex = final.callPackage ./fex.nix {};
 }

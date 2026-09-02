@@ -1,0 +1,37 @@
+Fall back to the raw host path when resolving an absolute shebang interpreter.
+
+FEX resolves an absolute `#!` interpreter path only as `<rootfs><path>`. On a
+non-merged distro rootfs (the FEXRootFSFetcher Fedora image has no `/nix`), a
+wrapper whose shebang points at a Nix-store bash -- e.g. every nixpkgs
+`buildFHSEnv` wrapper, which `umu-launcher`/`umu-run` is -- resolves to a path
+that does not exist, so `GetShebangInterpFile` returns empty, the script is
+classified as `TYPE_NONE`, and `ExecveHandler` rejects it with ENOEXEC. This
+surfaces as `OSError: [Errno 8] Exec format error` when faugus-launcher spawns
+`umu-run` under muvm + FEX.
+
+`InterpreterHandler` (FEXInterpreter.cpp) and `ELFContainer` both already try the
+rootfs path and then the raw host path; this makes `GetShebangInterpFile` match.
+
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.cpp
+@@ -156,10 +156,17 @@
+     // Executable argument
+     fextl::string ShebangProgram(ShebangArguments[0]);
+
+-    // If the filename is absolute then prepend the rootfs
+-    // If it is relative then don't append the rootfs
++    // If the filename is absolute then check the rootfs first, but fall back to
++    // the raw host path below when the interpreter only exists outside the
++    // rootfs (e.g. a Nix-store bash named by a buildFHSEnv wrapper's shebang on
++    // a non-merged distro rootfs). Without this, ExecveHandler treats the
++    // shebang as unrecognized and rejects the script with ENOEXEC, even though
++    // InterpreterHandler and ELFContainer already do this same fallback.
+     if (ShebangProgram[0] == '/') {
+-      ShebangProgram = FEX::HLE::_SyscallHandler->RootFSPath() + ShebangProgram;
++      fextl::string RootFSProgram = FEX::HLE::_SyscallHandler->RootFSPath() + ShebangProgram;
++      if (FHU::Filesystem::Exists(RootFSProgram)) {
++        return RootFSProgram;
++      }
+     }
+
+     if (FHU::Filesystem::Exists(ShebangProgram)) {

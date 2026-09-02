@@ -47,6 +47,12 @@
         inherit system overlays;
       };
 
+    pkgsOpenmwFor = system:
+      import inputs.nixpkgs-openmw {
+        config = nix_config;
+        inherit system;
+      };
+
     genUserSettings = {
       systemArg,
       hostArg,
@@ -66,6 +72,8 @@
         if stable
         then pkgsStableFor system
         else pkgsFor system;
+
+      pkgs-openmw = pkgsOpenmwFor system;
       username = "avie";
       name = "Avie";
       dotfilesDir = ./.;
@@ -275,6 +283,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-avie.url = "github:Avie238/nixpkgs";
+    nixpkgs-openmw.url = "github:nixos/nixpkgs/0ae2bc1419c3f345984c2629e72e7a631820fa4d";
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";

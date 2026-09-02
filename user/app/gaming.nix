@@ -38,24 +38,24 @@ in {
     };
   };
 
-  # config = lib.mkIf config.gaming.enable {
-  #   home.packages =
-  #     if (userSettings.system == "aarch64-linux")
-  #     then
-  #       with pkgs;
-  #         [
-  #           muvm
-  #           x86.steam
-  #           x86.protonplus
-  #           x86.protonup-qt
-  #           x86.winetricks
-  #         ]
-  #         ++ (map (x: wrapMuvm {package = x;}) ["lutris" "gamescope"])
-  #     else
-  #       with pkgs; [
-  #         faugus-launcher
-  #         protonplus
-  #         winetricks
-  #       ];
-  # };
+  config = lib.mkIf config.gaming.enable {
+    home.packages =
+      if (userSettings.system == "aarch64-linux")
+      then
+        with pkgs;
+          [
+            muvm
+            # x86.steam
+            # x86.protonplus
+            # x86.protonup-qt
+            # x86.winetricks
+          ]
+          ++ (map (x: wrapMuvm {package = x;}) ["lutris" "faugus-launcher"])
+      else
+        with pkgs; [
+          faugus-launcher
+          protonplus
+          winetricks
+        ];
+  };
 }

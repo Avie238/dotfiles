@@ -35,7 +35,13 @@
 
     programs.niri.settings = {
       screenshot-path = "~/Screenshots/Screenshot From %Y-%m-%d %H-%M-%S.png";
-      input.focus-follows-mouse.enable = false;
+      input = {
+        mouse = {
+          accel-profile = "flat";
+          accel-speed = -0.27;
+        };
+        focus-follows-mouse.enable = false;
+      };
       spawn-at-startup = [{argv = ["swaybg" "-i" "/home/avie/dotfiles/wallpaper.jpg" "-m" "fill"];}];
       outputs."eDP-1" = {
         scale = 2;
