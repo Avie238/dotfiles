@@ -21,6 +21,8 @@
       name = "hotspot";
       SSID = "HOTSPOT_SSID";
       PASSWORD = "$HOTSPOT_PASSWORD";
+
+      dns = "1.1.1.1";
     })
     (import ./networks/wpa-eap.nix {
       SSID = "eduroam";

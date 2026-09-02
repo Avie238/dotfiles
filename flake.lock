@@ -1226,6 +1226,7 @@
         "nixpkgs-openmw": "nixpkgs-openmw",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "sops-nix": "sops-nix",
+        "steam-asahi": "steam-asahi",
         "steam-nixpkgs": "steam-nixpkgs",
         "stylix": "stylix"
       }
@@ -1247,6 +1248,26 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "steam-asahi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783937169,
+        "narHash": "sha256-d+0Bfwtt7HmLW2Usnw9XHA/uyNVHy3G1wT1yNQWuyCs=",
+        "owner": "sm-idk",
+        "repo": "steam-asahi",
+        "rev": "5e538015e267bfd57ccf49e5ed0660ac7fd9f8ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sm-idk",
+        "repo": "steam-asahi",
         "type": "github"
       }
     },

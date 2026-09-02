@@ -120,6 +120,7 @@
             then inputs.home-manager-stable.nixosModules.home-manager
             else inputs.home-manager.nixosModules.home-manager
           )
+          inputs.steam-asahi.nixosModules.default
         ];
         specialArgs = {
           inherit inputs userSettings self;
@@ -284,6 +285,10 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-avie.url = "github:Avie238/nixpkgs";
     nixpkgs-openmw.url = "github:nixos/nixpkgs/0ae2bc1419c3f345984c2629e72e7a631820fa4d";
+    steam-asahi = {
+      url = "github:sm-idk/steam-asahi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
