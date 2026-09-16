@@ -38,7 +38,7 @@
       input = {
         mouse = {
           accel-profile = "flat";
-          accel-speed = -0.27;
+          accel-speed = -0.20;
         };
         focus-follows-mouse.enable = false;
       };

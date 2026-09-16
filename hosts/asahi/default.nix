@@ -16,7 +16,32 @@
   boot.binfmt.emulatedSystems = ["i686-linux" "x86_64-linux"];
   nix.settings = {
     extra-platforms = config.boot.binfmt.emulatedSystems;
+    # Let artemis fetch build inputs from substituters itself instead of us
+    # copying them over the wire first.
+    builders-use-substitutes = true;
   };
+
+  # Offload aarch64-linux builds (e.g. linux-asahi on a cachix miss) to
+  # artemis over SSH — it emulates aarch64 via binfmt (see hosts/artemis).
+  # Only used on a cache miss; if artemis is unreachable this just falls
+  # back to building locally.
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    {
+      hostName = "artemis-nixos";
+      system = "aarch64-linux";
+      protocol = "ssh-ng";
+      sshUser = "avie";
+      sshKey = config.sops.secrets."id_ed25519".path;
+      maxJobs = 8; # tune to artemis's actual core count
+      speedFactor = 1;
+      supportedFeatures = ["big-parallel" "kvm"];
+    }
+  ];
+  # avie's SSH key is already deployed everywhere via sops (system/minimal/ssh.nix)
+  # and already authorized on artemis; this just makes root's (nix-daemon's)
+  # ssh client trust artemis's host key non-interactively.
+  programs.ssh.knownHosts."artemis-nixos".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILO6KbBOGVqy9cnc8/Ll/hyJF4/KP5on/X9TC5QEg/yp";
 
   boot = {
     loader.efi.canTouchEfiVariables = false;

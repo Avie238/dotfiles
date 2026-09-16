@@ -20,6 +20,7 @@
         # (system module); faugus-asahi is the umu/Proton launcher.
         with pkgs; [
           faugus-asahi
+          x86.arduino-ide
         ]
       else
         with pkgs; [

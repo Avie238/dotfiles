@@ -11,6 +11,11 @@
   ];
 
   #Boot
+  # Lets artemis build aarch64-linux derivations (emulated) as a remote
+  # builder for avie-nixos — see hosts/asahi's nix.buildMachines.
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+
   # fileSystems."/home/avie/SSD" = {
   #   device = "/dev/disk/by-uuid/7f4c805b-8775-4bc3-9e20-216631de4d92";
   #   fsType = "ext4";
