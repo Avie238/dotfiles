@@ -70,6 +70,10 @@
             dropdown-show-seconds = false;
           };
           weather.location = "Maastricht";
+          dashboard = {
+            dropdown-lock-command = "systemctl suspend";
+            right-click = "systemctl suspend";
+          };
         };
       };
     };

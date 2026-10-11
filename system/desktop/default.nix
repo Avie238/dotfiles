@@ -28,6 +28,7 @@ in {
     settings.global.security = "user";
     openFirewall = true;
   };
+
   # networking.nftables.enable = true;
 
   services.samba-wsdd = {
