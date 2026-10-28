@@ -40,8 +40,8 @@
     texliveFull
     proton-vpn
     nix-cleanup
-    motrix-next
     jq
+    rayburst
     python3
     kdePackages.ghostwriter
     kdePackages.filelight
