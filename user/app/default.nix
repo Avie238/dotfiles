@@ -47,6 +47,14 @@
     kdePackages.filelight
   ];
 
+  services.home-manager.autoUpgrade = {
+    enable = true;
+    useFlake = true;
+    flakeDir = "/home/avie/dotfiles";
+    frequency = "03:00";
+    preSwitchCommands = ["nix flake update"];
+  };
+
   xdg.enable = true;
   xdg.desktopEntries = {
     Faugus = {

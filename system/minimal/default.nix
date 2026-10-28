@@ -36,8 +36,9 @@
     flake = "/home/avie/dotfiles";
     flags = [
       "--print-build-logs"
+      "--commit-lock-file"
     ];
-    dates = "09:00";
+    dates = "03:00";
     randomizedDelaySec = "45min";
   };
 
